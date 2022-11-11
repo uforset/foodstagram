@@ -1,0 +1,14 @@
+[14:41:53][INFO ][ContextLoader.java:271] - Root WebApplicationContext: initialization started
+[14:41:54][INFO ][ContextLoader.java:307] - Root WebApplicationContext initialized in 1460 ms
+[14:41:54][INFO ][FrameworkServlet.java:525] - Initializing Servlet 'appServlet'
+[14:41:56][INFO ][FrameworkServlet.java:547] - Completed initialization in 1672 ms
+[14:42:14][WARN ][DispatcherServlet.java:1278] - No mapping for POST /foodstagram/ntop3.do
+[14:42:14][WARN ][DispatcherServlet.java:1278] - No mapping for POST /foodstagram/btop3.do
+[15:59:03][INFO ][ContextLoader.java:271] - Root WebApplicationContext: initialization started
+[15:59:05][INFO ][ContextLoader.java:307] - Root WebApplicationContext initialized in 1487 ms
+[15:59:05][INFO ][FrameworkServlet.java:525] - Initializing Servlet 'appServlet'
+[15:59:07][INFO ][FrameworkServlet.java:547] - Completed initialization in 1739 ms
+[16:15:16][INFO ][ContextLoader.java:271] - Root WebApplicationContext: initialization started
+[16:15:18][INFO ][ContextLoader.java:307] - Root WebApplicationContext initialized in 1536 ms
+[16:15:18][INFO ][FrameworkServlet.java:525] - Initializing Servlet 'appServlet'
+[16:15:20][INFO ][FrameworkServlet.java:547] - Completed initialization in 1719 ms
