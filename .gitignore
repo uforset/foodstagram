@@ -10,9 +10,9 @@ pom.properties
 MANIFEST.MF
 
 # except first
-#.settings/
-#.classpath
-#.project
+.settings/
+.classpath
+.project
 
 
 ### Eclipse ###
