@@ -331,7 +331,7 @@
             <li style="width: 350px;margin-left: 350px;">
                 <ol>
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
-                    <li><a href="chat.html"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
                     <li><a href="write.html"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
                     <li><a href="mypage.html"><img src="resources/images/profile.jpg" id="profile"></a></li>

@@ -17,7 +17,7 @@
 		<param-value>classpath:root-context.xml
 								  <!-- 스프링 시큐리티 설정 파일 추가 등록 -->
 								  /WEB-INF/spring/appServlet/spring-security.xml
-								  
+								  /WEB-INF/spring/appServlet/websocket-context.xml
 		</param-value>
 	</context-param>
 	
@@ -54,6 +54,7 @@
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
 	</web-app>
