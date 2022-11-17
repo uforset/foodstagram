@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+
+
+	<!-- 선언한 Handler와 url 주소를 연결(Mapping) 시키기 -->
+	<!-- <websocket:handlers>
+		<websocket:mapping handler="myWebSocketHandler" path="/chat" />
+		서버의 세션 정보와 웹소켓 세션 정보 합치기
+		
+		SockJS 라이브러리 사용을 위한 설정 등록
+		<websocket:sockjs websocket-enabled="true" />
+	</websocket:handlers>
+	
+	<bean id="myWebSocketHandler"
+		class="com.circle.foodstagram.websocket.controller.WebsocketHandler"
+		primary="true" /> -->
+		
+	<!-- <websocket:message-broker application-destination-prefix="/pub">
+		<websocket:stomp-endpoint path="/stomp">
+			<websocket:sockjs websocket-enabled="true"/>
+		</websocket:stomp-endpoint>
+		<websocket:simple-broker prefix="/sub" />
+	</websocket:message-broker> -->
+	
+</beans>
