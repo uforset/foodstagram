@@ -13,8 +13,8 @@
 		id="realDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="c##homework" />
-		<property name="password" value="homework" />
+		<property name="username" value="c##food" />
+		<property name="password" value="food" />
 	</bean>
 	
 	<!-- 전달값이 적용되어 실행되는 query 문과 resultSet 결과값을 
@@ -72,4 +72,25 @@
 		<aop:advisor advice-ref="txAdvice" id="transactionAdvisor"
 			pointcut-ref="serviceMethod" />
 	</aop:config>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="iceca159@gmail.com" />
+		<property name="password" value="gtuwltnqaebuefow" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<!-- gmail의 경우 보안문제 업데이트로 인해 SSLSocketFactory를 추가해야 smtp 사용 가능. -->
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
 </beans>
