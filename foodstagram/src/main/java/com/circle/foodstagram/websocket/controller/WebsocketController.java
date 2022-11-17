@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class WebsocketController {
-	// 채팅뷰 JSP로 연결시키는 메소드
 	
-	@GetMapping("chatting.do")
-	public String chatting(Model model, HttpServletRequest req) {
-		// 접속한 ip주소를 확인하여 차후 사용자 비교에 사용하기 
-		model.addAttribute("host", req.getRemoteAddr());
-		return "chat/chattingView";
-	}
+	// 채팅뷰 JSP로 연결시키는 메소드
+	// 일단 채팅방 목록으로 연결함.
+//	@GetMapping("chatting.do")
+//	public String moveChatRoom(Model model, HttpServletRequest req) {
+//		// 접속한 ip주소를 확인하여 차후 사용자 비교에 사용하기 
+//		model.addAttribute("host", req.getRemoteAddr());
+//		return "redirect:/chat/rooms";
+//	}
 	
 }

@@ -11,9 +11,11 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 
 public class WebsocketHandler extends TextWebSocketHandler {
+	
+	//안씀일단
 	// 웹소켓 연결 사용자 목록
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-
+	
 	@Override // 웹소켓 연결 시작시 동작!!
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
