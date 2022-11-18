@@ -1,4 +1,4 @@
-ackage com.circle.foodstagram.member.model.vo;
+package com.circle.foodstagram.member.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;

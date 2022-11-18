@@ -40,6 +40,7 @@ public class StompWebSocketController {
 //	}
 	private final SimpMessagingTemplate template;
 
+
 	@Autowired
 	public StompWebSocketController(SimpMessagingTemplate template) {
 		this.template = template;
