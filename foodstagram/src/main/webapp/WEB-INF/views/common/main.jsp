@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="resources/css/reset.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
-    <link href="resources/css/style.css" rel="stylesheet">
+    <link href="resources/css/style.css"  rel="stylesheet">
     <title>Foodstagram</title>
     <style>
         /* 메인페이지 */
@@ -334,7 +334,7 @@
                     <li><a href="chat.html"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
                     <li><a href="write.html"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
-                    <li><a href="mypage.html"><img src="resources/images/profile.jpg" id="profile"></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/mpage.do"><img src="resources/images/profile.jpg" id="profile"></a></li>
                     <li><a href="#"><i class="fa-solid fa-bell fa-2x"></i></a></li>
                     <li class="noneRead"></li>
                 </ol>
