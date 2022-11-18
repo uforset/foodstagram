@@ -11,111 +11,100 @@
 	<resultMap type="Member" id="resultList">
 		<result property="userid" column="userid" />
 		<result property="userpwd" column="userpwd" />
-		<result property="username" column="username" />
-		<result property="age" column="age" />
-		<result property="gender" column="gender" />
-		<result property="phone" column="phone" />
 		<result property="email" column="email" />
-		<result property="hobby" column="hobby" />
-		<result property="etc" column="etc" />
-		<result property="enroll_date" column="enroll_date" />
-		<result property="lastmodified" column="lastmodified" />
-		<result property="login_ok" column="login_ok" />
+		<result property="username" column="username" />
+		<result property="gender" column="gender" />
+		<result property="birth_date" column="birth_date" />
+		<result property="loginok" column="loginok" />
 		<result property="admin" column="admin" />
 	</resultMap>
-
-
-	<select id="selectLogin" parameterType="Member" resultType="Member">
-		select * from member
-		where userid = #{ userid } and userpwd = #{ userpwd }
-		and login_ok = 'Y'
-	</select>
 	
 	<!-- 회원 아이디(userid)로 회원정보 조회 -->
 	<select id="selectMember" parameterType="string" resultType="Member">
 		select * from member
-		where userid = #{ uid }
+		where userid = #{ userid } 
 	</select>
-	
+
+	<!-- 회원 가입 -->
+	<insert id="insertMember" parameterType="Member">
+		insert into member (userid, userpwd, email, username, gender, birth_date, loginok, admin)
+		values (#{ userid }, #{ userpwd }, #{ email }, #{ username }, #{ gender }, sysdate, default, default)
+	</insert>
+
 	<!-- 회원가입시 아이디 중복 체크 처리용 -->
 	<select id="selectCheckId" parameterType="string" resultType="_int">
 		select count(userid) from member
 		where userid = #{ uid }
 	</select>
-	
-	<!-- 회원 전체 조회용 -->
-	<select id="selectList" resultMap="resultList">
+
+	<!-- 로그인 -->
+	<select id="selectLogin" parameterType="Member" resultType="Member">
 		select * from member
+		where userid = #{ userid } and userpwd = #{ userpwd }
+		and loginok = 'Y'
 	</select>
 	
-	<!-- login_ok 값 변경용 -->
-	<update id="updateLoginOK" parameterType="Member">
-		update member
-		set login_ok = #{ login_ok }
-		where userid = #{ userid }
-	</update>
+	<!-- 이름, 이메일로 아이디 찾기 -->
+	<select id = "findId" parameterType="Member" resultType="string">
+		select userid from member
+		where username = #{ username } and email = #{ email }
+	</select>
 	
-	<insert id="insertMember" parameterType="Member">
-		insert into member (userid, userpwd, username, 
-		gender, age, phone, email, hobby, etc, enroll_date,
-		lastmodified, login_ok, admin)
-		values (#{ userid }, #{ userpwd }, #{ username }, 
-		#{ gender }, #{ age }, #{ phone }, #{ email }, 
-		#{ hobby }, #{ etc }, sysdate, sysdate, default, default)
-	</insert>
-	
+	<!-- 비밀번호 변경 -->
 	<update id="updateMember" parameterType="Member">
 		update member
-		set 	userpwd = #{ userpwd },
-			age = #{ age },
-			phone = #{ phone },
-			email = #{ email },
-			hobby = #{ hobby },
-			etc = #{ etc }
+		set userpwd = #{ userpwd }
 		where userid = #{ userid }
 	</update>
 	
+	<!-- 회원 탈퇴 -->
 	<delete id="deleteMember" parameterType="string">
 		delete from member
 		where userid = #{ uid }
 	</delete>
 	
+	<!-- 비밀번호 찾기 변경 -->
+	<update id = "pwUpdate" parameterType="Member">
+		update member
+		set userpwd = #{ userpwd }
+		where userid = #{ userid }
+	</update>
+
+	<!-- 회원 전체 조회용 -->
+	<select id="selectList" resultMap="resultList">
+		select * from member
+		order by userid asc
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		select count(*) from member
+	</select>
+	
+	<!-- loginok 값 변경용 -->
+	<update id="updateLoginOK" parameterType="Member">
+		update member
+		set loginok = #{ loginok }
+		where userid = #{ userid }
+		</update>
+	
 	<!-- 회원 검색 처리용 쿼리문 -->
 	<select id="selectSearchUserid" parameterType="string" resultMap="resultList">
 		select * from member
-		where userid like '%' || #{ keyword } || '%'
-	</select>
-	
-	<select id="selectSearchGender" parameterType="string" resultMap="resultList">
-		select * from member
-		where gender = #{ keyword }
-	</select>
-	
-	<select id="selectSearchAge" parameterType="_int" resultMap="resultList">
-		select * from member
-		<if test="value == 60">
-			where age >= #{ value }
-		</if>
-		<if test="value != 60">
-			where age between #{ value } and #{ value } + 9
-		</if>
-	</select>
-	
-	<select id="selectSearchEnrollDate" parameterType="SearchDate" resultMap="resultList">
-		select * from member
-		where enroll_date between #{ begin } and #{ end }
+		where userid like '%' || #{ keyword } || '%' 
+		order by userid asc
 	</select>
 	
 	<select id="selectSearchLoginOK" parameterType="string" resultMap="resultList">
 		select * from member
-		where login_ok = #{ keyword }
+		where sloginok = #{ keyword } 
+		order by userid asc
+	</select>
+	
+	<!-- 관리자 제외한 회원 조회용 -->
+	<select id="selectList2" resultMap="resultList">
+		select * from member
+		where userid not like '%admin%'
+		order by userid asc
 	</select>
 
 </mapper>
-
-
-
-
-
-
-

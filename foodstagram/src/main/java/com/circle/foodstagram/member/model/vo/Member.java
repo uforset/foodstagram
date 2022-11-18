@@ -1,45 +1,33 @@
-package com.circle.foodstagram.member.model.vo;
+ackage com.circle.foodstagram.member.model.vo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Member implements java.io.Serializable {
-	private static final long serialVersionUID = 5161221897126526995L;
+public class Member implements Serializable{
 
-	//스프링에서 데이터베이스 테이블 컬럼명과 필드(멤버변수)명을 
-	//일치시키면 마이바티스 매퍼의 resultMap 이 자동 작동 실행됨
+	private static final long serialVersionUID = -8711503667562197576L;
+	
 	private String userid;
 	private String userpwd;
 	private String username;
 	private String gender;
-	private int age;
-	private String phone;
+	private java.sql.Date birth_date;
 	private String email;
-	private String hobby;
-	private String etc;
-	private java.sql.Date enroll_date;
-	private java.sql.Date lastmodified;
-	private String login_ok;
-	private String admin;
+	private String loginok;
 	private String useradmin;
 	
 	public Member() {}
 
-	public Member(String userid, String userpwd, String username, String gender, int age, String phone, String email,
-			String hobby, String etc, Date enroll_date, Date lastmodified, String login_ok, String admin, String useradmin) {
+	public Member(String userid, String userpwd, String username, String gender, Date birth_date, String email,
+			String loginok, String useradmin) {
 		super();
 		this.userid = userid;
 		this.userpwd = userpwd;
 		this.username = username;
 		this.gender = gender;
-		this.age = age;
-		this.phone = phone;
+		this.birth_date = birth_date;
 		this.email = email;
-		this.hobby = hobby;
-		this.etc = etc;
-		this.enroll_date = enroll_date;
-		this.lastmodified = lastmodified;
-		this.login_ok = login_ok;
-		this.admin = admin;
+		this.loginok = loginok;
 		this.useradmin = useradmin;
 	}
 
@@ -75,20 +63,12 @@ public class Member implements java.io.Serializable {
 		this.gender = gender;
 	}
 
-	public int getAge() {
-		return age;
+	public java.sql.Date getBirth_date() {
+		return birth_date;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setBirth_date(java.sql.Date birth_date) {
+		this.birth_date = birth_date;
 	}
 
 	public String getEmail() {
@@ -99,52 +79,12 @@ public class Member implements java.io.Serializable {
 		this.email = email;
 	}
 
-	public String getHobby() {
-		return hobby;
+	public String getLoginok() {
+		return loginok;
 	}
 
-	public void setHobby(String hobby) {
-		this.hobby = hobby;
-	}
-
-	public String getEtc() {
-		return etc;
-	}
-
-	public void setEtc(String etc) {
-		this.etc = etc;
-	}
-
-	public java.sql.Date getEnroll_date() {
-		return enroll_date;
-	}
-
-	public void setEnroll_date(java.sql.Date enroll_date) {
-		this.enroll_date = enroll_date;
-	}
-
-	public java.sql.Date getLastmodified() {
-		return lastmodified;
-	}
-
-	public void setLastmodified(java.sql.Date lastmodified) {
-		this.lastmodified = lastmodified;
-	}
-
-	public String getLogin_ok() {
-		return login_ok;
-	}
-
-	public void setLogin_ok(String login_ok) {
-		this.login_ok = login_ok;
-	}
-
-	public String getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(String admin) {
-		this.admin = admin;
+	public void setLoginok(String loginok) {
+		this.loginok = loginok;
 	}
 
 	public String getUseradmin() {
@@ -162,11 +102,8 @@ public class Member implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Member [userid=" + userid + ", userpwd=" + userpwd + ", username=" + username + ", gender=" + gender
-				+ ", age=" + age + ", phone=" + phone + ", email=" + email + ", hobby=" + hobby + ", etc=" + etc
-				+ ", enroll_date=" + enroll_date + ", lastmodified=" + lastmodified + ", login_ok=" + login_ok
-				+ ", admin=" + admin + ", useradmin=" + useradmin 
-				+ "]";
+				+ ", birth_date=" + birth_date + ", email=" + email + ", loginok=" + loginok + ", useradmin="
+				+ useradmin + "]";
 	}
 	
 }
-
