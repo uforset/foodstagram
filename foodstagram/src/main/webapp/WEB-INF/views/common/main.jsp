@@ -334,7 +334,7 @@
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
                     <li><a href="write.html"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
-                    <li><a href="mypage.html"><img src="resources/images/profile.jpg" id="profile"></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/mpage.do"><img src="resources/images/profile.jpg" id="profile"></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/nlist.do"><i class="fa-solid fa-bell fa-2x"></i></a></li>
                     <li class="noneRead"></li>
                 </ol>
