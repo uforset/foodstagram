@@ -9,10 +9,16 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="com.circle.foodstagram.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.circle.foodstagram.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.circle.foodstagram.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.circle.foodstagram.common.SearchDate" alias="SearchDate" />
+		<typeAlias type="com.circle.foodstagram.common.Paging" alias="Paging" />
+		<typeAlias type="com.circle.foodstagram.common.SearchPaging" alias="SearchPaging" />
+		<typeAlias type="com.circle.foodstagram.common.FileDownloadView" alias="FileDownloadView" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
+		<mapper resource="mappers/notice-mapper.xml" />
 	</mappers>
 </configuration>

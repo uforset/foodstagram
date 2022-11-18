@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="noticeMapper">
+
+	<resultMap type="Notice" id="resultNotice">
+		<id column="noticeno" property="noticeno" />
+		<result column="noticetitle" property="noticetitle" />
+		<result column="noticedate" property="noticedate" />
+		<result column="userid" property="userid" />
+		<result column="noticecontent" property="noticecontent" />
+		<result column="notice_upfile" property="notice_upfile" />
+		<result column="notice_refile" property="notice_refile" />
+		<result column="readcount" property="readcount" />
+		<result column="importance" property="importance" />
+	</resultMap>
+	
+	<select id="selectAll" resultMap="resultNotice">
+		select * from notice
+		order by noticeno desc
+	</select>
+	
+	<select id="getListCount" resultType="_int" >
+		select count(*) from notice
+		order by noticeno desc
+	</select>
+	
+	<select id="getSearchTListCount" resultType="_int" parameterType="string">
+		select count(*) from notice
+		where noticetitle like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchDListCount" resultType="_int" parameterType="SearchDate">
+		select count(*) from notice
+		where noticedate between #{ begin } and #{ end }
+	</select>
+	
+	<select id="searchTitle" resultMap="resultNotice" parameterType="SearchPaging">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
+						  NOTICEDATE, USERID, 
+						  NOTICECONTENT,  
+			               NOTICE_UPFILE, NOTICE_REFILE, 
+			               READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE
+			       		  where noticetitle like '%' || #{ keyword } || '%'
+			               ORDER BY NOTICENO DESC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="searchDate" resultMap="resultNotice" parameterType="SearchPaging">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
+						  NOTICEDATE, USERID, 
+						  NOTICECONTENT,  
+			               NOTICE_UPFILE, NOTICE_REFILE, 
+			               READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE
+			       		   where noticedate between #{ begin } and #{ end }
+			               ORDER BY NOTICENO DESC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectNotice" parameterType="_int" resultMap="resultNotice">
+		select * from notice
+		where noticeno = #{ noticeno }
+	</select>
+	
+	<delete id="deleteNotice" parameterType="_int">
+		delete from notice
+		where noticeno = #{ noticeno }
+	</delete>
+	
+	<insert id="insertNotice" parameterType="Notice">
+		insert into notice (NOTICENO, NOTICETITLE, USERID, 
+		NOTICEDATE, NOTICE_UPFILE, NOTICE_REFILE, NOTICECONTENT, READCOUNT, IMPORTANCE) 
+		values ((select max(noticeno) + 1 from notice), 
+				#{ noticetitle }, #{ userid }, sysdate, 
+				#{ notice_upfile, jdbcType=VARCHAR }, 
+				#{ notice_refile, jdbcType=VARCHAR }, 
+				#{ noticecontent }, default ,
+				<if test="importance != 0">
+				#{ importance }
+				</if>
+				<if test="importance == 0">
+				default
+				</if>)
+	</insert>
+	
+	<update id="updateNotice" parameterType="Notice">
+		update notice
+		set noticetitle = #{ noticetitle },
+			noticecontent = #{ noticecontent}
+			<if test="notice_upfile != null">
+			, notice_upfile = #{ notice_upfile }
+			, notice_refile = #{ notice_refile }
+			</if>
+			<if test="notice_upfile == null">
+			, notice_upfile = null
+			, notice_refile = null
+			</if>
+			
+			<if test="importance != 0">
+			, importance = #{ importance }
+			</if>
+			<if test="importance == 0">
+			, importance = default
+			</if>
+			
+		where noticeno = #{ noticeno }
+	</update>
+	
+	<update id="addReadCount" parameterType="_int">
+		update notice
+		set readcount = readcount + 1
+		where noticeno = #{ noticeno }
+	</update>
+	
+	<select id="selectList" parameterType="Paging" resultMap="resultNotice">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
+						  NOTICEDATE, USERID, 
+						  NOTICECONTENT,  
+			               NOTICE_UPFILE, NOTICE_REFILE, 
+			               READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE 
+			              ORDER BY IMPORTANCE DESC, 
+			              			NOTICENO DESC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	
+</mapper>
