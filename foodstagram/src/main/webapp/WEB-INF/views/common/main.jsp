@@ -272,7 +272,25 @@
         }
     </style>
 </head>
+<!-- TWC chatbot Scripts -->
+<script src="https://public-common-sdk.s3.ap-northeast-2.amazonaws.com/sdk/seller/Twc.plugin.js"></script>
 
+<script>
+(function() {
+ Twc('init', {
+   brandKey: "m0qEkQGszGQPOJycVHShoA",
+   channelType: "scenario",
+scenarioId: "Njk=",
+   buttonOption: {
+     showLauncher: true,
+     zIndex: 10,
+     bottom: 25,
+     right: 25
+    }
+  })
+})();
+</script>
+<!--  End TWC chatbot Scripts -->
 <body>
     <nav>
         <ul>
@@ -431,7 +449,7 @@
             </tr>
         </table>
     </section>
-    <div class="chatBot">챗봇 들어갈 영역</div>
+    
 
 
     <script>
