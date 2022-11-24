@@ -38,13 +38,9 @@ public class StompWebSocketController {
 //		
 //		return chat;
 //	}
-	private final SimpMessagingTemplate template;
-
-
 	@Autowired
-	public StompWebSocketController(SimpMessagingTemplate template) {
-		this.template = template;
-	}
+	private SimpMessagingTemplate template;
+
 
 	// 채팅뷰 JSP로 연결시키는 메소드
 	// 일단 채팅방 목록으로 연결함.
