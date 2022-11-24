@@ -4,10 +4,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 
-	<!-- select 한 결과집합 ResultSet 에서 한 행씩 꺼내서 
-	각 컬럼값들을 vo 객체의 각 필드에 저장 처리하는 작업
-	: 결과 매핑
-	리스트나 맵에 여러 객체를 저장 처리도 포함됨 -->
+	<!-- select 한 결과집합 ResultSet 에서 한 행씩 꺼내서 각 컬럼값들을 vo 객체의 각 필드에 저장 처리하는 작업 
+		: 결과 매핑 리스트나 맵에 여러 객체를 저장 처리도 포함됨 -->
 	<resultMap type="Member" id="resultList">
 		<result property="userid" column="userid" />
 		<result property="userpwd" column="userpwd" />
@@ -18,93 +16,146 @@
 		<result property="loginok" column="loginok" />
 		<result property="admin" column="admin" />
 	</resultMap>
-	
+
 	<!-- 회원 아이디(userid)로 회원정보 조회 -->
-	<select id="selectMember" parameterType="string" resultType="Member">
+	<select id="selectMember" parameterType="string"
+		resultType="Member">
 		select * from member
-		where userid = #{ userid } 
+		where userid = #{ userid }
 	</select>
 
 	<!-- 회원 가입 -->
 	<insert id="insertMember" parameterType="Member">
-		insert into member (userid, userpwd, email, username, gender, birth_date, loginok, admin)
-		values (#{ userid }, #{ userpwd }, #{ email }, #{ username }, #{ gender }, sysdate, default, default)
+		insert into member
+		(userid, userpwd, email, username, gender, birth_date, loginok, admin)
+		values (#{ userid }, #{ userpwd }, #{ email }, #{ username }, #{
+		gender }, sysdate, default, default)
 	</insert>
 
 	<!-- 회원가입시 아이디 중복 체크 처리용 -->
-	<select id="selectCheckId" parameterType="string" resultType="_int">
+	<select id="selectCheckId" parameterType="string"
+		resultType="_int">
 		select count(userid) from member
 		where userid = #{ uid }
 	</select>
 
 	<!-- 로그인 -->
-	<select id="selectLogin" parameterType="Member" resultType="Member">
+	<select id="selectLogin" parameterType="Member"
+		resultType="Member">
 		select * from member
-		where userid = #{ userid } and userpwd = #{ userpwd }
+		where userid = #{ userid } and userpwd
+		= #{ userpwd }
 		and loginok = 'Y'
 	</select>
-	
+
 	<!-- 이름, 이메일로 아이디 찾기 -->
-	<select id = "findId" parameterType="Member" resultType="string">
-		select userid from member
-		where username = #{ username } and email = #{ email }
+	<select id="findId" parameterType="Member" resultType="string">
+		select
+		userid from member
+		where username = #{ username } and email = #{ email
+		}
 	</select>
-	
+
 	<!-- 비밀번호 변경 -->
 	<update id="updateMember" parameterType="Member">
 		update member
-		set userpwd = #{ userpwd }
+		set userpwd
+		= #{ userpwd }
 		where userid = #{ userid }
 	</update>
-	
+
 	<!-- 회원 탈퇴 -->
 	<delete id="deleteMember" parameterType="string">
 		delete from member
-		where userid = #{ uid }
+		where
+		userid = #{ uid }
 	</delete>
-	
+
 	<!-- 비밀번호 찾기 변경 -->
-	<update id = "pwUpdate" parameterType="Member">
+	<update id="pwUpdate" parameterType="Member">
 		update member
-		set userpwd = #{ userpwd }
+		set userpwd =
+		#{ userpwd }
 		where userid = #{ userid }
 	</update>
 
 	<!-- 회원 전체 조회용 -->
-	<select id="selectList" resultMap="resultList">
-		select * from member
-		order by userid asc
-	</select>
-	
+	<!-- <select id="selectList" resultMap="resultList"> select * from member 
+		order by userid asc </select> -->
+
 	<select id="getListCount" resultType="_int">
 		select count(*) from member
 	</select>
 	
+	<select id="getSearchIdCount" resultType="_int" parameterType="string">
+		select count(*) from member
+		where userid like '%' || #{ keyword } || '%'
+	</select>
+
 	<!-- loginok 값 변경용 -->
 	<update id="updateLoginOK" parameterType="Member">
 		update member
-		set loginok = #{ loginok }
+		set
+		loginok = #{ loginok }
 		where userid = #{ userid }
-		</update>
-	
+	</update>
+
 	<!-- 회원 검색 처리용 쿼리문 -->
-	<select id="selectSearchUserid" parameterType="string" resultMap="resultList">
+	<select id="selectSearchUserid" parameterType="string"
+		resultMap="resultList">
 		select * from member
-		where userid like '%' || #{ keyword } || '%' 
+		where userid like '%' || #{ keyword } ||
+		'%'
 		order by userid asc
 	</select>
-	
-	<select id="selectSearchLoginOK" parameterType="string" resultMap="resultList">
+
+	<select id="selectSearchEmail" parameterType="string"
+		resultMap="resultList">
 		select * from member
-		where sloginok = #{ keyword } 
-		order by userid asc
+		where email like '%' || #{ keyword } ||
+		'%'
+		order by email asc
 	</select>
-	
+
+	<select id="selectSearchLoginOK" parameterType="string"
+		resultMap="resultList">
+		select * from member
+		where loginok = #{ keyword }
+	</select>
+
 	<!-- 관리자 제외한 회원 조회용 -->
 	<select id="selectList2" resultMap="resultList">
 		select * from member
-		where userid not like '%admin%'
+		where
+		userid not like '%admin%'
 		order by userid asc
+	</select>
+
+
+
+	<select id="selectList" parameterType="Paging"
+		resultMap="resultList">
+		<![CDATA[
+			select *
+			from (select rownum rnum, userid, userpwd, username, gender, birth_date,
+			email, loginok, admin
+			from (select * from member
+		              order by userid desc)) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+
+			<select id="searchId" resultMap="resultList" parameterType="SearchPaging">
+		<![CDATA[
+				select *
+			from (select rownum rnum, userid, userpwd, username, gender, birth_date,
+			email, loginok, admin
+			from (select * from member
+		             where userid like '%' || #{keyword} || '%'
+		             order by userid desc
+		              )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
 	</select>
 
 </mapper>

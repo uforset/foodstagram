@@ -247,7 +247,7 @@ public class NoticeController {
 			model.addAttribute("currentPage",currentPage);
 
 			Member loginMember = (Member) session.getAttribute("loginMember");
-			if (loginMember != null && loginMember.getUseradmin().equals("Y")) {
+			if (loginMember != null && loginMember.getAdmin().equals("Y")) {
 				// 관리자가 상세보기를 요청했을 때
 				return "notice/noticeAdminDetailView";
 			} else {
