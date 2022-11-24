@@ -369,7 +369,7 @@ th.last_bg {
 		 	   </a>
 		 	</li>
 		 	<li>
-		 	<c:if test="${ sessionScope.loginMember.useradmin eq 'Y' }">
+		 	<c:if test="${ sessionScope.loginMember.admin eq 'Y' }">
 		 		<a href="${ pageContext.servletContext.contextPath }/nwform.do">
 		 			<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/n_list2.png" onmouseover="this.src=''${ pageContext.servletContext.contextPath }/resources/notice_img/n_list2o.png'" onmouseout="this.src=''${ pageContext.servletContext.contextPath }/resources/notice_img/n_list2.png'">>
 		 		</a>
