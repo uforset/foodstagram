@@ -15,10 +15,14 @@
 		<typeAlias type="com.circle.foodstagram.common.Paging" alias="Paging" />
 		<typeAlias type="com.circle.foodstagram.common.SearchPaging" alias="SearchPaging" />
 		<typeAlias type="com.circle.foodstagram.common.FileDownloadView" alias="FileDownloadView" />
+		<typeAlias type="com.circle.foodstagram.qna.model.vo.Question" alias="Question" />
+		<typeAlias type="com.circle.foodstagram.qna.model.vo.Answer" alias="Answer" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/question-mapper.xml" />
+		<mapper resource="mappers/answer-mapper.xml" />
 	</mappers>
 </configuration>

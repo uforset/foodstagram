@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -135,39 +137,18 @@ $(function(){
 					<div class="state">상태</div>
 					<div class="sbj">제목</div>
 					<div class="date">등록일</div>
-					<div class="rating">만족도 평가</div>
 				</div>
 				<ul class="tbody">
-										<li>
-						<div class="state"><strong>답변</strong></div>
-						<div class="sbj"><a href="/customer/inquiry_view/7275">글쓰는 도중에 연락이왔습니다.</a></div>
-						<div class="date">2022-11-09</div>
-												<div class="rating"><a href="/customer/inquiry_rating/7275" class="btn-type4 min-w">평가하기</a></div>
-											</li>
-										<li>
-						<div class="state"><strong>답변</strong></div>
-						<div class="sbj"><a href="/customer/inquiry_view/6999">반품해지 해주세요</a></div>
-						<div class="date">2022-11-08</div>
-												<div class="rating"><a href="/customer/inquiry_rating/6999" class="btn-type4 min-w">평가하기</a></div>
-											</li>
-										<li>
-						<div class="state"><strong>답변</strong></div>
-						<div class="sbj"><a href="/customer/inquiry_view/6978">요금이 다르네요</a></div>
-						<div class="date">2022-11-08</div>
-												<div class="rating"><a href="/customer/inquiry_rating/6978" class="btn-type4 min-w">평가하기</a></div>
-											</li>
-										<li>
-						<div class="state"><strong>답변</strong></div>
-						<div class="sbj"><a href="/customer/inquiry_view/6299">반품요청</a></div>
-						<div class="date">2022-11-04</div>
-												<div class="rating"><a href="/customer/inquiry_rating/6299" class="btn-type4 min-w">평가하기</a></div>
-											</li>
-										<li>
-						<div class="state"><strong>완료</strong></div>
-						<div class="sbj"><a href="/customer/inquiry_view/5813">가입할때랑 요금이 달라요</a></div>
-						<div class="date">2022-11-03</div>
-												<div class="rating"><img src="/assets/images/common/rating1.png" alt="" class="rating-bar"></div>
-											</li>
+						<c:forEach items="${ list }" var="q" varStatus="status">
+						<li>
+							<div class="state"><strong>${ q.answercheck }</strong></div>
+							<div class="sbj"><a href="/foodstagram/qna_view.do?q=${ q.q_no }">${ q.q_title }</a></div>
+							<div class="date"><fmt:formatDate value="${ q.q_date }" pattern="yyyy-MM-dd" /></div>
+						</li>
+						</c:forEach>
+				
+				
+							
 					<!-- 					<li> -->
 <!-- 						<div class="state"><strong>답변</strong></div> -->
 <!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
@@ -262,7 +243,28 @@ $(function(){
 
 			<!-- pc -->
 			<div class="paginate m-hide">
-				<a class='first' href='https://www.eyes.co.kr//customer/inquiry_list/?biz_gb=MV&s_keyword=&current_page=1' title='처음'></a><a class='prev' href='#' style='cursor:default' title='이전'></a><a class='curr' href='#'>1</a><a class='next' href='#' style='cursor:default' title='다음'></a><a class='last' href='https://www.eyes.co.kr//customer/inquiry_list/?biz_gb=MV&s_keyword=&current_page=1' title='마지막'></a>			</div>
+				<c:url var="ql1" value="/myQuestionListView.do">
+					<c:param name="page" value="1" />
+				</c:url>
+				<a class='first' href='${ ql1 }' title='처음'></a>
+				<a class='prev' href='#' style='cursor:default' title='이전'></a>
+				<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1" >
+					<c:if test="${ p eq currentPage }">
+						<a class='curr' href='#'>${ p }</a>
+					</c:if>
+					<c:if test="${ p ne currentPage }">
+						<c:url var="ql" value="/myQuestionListView.do">
+							<c:param name="page" value="${ p }" />
+						</c:url>
+						<a href='${ ql }'>${ p }</a>
+					</c:if>
+				</c:forEach>
+				<a class='next' href='#' style='cursor:default' title='다음'></a>
+				<c:url var="ql4" value="/myQuestionListView.do">
+					<c:param name="page" value="${ maxPage }" />
+				</c:url>
+				<a class='last' href='${ ql4 }' title='마지막'></a>
+			</div>
 
 			<!-- mo -->
 			<div class="paginate p-hide">

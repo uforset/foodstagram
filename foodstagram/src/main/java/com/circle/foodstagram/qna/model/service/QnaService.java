@@ -1,6 +1,7 @@
 package com.circle.foodstagram.qna.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.circle.foodstagram.qna.model.vo.Answer;
 import com.circle.foodstagram.qna.model.vo.Question;
@@ -16,8 +17,8 @@ public interface QnaService {
 	
 	Question selectQuestion(int id);
 	
-	ArrayList<Question> selectMyQuestionList();
-	int selectMyListCount();
+	ArrayList<Question> selectMyQuestionList(Map<String, Object> map);
+	int selectMyListCount(String userid);
 	
 	int updateAnswerCheck();
 	

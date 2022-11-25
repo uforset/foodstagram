@@ -1,6 +1,8 @@
 package com.circle.foodstagram.qna.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,11 @@ public class QuestionDao {
 		return null;
 		}
 	
-	public ArrayList<Question> selectMyQuestionList(){
-		return null;
+	public ArrayList<Question> selectMyQuestionList(Map<String, Object> map){
+		List<Question> list = session.selectList("questionMapper.selectMyQuestionList",map);
+		return (ArrayList<Question>)list;
 		}
-	public int selectMyListCount() {
-		return 0;
+	public int selectMyListCount(String userid) {
+		return session.selectOne("questionMapper.selectMyListCount",userid);
 		}
 }

@@ -128,7 +128,7 @@ $(function(){
 			<div class="tab-type1">
 				<ul>
 					<li class="on"><a href="${ pageContext.servletContext.contextPath }/question.do">상담문의</a></li>
-										<li><a href="${ pageContext.servletContext.contextPath }/questionList.do">문의내역</a></li>
+										<li><a href="${ pageContext.servletContext.contextPath }/myQuestionListView.do">문의내역</a></li>
 									</ul>
 			</div>
 

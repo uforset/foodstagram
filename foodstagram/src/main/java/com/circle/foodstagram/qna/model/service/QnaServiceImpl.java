@@ -1,9 +1,13 @@
 package com.circle.foodstagram.qna.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.circle.foodstagram.qna.model.dao.AnswerDao;
+import com.circle.foodstagram.qna.model.dao.QuestionDao;
 import com.circle.foodstagram.qna.model.vo.Answer;
 import com.circle.foodstagram.qna.model.vo.Question;
 
@@ -11,6 +15,11 @@ import com.circle.foodstagram.qna.model.vo.Question;
 @Service("qnaService")
 public class QnaServiceImpl implements QnaService {
 
+	@Autowired
+	private AnswerDao answerDao;
+	@Autowired
+	private QuestionDao questionDao;
+	
 	@Override
 	public int insertQuestion() {
 		// TODO Auto-generated method stub
@@ -48,15 +57,15 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public ArrayList<Question> selectMyQuestionList() {
+	public ArrayList<Question> selectMyQuestionList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return questionDao.selectMyQuestionList(map);
 	}
 
 	@Override
-	public int selectMyListCount() {
+	public int selectMyListCount(String userid) {
 		// TODO Auto-generated method stub
-		return 0;
+		return questionDao.selectMyListCount(userid);
 	}
 
 	@Override
@@ -82,5 +91,7 @@ public class QnaServiceImpl implements QnaService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }
