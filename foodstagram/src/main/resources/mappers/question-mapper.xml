@@ -30,4 +30,10 @@
 	where rnum between #{startRow} and #{endRow}
 	</select>
 	
+	<insert id="insertQuestion" parameterType="Question">
+	
+		<selectKey keyProperty="q_no" resultType="int" order="AFTER">
+			select max(q_no) from question
+		</selectKey>
+	</insert>
 </mapper>

@@ -241,13 +241,24 @@ $(function(){
 				-->
 			</div>
 
-			<!-- pc -->
+			<!-- pc 페이지 표시 영역-->
 			<div class="paginate m-hide">
+				<!-- 1페이지로 이동 처리 -->
 				<c:url var="ql1" value="/myQuestionListView.do">
 					<c:param name="page" value="1" />
 				</c:url>
 				<a class='first' href='${ ql1 }' title='처음'></a>
-				<a class='prev' href='#' style='cursor:default' title='이전'></a>
+				<!-- 이전 페이지그룹으로 이동 처리 -->
+				<c:if test="${ (currentPage - 10) <= startPage and (currentPage - 10) >= 1 }">
+					<c:url var="ql2" value="/myQuestionListView.do">
+						<c:param name="page" value="${ startPage - 10 }" />
+					</c:url>
+					<a class='prev' href='${ ql2 }' style='cursor:default' title='이전그룹'></a>
+				</c:if>
+				<c:if test="${ !((currentPage - 10) <= startPage and (currentPage - 10) >= 1) }">
+					<a class='prev' href='#' style='cursor:default' title='이전그룹'></a>
+				</c:if>
+				<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
 				<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1" >
 					<c:if test="${ p eq currentPage }">
 						<a class='curr' href='#'>${ p }</a>
@@ -259,7 +270,17 @@ $(function(){
 						<a href='${ ql }'>${ p }</a>
 					</c:if>
 				</c:forEach>
-				<a class='next' href='#' style='cursor:default' title='다음'></a>
+				<!-- 다음 페이지그룹으로 이동 처리 -->
+				<c:if test="${ (currentPage + 10) > endPage and (endPage + 1 ) < maxPage }">
+					<c:url var="ql3" value="/myQuestionListView.do">
+						<c:param name="page" value="${ endPage+1 }" />
+					</c:url>
+					<a class='next' href='${ ql3 }' style='cursor:default' title='다음그룹'></a>
+				</c:if>
+				<c:if test="${ !((currentPage + 10) > endPage and (endPage + 1) < maxPage) }">
+					<a class='next' href='#' style='cursor:default' title='다음그룹'></a>
+				</c:if>
+				<!-- 끝페이지로 이동 처리 -->
 				<c:url var="ql4" value="/myQuestionListView.do">
 					<c:param name="page" value="${ maxPage }" />
 				</c:url>

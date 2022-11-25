@@ -123,12 +123,12 @@ $(function(){
 			<div class="title-wrap">
 				<h3 class="h3">1:1문의</h3>
 			</div>
-			<form id="regForm" name="regForm" method="post" enctype="multipart/form-data" action="">
-			<input type="hidden" id="con_seq" name="con_seq" value="">
+			<form id="regForm" name="regForm" method="post" enctype="multipart/form-data" action="insertQuestion.do" >
+			<!-- <input type="hidden" id="con_seq" name="con_seq" value="">
 			<input type="hidden" id="biz_gb" name="biz_gb" value="MV">
-			<input type="hidden" id="mw_seq" name="mw_seq" value="Ldno00003914">
-			<input type="hidden" id="mem_nm" name="mem_nm" value="서상원">
-			<input type="hidden" id="consult_sta" name="consult_sta" value="R">
+			<input type="hidden" id="mw_seq" name="mw_seq" value="Ldno00003914"> -->
+			<input type="hidden" id="userid" name="userid" value="${ loginMember.userid }">
+			<!-- <input type="hidden" id="consult_sta" name="consult_sta" value="R"> -->
 			<div class="board-view-type2">
 				<table>
 					<colgroup>
@@ -140,7 +140,7 @@ $(function(){
 							<th>접수일시</th>
 							<td></td>							
 						</tr>
-						<tr>
+						<!-- <tr>
 							<th>유형</th>
 							<td>
 								<select name="con_cate" id="con_cate">
@@ -154,30 +154,26 @@ $(function(){
                                                                         <option value="T07"	>홈페이지</option>
                                                 					</select>
 							</td>
-						</tr>
+						</tr> -->
 						<tr>
-							<th>회원명</th>
-							<td>서상원</td>
+							<th>아이디</th>
+							<td>${ loginMember.userid }</td>
 						</tr>
-						<tr>
-							<th>전화번호</th>
-							<td>SKT / 01030496533</td>
-						</tr>
-						<tr>
+						<!-- <tr>
 							<th>연락가능 전화번호</th>
 							<td><input type="text" id="recv_phone" name="recv_phone" value="" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"></td>
-						</tr>
-						<tr>
-							<th>이메일(아이디)</th>
-							<td>tjgyqo2@gmail.com</td>
-						</tr>
+						</tr> -->
 						<tr>
 							<th>제목</th>
-							<td><input type="text" id="title" name="title" value="" placeholder="제목을 입력해 주세요"></td>
+							<td><input type="text" id="q_title" name="q_title" value="" placeholder="제목을 입력해 주세요"></td>
 						</tr>
 						<tr>
 							<th>문의내용</th>
-							<td><textarea id="content" name="content" placeholder="내용을 입력해 주세요"></textarea></td>
+							<td><textarea id="q_content" name="q_content" placeholder="내용을 입력해 주세요"></textarea></td>
+						</tr>
+						<tr>
+							<th>첨부파일</th>
+							<td><input multiple="multiple"  type="file" name="picFile"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -188,7 +184,7 @@ $(function(){
 			<div class="btn-wrap col2">
 				<div></div>
 				<div class="col2 m-col2">
-					<a href="/customer/inquiry_list" class="btn-type1 scd min-w">취소</a>
+					<a href="/foodstagram/question.do" class="btn-type1 scd min-w">취소</a>
 					<a href="#none" onclick="inquirySave()" class="btn-type1 min-w">저장</a>
 				</div>
 			</div>
@@ -198,7 +194,7 @@ $(function(){
 	<!-- //container -->
 	<script>
 function inquirySave(){
-	if($("#title").val() == "") {
+	if($("#q_title").val() == "") {
 		alert('글 제목을 입력해주시기 바랍니다.');
 		return false;
 	}
@@ -209,16 +205,17 @@ function inquirySave(){
 	}
 
 
-	if($("#content").val() == "") {
+	if($("#q_content").val() == "") {
 		alert('문의 내용을 입력해주시기 바랍니다.');
 		return false;
 	}
 
 
 	$.ajax({
-        url: "/customer/inquirySave",
+        url: "insertQuestion.do",
         type: "post",
         data: new FormData($("#regForm")[0]),
+        enctype: "multipart/form-data",
         processData: false,
         contentType: false,
         cache: false,
@@ -231,7 +228,7 @@ function inquirySave(){
             var jsonobj = JSON.parse(data);
             if(jsonobj.success==true){
             	alert("등록 되었습니다.");
-            	location.href='/customer/inquiry_list';
+            	location.href='/foodstagram/myQuestionListView.do';
             	return false;
             }else{
             	alert("잠시 후 다시 시도해 주시기 바랍니다.");
