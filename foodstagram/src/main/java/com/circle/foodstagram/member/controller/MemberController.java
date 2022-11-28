@@ -2,12 +2,15 @@ package com.circle.foodstagram.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.circle.foodstagram.member.model.vo.KakaoLoginApi;
 import com.circle.foodstagram.member.model.vo.Member;
 import com.circle.foodstagram.member.service.MailSendService;
 import com.circle.foodstagram.member.service.MemberService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 public class MemberController {
@@ -37,11 +43,42 @@ public class MemberController {
 	
 	@Autowired
 	private MailSendService mailService;
+
+	public Logger log;
 	// 뷰 페이지 이동 처리용 --------------------------------------------------
 	@RequestMapping("enrollPage.do")
 	public String moveEnrollPage() {
 		return "member/enrollPage";
 	}
+	
+	// 아이디 찾기 페이지 이동
+	@RequestMapping("findIDPage.do")
+	public String findIDPage() {
+		return "member/findIDPage";
+	}
+	
+	// 비밀번호 찾기 페이지 이동
+		@RequestMapping("pw_find.do")
+		public String pw_find() {
+			return "member/pw_find";
+		}
+	
+	
+	// -------------------------------------------------------------
+	// 카카오 연동 객체 생성
+	KakaoLoginApi kakao_loginapi = new KakaoLoginApi();
+	
+	//로그인 페이지로 이동시, 카카오 로그인 버튼에 연결할 url 보냄
+		@RequestMapping(value="loginPage.do", method = { RequestMethod.GET, RequestMethod.POST })
+		public String moveLoginPage(Model model, HttpSession session) {
+			
+			String kakaoAuthUrl = kakao_loginapi.getAuthorizationUrl(session);
+			model.addAttribute("kurl", kakaoAuthUrl);
+			
+			return "member/loginPage";
+		}
+	
+	
 	
 	// 회원정보 변경을 위한 본인 인증 페이지로 이동
 		@RequestMapping("moveup.do")
@@ -370,4 +407,49 @@ public class MemberController {
 		}
 	}
 	
+	
+	// ------------------------------------------
+	// sns 로그인 콜백 페이지 이동
+	
+	//카카오
+	@RequestMapping(value = "/kcallback.do", produces = "application/json", 
+			method = { RequestMethod.GET, RequestMethod.POST })
+	public String kakaoLogin(
+			@RequestParam("code") String code, 
+			Model model, HttpSession session) throws Exception {
+
+		// 결과값을 node에 담아줌
+		JsonNode node = kakao_loginapi.getAccessToken(code); // accessToken에 사용자의 로그인한 모든 정보가 들어있음
+		JsonNode accessToken = node.get("access_token"); // 사용자의 정보
+		JsonNode userInfo = kakao_loginapi.getKakaoUserInfo(accessToken);
+
+		// 회원가입시 사용		
+		String kid = null;//카카오 로그인 id 값 받아오기
+		// 유저정보 카카오에서 가져오기 Get properties
+		JsonNode properties = userInfo.path("properties");
+		JsonNode kakao_account = userInfo.path("kakao_account");// 값 가져올 수 있지만 사용은 안함		
+		kid = userInfo.path("id").asText();
+		
+		// *값 받아온 것을 회원 정보와 확인해야함*//
+		Member member = new Member();
+		// 아이디 저장되 있는 이름 만들기
+		String checkid = "@K" + kid;// 카카오 아이디 저장 값
+		member.setUserid(checkid);
+		
+		// 간편 로그인 아이디에 해당하는 회원 정보 확인하러가기
+		//Member loginMember = memberService.selectLogin(member);
+		//if(loginMember != null) {//해당하는 아이디가 있으면 로그인 완료
+		if(checkid != null) {  //테스트용 조건임	
+			//카카오 로그인 세션에 저장
+			session.setAttribute("loginMember", member); // 세션 생성			
+			
+			return "common/main";
+			
+		}else {
+			model.addAttribute("message", "카카오 로그인 회원 조회 실패");
+			return "common/error";
+			
+		}
+
+	}// end kakaoLogin()
 }

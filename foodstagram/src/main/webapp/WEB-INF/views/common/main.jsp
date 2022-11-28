@@ -12,6 +12,9 @@
     <link href="resources/css/reset.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <link href="resources/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <title>Foodstagram</title>
     <style>
         /* 메인페이지 */
@@ -274,6 +277,22 @@
 </head>
 
 <body>
+<script type="text/javascript">
+  var naver_id_login = new naver_id_login("Vj4dFHCEvSx5oz95b7Ws", "http://localhost:8080/foodstagram/main.do");
+  // 접근 토큰 값 출력
+  console.log(naver_id_login.oauthParams.access_token);
+  // 네이버 사용자 프로필 조회
+  naver_id_login.get_naver_userprofile("naverSignInCallback()");
+  // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+  function naverSignInCallback() {
+	  console.log(naver_id_login.getProfileData('name'));
+	  console.log(naver_id_login.getProfileData('email'));
+	  console.log(naver_id_login.getProfileData('nickname'));
+	  console.log(naver_id_login.getProfileData('gender'));
+	  console.log(naver_id_login.getProfileData('birthday'));
+	  
+  }
+</script>
     <nav>
         <ul>
             <!--클릭시 홈으로이동-->
