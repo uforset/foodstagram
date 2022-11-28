@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="attachMapper">
+
+	<insert id="insertAttach" parameterType="Attach">
+		insert into attach (atch_no,
+							atch_parent_no,
+							atch_category,
+							atch_file_name,
+							atch_original_name,
+							atch_file_size,
+							atch_fancy_size,
+							atch_content_type,
+							atch_path,
+							atch_down_hit,
+							atch_reg_date)
+					values (default,
+							#{atch_parent_no},
+							#{atch_category},
+							#{atch_file_name},
+							#{atch_original_name},
+							#{atch_file_size},
+							#{atch_fancy_size},
+							#{atch_content_type},
+							#{atch_path},
+							0,
+							default)
+	
+	
+	
+	</insert>
+
+</mapper>

@@ -31,7 +31,20 @@
 	</select>
 	
 	<insert id="insertQuestion" parameterType="Question">
-	
+		insert into question   (q_no,
+								userid,
+								q_title,
+								q_date,
+								q_content,
+								q_upfile,
+								answercheck)
+					values 	   (default,
+								#{userid},
+								#{q_title},
+								default,
+								#{q_content},
+								null,
+								'N')
 		<selectKey keyProperty="q_no" resultType="int" order="AFTER">
 			select max(q_no) from question
 		</selectKey>

@@ -8,7 +8,7 @@ import com.circle.foodstagram.qna.model.vo.Question;
 
 public interface QnaService {
 
-	int insertQuestion();
+	int insertQuestion(Question question);
 	int updateQuestion();
 	int deleteQuestion();
 	

@@ -10,13 +10,19 @@ import org.springframework.stereotype.Repository;
 
 import com.circle.foodstagram.qna.model.vo.Question;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Repository("questionDao")
 public class QuestionDao {
 	@Autowired
 	private SqlSessionTemplate session;
 	
-	public int insertQuestion() {
-		return 0;
+	public int insertQuestion(Question question) {
+		// 파일있으면 넣어줘야함 게시글 등록한후에 그 게시글 기본키이용해서 넣어줌 
+		int i = session.insert("questionMapper.insertQuestion",question);
+		log.info("질문 입력 후 질문번호 확인"+question.getQ_no());
+		return i;
 		}
 	public int updateQuestion() {
 		return 0;

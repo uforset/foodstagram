@@ -3,6 +3,7 @@ package com.circle.foodstagram.qna.controller;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.circle.foodstagram.common.AttachUtils;
+import com.circle.foodstagram.common.attach.model.service.AttachService;
+import com.circle.foodstagram.common.attach.model.vo.Attach;
 import com.circle.foodstagram.member.model.vo.Member;
 import com.circle.foodstagram.qna.model.service.QnaService;
 import com.circle.foodstagram.qna.model.vo.Question;
@@ -34,7 +38,13 @@ import lombok.extern.log4j.Log4j;
 public class QuestionController {
 
 	@Autowired
-	QnaService qnaService;
+	private QnaService qnaService;
+	
+	@Autowired
+	private AttachUtils attachUtils;
+	
+	@Autowired
+	private AttachService attachService;
 	
 	// 페이지 이동 메소드
 	@GetMapping("question.do")
@@ -123,46 +133,104 @@ public class QuestionController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "insertQuestion", method = RequestMethod.POST)
+	@RequestMapping(value = "insertQuestion.do", method = RequestMethod.POST)
 	public String fileUpload(
-			@RequestParam("article_file") List<MultipartFile> multipartFile
+			@RequestParam(name="boFiles", required=false)MultipartFile[] boFiles
+			, Question question
 			, HttpServletRequest request) {
 		
 		String strResult = "{ \"result\":\"FAIL\" }";
-		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-		String fileRoot;
+		
+		//question.setQ_date(new Date()); db에서 SYSDATE DEFAULT임
+		
+		if (boFiles != null) {
+			// 첨부파일이 있을때
+			// question.setAttaches(파일리스트); 넣어줌
+		}
+		// 첨부파일 처리
+
 		try {
-			// 파일이 있을때 탄다.
-			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
-				
-				for(MultipartFile file:multipartFile) {
-					fileRoot = contextRoot + "resources/upload/";
-					System.out.println(fileRoot);
-					
-					String originalFileName = file.getOriginalFilename();	//오리지날 파일명
-					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-					String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-					
-					File targetFile = new File(fileRoot + savedFileName);	
-					try {
-						InputStream fileStream = file.getInputStream();
-						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
-						
-					} catch (Exception e) {
-						//파일삭제
-						FileUtils.deleteQuietly(targetFile);	//저장된 현재 파일 삭제
-						e.printStackTrace();
-						break;
-					}
-				}
-				strResult = "{ \"result\":\"OK\" }";
+			if(boFiles != null && boFiles.length > 0) {
+				 String savePath = request.getSession().getServletContext().getRealPath("resources/question_upfiles");
+				 List<Attach> attaches=
+						 attachUtils.getAttachListByMultiparts(boFiles, "Question", savePath);
+		         //실제로 파일경로에 선택된 파일 올리고 List<Attach> return  (파일업로드)
+				 // (boFiles, 게시판, 폴더이름)
+				 log.info(attaches);
+				 question.setAttaches(attaches);
 			}
-			// 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
-			else
-				strResult = "{ \"result\":\"OK\" }";
-		}catch(Exception e){
+			
+		} catch (Exception e) {
+			log.info("파일 업로드중 에러발생");
 			e.printStackTrace();
 		}
+		
+		// 글등록
+		if( qnaService.insertQuestion(question) > 0 ) {
+			log.info("질문등록성공" + question.toString());
+			//strResult = "{ \"result\":\"success\" }";
+		} else {
+			log.info("질문등록실패");
+		}		
+		List<Attach> attaches= question.getAttaches();
+		int q_no = question.getQ_no();
+		if( attaches != null && attaches.size()>0) {
+			for(Attach a : attaches) { // 하나씩 db에 저장
+				a.setAtch_parent_no(q_no); // 저장한 게시글번호 첨부파일vo에 세팅
+				log.info("db에저장할 첨부파일vo" + a);
+				if( attachService.insertAttach(a) > 0 ) {// 하나씩 db에 저장
+					log.info("성공! " + a);
+				} else {
+					log.info("실패..." + a);
+					return strResult;
+				}
+			}
+		}
+		strResult = "{ \"result\":\"success\" }";
+		// 첨부파일 db등록
+	
+//		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+//		String fileRoot;
+//		try {
+//			// 파일이 있을때 탄다.
+//			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
+//				
+//				for(MultipartFile file:multipartFile) {
+//					fileRoot = contextRoot + "resources/upload/";
+//					System.out.println(fileRoot);
+//					
+//					String originalFileName = file.getOriginalFilename();	//오리지날 파일명
+//					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+//					String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+//					
+//					File targetFile = new File(fileRoot + savedFileName);	
+//					try {
+//						InputStream fileStream = file.getInputStream();
+//						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+//						
+//					} catch (Exception e) {
+//						//파일삭제
+//						FileUtils.deleteQuietly(targetFile);	//저장된 현재 파일 삭제
+//						e.printStackTrace();
+//						break;
+//					}
+//				}
+//				strResult = "{ \"result\":\"OK\" }";
+//			}
+//			// 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
+//			else
+//				strResult = "{ \"result\":\"OK\" }";
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+		
+		
+		
+		
+		
+		
+		
+		
 		return strResult;
 	}
 }

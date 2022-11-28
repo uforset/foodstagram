@@ -173,7 +173,7 @@ $(function(){
 						</tr>
 						<tr>
 							<th>첨부파일</th>
-							<td><input multiple="multiple"  type="file" name="picFile"></td>
+							<td><input multiple="multiple"  type="file" name="boFiles"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -199,10 +199,10 @@ function inquirySave(){
 		return false;
 	}
 
-	if($("#recv_phone").val() == "") {
+/* 	if($("#recv_phone").val() == "") {
 		alert('연락가능한 전화번호를 입력해주시기 바랍니다.');
 		return false;
-	}
+	} */
 
 
 	if($("#q_content").val() == "") {
@@ -226,7 +226,8 @@ function inquirySave(){
         		return false;
         	}
             var jsonobj = JSON.parse(data);
-            if(jsonobj.success==true){
+            console.log(data);
+            if(jsonobj.result=="success"){
             	alert("등록 되었습니다.");
             	location.href='/foodstagram/myQuestionListView.do';
             	return false;
