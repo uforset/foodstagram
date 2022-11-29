@@ -20,7 +20,8 @@ public class AnswerDao {
 	public int updateAnswer() {
 		return 0;
 	}
-	public Answer selectAnswer() {
-		return null;
+
+	public Answer getAnswer(int ref) {
+		return session.selectOne("answerMapper.getAnswer",ref);
 	}
 }

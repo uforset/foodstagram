@@ -127,8 +127,8 @@ $(function(){
 
 			<div class="tab-type1">
 				<ul>
-					<li><a href="/customer/inquiry">상담문의</a></li>
-					<li class="on"><a href="/customer/inquiry_list">문의내역</a></li>
+					<li><a href="/foodstagram/question.do">상담문의</a></li>
+					<li class="on"><a href="/foodstagram/myQuestionListView.do">문의내역</a></li>
 				</ul>
 			</div>
 
@@ -140,99 +140,20 @@ $(function(){
 				</div>
 				<ul class="tbody">
 						<c:forEach items="${ list }" var="q" varStatus="status">
+						<c:if test="${ q.answercheck eq 'N' }">
+							<c:set var="check" value="문의"></c:set>
+						</c:if>
+						<c:if test="${ q.answercheck eq 'Y' }">
+							<c:set var="check" value="답변"></c:set>
+						</c:if>
+						
 						<li>
-							<div class="state"><strong>${ q.answercheck }</strong></div>
-							<div class="sbj"><a href="/foodstagram/qna_view.do?q=${ q.q_no }">${ q.q_title }</a></div>
+							<div class="state"><strong>${ check }</strong></div>
+							<div class="sbj"><a href="/foodstagram/qnaDetail.do?q_no=${ q.q_no }">${ q.q_title }</a></div>
 							<div class="date"><fmt:formatDate value="${ q.q_date }" pattern="yyyy-MM-dd" /></div>
 						</li>
 						</c:forEach>
-				
-				
-							
-					<!-- 					<li> -->
-<!-- 						<div class="state"><strong>답변</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><a href="/customer/inquiry_rating" class="btn-type4 min-w">평가하기</a></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating0.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">LGU+알뜰폰 유심결합 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating1.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating2.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating3.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">LGU+알뜰폰 유심결합 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating4.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">LGU+알뜰폰 유심결합 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">LGU+알뜰폰 유심결합 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
+
 				</ul>
 				<!--
 				<div class="empty">
@@ -241,13 +162,24 @@ $(function(){
 				-->
 			</div>
 
-			<!-- pc -->
+			<!-- pc 페이지 표시 영역-->
 			<div class="paginate m-hide">
+				<!-- 1페이지로 이동 처리 -->
 				<c:url var="ql1" value="/myQuestionListView.do">
 					<c:param name="page" value="1" />
 				</c:url>
 				<a class='first' href='${ ql1 }' title='처음'></a>
-				<a class='prev' href='#' style='cursor:default' title='이전'></a>
+				<!-- 이전 페이지그룹으로 이동 처리 -->
+				<c:if test="${ (currentPage - 10) <= startPage and (currentPage - 10) >= 1 }">
+					<c:url var="ql2" value="/myQuestionListView.do">
+						<c:param name="page" value="${ startPage - 10 }" />
+					</c:url>
+					<a class='prev' href='${ ql2 }' style='cursor:default' title='이전그룹'></a>
+				</c:if>
+				<c:if test="${ !((currentPage - 10) <= startPage and (currentPage - 10) >= 1) }">
+					<a class='prev' href='#' style='cursor:default' title='이전그룹'></a>
+				</c:if>
+				<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
 				<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1" >
 					<c:if test="${ p eq currentPage }">
 						<a class='curr' href='#'>${ p }</a>
@@ -259,7 +191,17 @@ $(function(){
 						<a href='${ ql }'>${ p }</a>
 					</c:if>
 				</c:forEach>
-				<a class='next' href='#' style='cursor:default' title='다음'></a>
+				<!-- 다음 페이지그룹으로 이동 처리 -->
+				<c:if test="${ (currentPage + 10) > endPage and (endPage + 1 ) < maxPage }">
+					<c:url var="ql3" value="/myQuestionListView.do">
+						<c:param name="page" value="${ endPage+1 }" />
+					</c:url>
+					<a class='next' href='${ ql3 }' style='cursor:default' title='다음그룹'></a>
+				</c:if>
+				<c:if test="${ !((currentPage + 10) > endPage and (endPage + 1) < maxPage) }">
+					<a class='next' href='#' style='cursor:default' title='다음그룹'></a>
+				</c:if>
+				<!-- 끝페이지로 이동 처리 -->
 				<c:url var="ql4" value="/myQuestionListView.do">
 					<c:param name="page" value="${ maxPage }" />
 				</c:url>
