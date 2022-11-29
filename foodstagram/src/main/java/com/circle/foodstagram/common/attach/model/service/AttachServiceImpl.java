@@ -1,5 +1,7 @@
 package com.circle.foodstagram.common.attach.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class AttachServiceImpl implements AttachService {
 	@Override
 	public int insertAttach(Attach attach) {
 		return attachDao.insertAttach(attach);
+	}
+
+	@Override
+	public List<Attach> getAttachListByParent(int atch_parent_no, String atch_category) {
+		return attachDao.getAttachListByParent(atch_parent_no, atch_category);
 	}
 	
 }

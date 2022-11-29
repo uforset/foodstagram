@@ -1,5 +1,7 @@
 package com.circle.foodstagram.common.attach.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,13 @@ public class AttachDao {
 
 	public int insertAttach(Attach attach) {
 		return session.insert("attachMapper.insertAttach",attach);
+	}
+
+	public List<Attach> getAttachListByParent(int atch_parent_no, String atch_category) {
+		Attach attach = new Attach();
+		attach.setAtch_parent_no(atch_parent_no);
+		attach.setAtch_category(atch_category);
+		return session.selectList("attachMapper.getAttachListByParent", attach);
 	}
 	
 }

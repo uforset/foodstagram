@@ -14,6 +14,13 @@
 		<result column="answercheck" property="answercheck" />
 	</resultMap>
 
+	<resultMap type="Question" id="questionAttaches">
+	    <collection property="attaches" column="{atch_parent_no=q_no}"
+	    ofType="AttachVO" 
+	    select="attachMapper.getAttachListByParent"> 
+	    </collection>
+	</resultMap>
+
 	<select id="selectMyListCount" parameterType="string" resultType="_int">
 		select count(*)
 		from question
@@ -49,4 +56,10 @@
 			select max(q_no) from question
 		</selectKey>
 	</insert>
+	
+	<select id="getQuestion" parameterType="int" resultType="Question" resultMap="questionAttaches">
+		select * from question
+		where q_no = #{q_no}
+	</select>
+	
 </mapper>

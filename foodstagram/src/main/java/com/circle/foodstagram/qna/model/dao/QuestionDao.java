@@ -38,8 +38,8 @@ public class QuestionDao {
 		return 0;
 		}
 	
-	public Question selectQuestion(int id) {
-		return null;
+	public Question getQuestion(int id) {
+		return session.selectOne("questionMapper.getQuestion", id);
 		}
 	
 	public ArrayList<Question> selectMyQuestionList(Map<String, Object> map){

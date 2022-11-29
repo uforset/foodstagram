@@ -51,9 +51,8 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public Question selectQuestion(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Question getQuestion(int id) {
+		return questionDao.getQuestion(id);
 	}
 
 	@Override

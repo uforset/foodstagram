@@ -127,8 +127,8 @@ $(function(){
 
 			<div class="tab-type1">
 				<ul>
-					<li><a href="/customer/inquiry">상담문의</a></li>
-					<li class="on"><a href="/customer/inquiry_list">문의내역</a></li>
+					<li><a href="/foodstagram/question.do">상담문의</a></li>
+					<li class="on"><a href="/foodstagram/myQuestionListView.do">문의내역</a></li>
 				</ul>
 			</div>
 
@@ -142,7 +142,7 @@ $(function(){
 						<c:forEach items="${ list }" var="q" varStatus="status">
 						<li>
 							<div class="state"><strong>${ q.answercheck }</strong></div>
-							<div class="sbj"><a href="/foodstagram/qna_view.do?q=${ q.q_no }">${ q.q_title }</a></div>
+							<div class="sbj"><a href="/foodstagram/qnaDetail.do?q_no=${ q.q_no }">${ q.q_title }</a></div>
 							<div class="date"><fmt:formatDate value="${ q.q_date }" pattern="yyyy-MM-dd" /></div>
 						</li>
 						</c:forEach>

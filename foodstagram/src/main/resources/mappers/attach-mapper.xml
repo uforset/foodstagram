@@ -27,9 +27,15 @@
 							#{atch_path},
 							0,
 							default)
-	
-	
-	
 	</insert>
 
+	<select id="getAttachListByParent" parameterType="Attach" resultType="Attach">
+		select atch_no
+	        , atch_original_name
+	        , atch_fancy_size
+	        , atch_down_hit
+	        , TO_CHAR(atch_reg_date, 'YYYY.MM.DD') AS atch_reg_date
+	    FROM  attach
+	   WHERE  atch_parent_no = #{atch_parent_no}
+	</select>
 </mapper>

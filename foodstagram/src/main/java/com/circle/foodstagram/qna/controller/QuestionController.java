@@ -1,21 +1,16 @@
 package com.circle.foodstagram.qna.controller;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -151,9 +146,9 @@ public class QuestionController {
 
 		try {
 			if(boFiles != null && boFiles.length > 0) {
-				 String savePath = request.getSession().getServletContext().getRealPath("resources/question_upfiles");
+				 //String savePath = request.getSession().getServletContext().getRealPath("resources/question_upfiles");
 				 List<Attach> attaches=
-						 attachUtils.getAttachListByMultiparts(boFiles, "Question", savePath);
+						 attachUtils.getAttachListByMultiparts(boFiles, "Question", "question_upfiles", request);
 		         //실제로 파일경로에 선택된 파일 올리고 List<Attach> return  (파일업로드)
 				 // (boFiles, 게시판, 폴더이름)
 				 log.info(attaches);
@@ -186,51 +181,25 @@ public class QuestionController {
 				}
 			}
 		}
-		strResult = "{ \"result\":\"success\" }";
-		// 첨부파일 db등록
-	
-//		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-//		String fileRoot;
-//		try {
-//			// 파일이 있을때 탄다.
-//			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
-//				
-//				for(MultipartFile file:multipartFile) {
-//					fileRoot = contextRoot + "resources/upload/";
-//					System.out.println(fileRoot);
-//					
-//					String originalFileName = file.getOriginalFilename();	//오리지날 파일명
-//					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-//					String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-//					
-//					File targetFile = new File(fileRoot + savedFileName);	
-//					try {
-//						InputStream fileStream = file.getInputStream();
-//						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
-//						
-//					} catch (Exception e) {
-//						//파일삭제
-//						FileUtils.deleteQuietly(targetFile);	//저장된 현재 파일 삭제
-//						e.printStackTrace();
-//						break;
-//					}
-//				}
-//				strResult = "{ \"result\":\"OK\" }";
-//			}
-//			// 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
-//			else
-//				strResult = "{ \"result\":\"OK\" }";
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-		
-		
-		
-		
-		
-		
-		
-		
+		strResult = "{ \"result\":\"success\" }";	
 		return strResult;
 	}
+	
+	@GetMapping("qnaDetail.do")
+	public String moveQuestionDetailMethod(
+			Model model
+			,int q_no) {
+		
+		Question q = qnaService.getQuestion(q_no);	// 이거하나로 질문에연결된 첨부파일도 List에 세팅이 됨 resultMap 이용 mapper참고	
+		log.info(q); 
+		
+		// 답글이 있을경우 답글도 넣어줌
+		
+		model.addAttribute("q", q);
+		//model.addAttribute("a", a);
+		
+		
+		return "qna/qnaDetail";
+	}
+	
 }

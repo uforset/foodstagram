@@ -15,7 +15,7 @@ public interface QnaService {
 	ArrayList<Question> selectAllQuestionList();
 	int selectListCount();
 	
-	Question selectQuestion(int id);
+	Question getQuestion(int id);
 	
 	ArrayList<Question> selectMyQuestionList(Map<String, Object> map);
 	int selectMyListCount(String userid);
