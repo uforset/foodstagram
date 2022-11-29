@@ -24,7 +24,7 @@ public class Question implements Serializable {
 	private String q_title;
 	private Date q_date;
 	private String q_content;
-	private String q_upfile;
+	//private String q_upfile;
 	private String answercheck;
 	
 	private List<Attach> attaches ;      /*첨부파일 리스트    */ 

@@ -140,99 +140,20 @@ $(function(){
 				</div>
 				<ul class="tbody">
 						<c:forEach items="${ list }" var="q" varStatus="status">
+						<c:if test="${ q.answercheck eq 'N' }">
+							<c:set var="check" value="문의"></c:set>
+						</c:if>
+						<c:if test="${ q.answercheck eq 'Y' }">
+							<c:set var="check" value="답변"></c:set>
+						</c:if>
+						
 						<li>
-							<div class="state"><strong>${ q.answercheck }</strong></div>
+							<div class="state"><strong>${ check }</strong></div>
 							<div class="sbj"><a href="/foodstagram/qnaDetail.do?q_no=${ q.q_no }">${ q.q_title }</a></div>
 							<div class="date"><fmt:formatDate value="${ q.q_date }" pattern="yyyy-MM-dd" /></div>
 						</li>
 						</c:forEach>
-				
-				
-							
-					<!-- 					<li> -->
-<!-- 						<div class="state"><strong>답변</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><a href="/customer/inquiry_rating" class="btn-type4 min-w">평가하기</a></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating0.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">LGU+알뜰폰 유심결합 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating1.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating2.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating3.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">LGU+알뜰폰 유심결합 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating4.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">LGU+알뜰폰 유심결합 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">LGU+알뜰폰 유심결합 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">IMEI등록 관련 문의</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<div class="state"><strong>완료</strong></div> -->
-<!-- 						<div class="sbj"><a href="/customer/inquiry_view">미성년자 가입시 필요서류</a></div> -->
-<!-- 						<div class="date">2021.11.26</div> -->
-<!-- 						<div class="rating"><img src="/assets/images/common/rating5.png" alt="" class="rating-bar"></div> -->
-<!-- 					</li> -->
+
 				</ul>
 				<!--
 				<div class="empty">

@@ -9,6 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>문의 상세 보기</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/reset.css?v=1669255025">
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/swiper.min.css">
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
@@ -169,7 +170,7 @@ $(function(){
 							<th>첨부파일</th>
 							<td>
 								<c:forEach var="f" items="${ q.attaches }" varStatus="st">
-								<div> 파일 ${st.count} <a href="<c:url value='/attach/download/${f.atch_no}' />" target="_blank"> 
+								<div> 파일 ${st.count} <a style="color: #337ab7;" href="<c:url value='/attach/download/${f.atch_no}' />" target="_blank"> 
 						        <span class="glyphicon glyphicon-save" aria-hidden="true"></span> ${f.atch_original_name}
 						        </a> Size : ${f.atch_fancy_size} Down : ${f.atch_down_hit}
 						        </div>
@@ -178,13 +179,17 @@ $(function(){
 						</tr>
 					</tbody>
 				</table>
+				<!-- 답변이 없을경우 -->
+				<c:if test="${ q.answercheck eq 'N' }" > 
 				<div class="btn-wrap">
 					<a href="/foodstagram/myQuestionListView.do" class="btn-type1 min-w">목록</a> 
-					<a href="/customer/inquiry_list" class="btn-type3 tert min-w">수정</a>
+					<a href="/foodstagram/questionReg.do/${ q.q_no }" style="background-color: white; color: black;" class="btn-type1 tert min-w">수정</a>
 				</div>
-								<div class="dv-line dv-line-type1"></div>
-
-				<h4 class="h4">전문 답변</h4>
+				</c:if>
+				
+				<!-- 답변이 있을경우 -->
+				<c:if test="${ q.answercheck eq 'Y' }">
+					<h4 class="h4">전문 답변</h4>
 				<table>
 					<colgroup>
 						<col style="width: 200px;">
@@ -197,16 +202,21 @@ $(function(){
 							<td><img src="/assets/images/re_BI_MVNO.png"></td>
 						</tr>
 						<tr>
-							<th>답변</th>
-							<td>
-							안녕하세요.<br><br>신청을 아이즈 맘껏 1GB+ 요금제로 신청 하셨습니다.<br>홈페이지상에는 다른 금액등으로 나와 있을 수 있으나,<br>11월 1일부로 리뉴얼되면서 발생되는 오류로 확인됩니다.<br>현재 전산팀에서 바삐 수정중입니다.<br>자세한 내용은 고객센터로 전화 주세요.<br><br>타통신사 이동시 최소 15일~3개월 이후 가능하며,<br>개통이 되면 이전 통신사는 자동으로 '해지'됩니다.<br><br>전통신사로 돌아가고 싶으시다면<br>전화 주셔서 '반품해지' 신청하시면 됩니다.<br><br>감사합니다.<br><br><br>---------------------------------------------<br>아이즈모바일SKT 1800-6100 (유료)<br>아이즈모바일KT 1800-6200 (유료)<br>아이즈모바일LG 1800-4100 (유료)<br>이용고객의 경우 국번 없이 114 (무료)<br>팩스 02-6333-9999<br>이메일 eyesmobile@eyesvision.com<br>---------------------------------------------							</td>
+							<th>답변일시</th>
+							<td><fmt:formatDate value="${ a.a_date }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						</tr>
-											</tbody>
+						<tr>
+							<th>답변</th>
+							<td>${ a.a_content }</td>
+						</tr>
+					</tbody>
 				</table>
-							</div>
+				
+				<div class="btn-wrap">
+					<a href="/foodstagram/myQuestionListView.do" class="btn-type1 min-w">목록</a> 
+				</div>
+				</c:if>
 
-			<div class="btn-wrap">
-				<a href="/foodstagram/myQuestionListView.do" class="btn-type1 min-w">목록</a>
 			</div>
 
 		</div>

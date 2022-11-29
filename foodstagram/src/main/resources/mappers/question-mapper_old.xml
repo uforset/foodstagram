@@ -10,6 +10,7 @@
 		<result column="q_title" property="q_title" />
 		<result column="q_date" property="q_date" />
 		<result column="q_content" property="q_content" />
+		<result column="q_upfile" property="q_upfile" />
 		<result column="answercheck" property="answercheck" />
 	</resultMap>
 
@@ -42,12 +43,14 @@
 								q_title,
 								q_date,
 								q_content,
+								q_upfile,
 								answercheck)
 					values 	   (default,
 								#{userid},
 								#{q_title},
 								default,
 								#{q_content},
+								null,
 								'N')
 		<selectKey keyProperty="q_no" resultType="int" order="AFTER">
 			select max(q_no) from question

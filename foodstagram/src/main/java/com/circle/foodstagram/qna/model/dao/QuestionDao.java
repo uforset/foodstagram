@@ -21,11 +21,11 @@ public class QuestionDao {
 	public int insertQuestion(Question question) {
 		// 파일있으면 넣어줘야함 게시글 등록한후에 그 게시글 기본키이용해서 넣어줌 
 		int i = session.insert("questionMapper.insertQuestion",question);
-		log.info("질문 입력 후 질문번호 확인"+question.getQ_no());
+		//log.info("질문 입력 후 질문번호 확인"+question.getQ_no());
 		return i;
 		}
-	public int updateQuestion() {
-		return 0;
+	public int updateQuestion(Question question) {
+		return session.update("questionMapper.updateQuestion", question);
 		}
 	public int deleteQuestion() {
 		return 0;

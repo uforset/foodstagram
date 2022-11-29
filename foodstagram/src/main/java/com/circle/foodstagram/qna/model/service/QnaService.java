@@ -9,13 +9,14 @@ import com.circle.foodstagram.qna.model.vo.Question;
 public interface QnaService {
 
 	int insertQuestion(Question question);
-	int updateQuestion();
+	int updateQuestion(Question question);
 	int deleteQuestion();
 	
 	ArrayList<Question> selectAllQuestionList();
 	int selectListCount();
 	
 	Question getQuestion(int id);
+	Answer getAnswer(int ref);
 	
 	ArrayList<Question> selectMyQuestionList(Map<String, Object> map);
 	int selectMyListCount(String userid);
@@ -24,5 +25,5 @@ public interface QnaService {
 	
 	int insertAnswer();
 	int updateAnswer();
-	Answer selectAnswer();
+	
 }

@@ -5,10 +5,15 @@
 <mapper namespace="answerMapper">
 
 	<resultMap type="Answer" id="resultAnswer">
-	
-	
+		<id column="a_id" property="a_id"/>
+		<result column="a_ref" property="a_ref" />
+		<result column="userid" property="userid" />
+		<result column="a_date" property="a_date" />
+		<result column="a_content" property="a_content" />
 	</resultMap>
 
-
+	<select id="getAnswer" parameterType="int" resultType="Answer">
+		select * from answer where a_ref = #{a_ref}
+	</select>
 
 </mapper>

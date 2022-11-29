@@ -23,5 +23,15 @@ public class AttachServiceImpl implements AttachService {
 	public List<Attach> getAttachListByParent(int atch_parent_no, String atch_category) {
 		return attachDao.getAttachListByParent(atch_parent_no, atch_category);
 	}
+
+	@Override
+	public Attach getAttach(int atch_no) {
+		return attachDao.getAttach(atch_no);
+	}
+
+	@Override
+	public int deleteAttach(int atch_no) {
+		return attachDao.deleteAttach(atch_no);
+	}
 	
 }

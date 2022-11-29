@@ -24,5 +24,13 @@ public class AttachDao {
 		attach.setAtch_category(atch_category);
 		return session.selectList("attachMapper.getAttachListByParent", attach);
 	}
+
+	public Attach getAttach(int atch_no) {
+		return session.selectOne("attachMapper.getAttach", atch_no);
+	}
+
+	public int deleteAttach(int atch_no) {
+		return session.delete("attachMapper.deleteAttach", atch_no);
+	}
 	
 }

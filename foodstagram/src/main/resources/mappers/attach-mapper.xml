@@ -38,4 +38,13 @@
 	    FROM  attach
 	   WHERE  atch_parent_no = #{atch_parent_no}
 	</select>
+	
+	<select id="getAttach" parameterType="int" resultType="Attach">
+		select * from attach where atch_no = #{atch_no}
+	</select>
+	
+	<delete id="deleteAttach" parameterType="int">
+		delete from attach where atch_no = #{atch_no}
+	</delete>
+	
 </mapper>

@@ -27,9 +27,9 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public int updateQuestion() {
+	public int updateQuestion(Question question) {
 		// TODO Auto-generated method stub
-		return 0;
+		return questionDao.updateQuestion(question);
 	}
 
 	@Override
@@ -86,9 +86,8 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public Answer selectAnswer() {
-		// TODO Auto-generated method stub
-		return null;
+	public Answer getAnswer(int ref) {
+		return answerDao.getAnswer(ref);
 	}
 
 
