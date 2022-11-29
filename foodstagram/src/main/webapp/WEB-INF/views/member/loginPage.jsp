@@ -61,6 +61,7 @@
   </script>
   <br>
   <!-- 구글 로그인 -->
+  <!-- 
   <script>
         function handleCredentialResponse(response) {
         	const responsePayload = parseJwt(response.credential);
@@ -92,8 +93,25 @@
           
         }
     </script>
-    <div align="center" id="buttonDiv"></div>
     
+    <div align="center" id="buttonDiv"></div>
+     -->
+     
+     <script src="https://accounts.google.com/gsi/client" async defer></script>
+      <div id="g_id_onload"
+         data-client_id="134558823520-frjf75vdh2eia14jqkkrfaqlcme9cvkm.apps.googleusercontent.com"
+         data-login_uri="http://localhost:8080/foodstagram/main.do"
+         data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin" align="center"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+      </div>
+     
     <br>
     <!-- 카카오 로그인 -->
     <script type="text/javascript">
