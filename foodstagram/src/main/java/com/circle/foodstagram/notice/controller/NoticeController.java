@@ -3,6 +3,7 @@ package com.circle.foodstagram.notice.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,6 +25,7 @@ import com.circle.foodstagram.common.SearchDate;
 import com.circle.foodstagram.member.model.vo.Member;
 import com.circle.foodstagram.notice.model.service.NoticeService;
 import com.circle.foodstagram.notice.model.vo.Notice;
+import com.circle.foodstagram.notification.model.service.NotificationService;
 import com.circle.foodstagram.common.SearchPaging;
 
 @Controller
@@ -32,6 +34,9 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private NotificationService notificationService;
 
 	// 뷰 페이지 이동 처리용 ---------------------------------------------------------------
 
@@ -62,7 +67,7 @@ public class NoticeController {
 	@RequestMapping("nlist.do")
 	public ModelAndView noticeListMethod(
 			@RequestParam(name="page", required=false) String page,
-			ModelAndView mv) {
+			ModelAndView mv, Model model, HttpSession session) {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -91,7 +96,24 @@ public class NoticeController {
 		
 		//페이징 계산 처리 끝 ---------------------------------------
 		
+
+		// NEW 아이콘 달기 : 공지글 리스트에서 새 글 제목옆에 NEW 표시
+		/*
+		 * SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); Calendar cld =
+		 * Calendar.getInstance(); cld.add(Calendar.DAY_OF_MONTH, -7); String nowday =
+		 * sdf.format(cld.getTime());
+		 * 
+		 * model.addAttribute("nowday",nowday);
+		 */
+	    
+	    //---------------------------------------------------------------
+	    
 		ArrayList<Notice> list = noticeService.selectList(paging);
+		
+		// 공지사항 들어왔으니까 readCheck Y로 업데이트 해줌
+		String userid = ((Member) session.getAttribute("loginMember")).getUserid();
+		notificationService.updateNotification(userid);
+		//notification의 readCheck를 userid 를 이용해서 Y로 업데이트 
 		
 		if(list != null && list.size() > 0) {
 			mv.addObject("list", list);
@@ -112,6 +134,7 @@ public class NoticeController {
 		return mv;
 	}
 
+	// --------------------------------------------------------------
 
 	// 공지글 제목 검색용
 	@RequestMapping(value="nsearchTitle.do", method=RequestMethod.GET)
@@ -227,7 +250,6 @@ public class NoticeController {
 			return "common/error";
 		}
 	}
-
 	// 공지글 상세보기 요청 처리용
 	@RequestMapping("ndetail.do")
 	public String noticeDetailMethod(Model model, @RequestParam("noticeno") int noticeno,
@@ -247,7 +269,7 @@ public class NoticeController {
 			model.addAttribute("currentPage",currentPage);
 
 			Member loginMember = (Member) session.getAttribute("loginMember");
-			if (loginMember != null && loginMember.getUseradmin().equals("Y")) {
+			if (loginMember != null && loginMember.getAdmin().equals("Y")) {
 				// 관리자가 상세보기를 요청했을 때
 				return "notice/noticeAdminDetailView";
 			} else {
@@ -290,7 +312,7 @@ public class NoticeController {
 		logger.info("제목 : "+ notice.getNoticetitle());
 		// 업로드된 파일 저장 폴더 지정
 		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
-
+																					
 		// 첨부파일이 있을 때만 업로드된 파일을 지정된 폴더로 옮기기
 		if (!mfile.isEmpty()) {
 			// 전송온 파일이름 추출함
@@ -340,7 +362,8 @@ public class NoticeController {
 	// 첨부파일 다운로드 요청 처리용
 	@RequestMapping("nfdown.do")
 	public ModelAndView fileDownMethod(ModelAndView mv, HttpServletRequest request,
-			@RequestParam("ofile") String notice_upfile, @RequestParam("rfile") String notice_refile) {
+			@RequestParam("ofile") String notice_upfile, 
+			@RequestParam("rfile") String notice_refile) {
 		// 공지사항 첨부파일 저장 폴더 경로 지정
 		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
 

@@ -9,13 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.circle.foodstagram.chat.model.dao.ChatRoomDao;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-
-
 
 @Controller
 @RequiredArgsConstructor
@@ -24,15 +21,15 @@ import lombok.extern.log4j.Log4j;
 public class RoomController {
 	
 	@Autowired
-	private final ChatRoomDao chatRoomDao;
+	private ChatRoomDao chatRoomDao;
 	
 	//채팅방 목록 조회
     @GetMapping(value = "/rooms")
     public ModelAndView rooms(){
 
-        log.info("# All Chat Rooms");
+        //log.info("# All Chat Rooms");
         ModelAndView mv = new ModelAndView("chat/rooms");
-        log.info(chatRoomDao.findAllRooms().toString());
+        //log.info(chatRoomDao.findAllRooms().toString());
         mv.addObject("list", chatRoomDao.findAllRooms());
 
         return mv;
@@ -42,7 +39,7 @@ public class RoomController {
     @PostMapping(value = "/room")
     public String create(@RequestParam String name, RedirectAttributes rttr){
 
-        log.info("# Create Chat Room , name: " + name);
+    	// log.info("# Create Chat Room , name: " + name);
         rttr.addFlashAttribute("roomName", chatRoomDao.createChatRoomDTO(name));
         return "redirect:/chat/rooms";
     }
@@ -51,7 +48,7 @@ public class RoomController {
     @GetMapping("/room")
     public void getRoom(String roomId, Model model){
 
-        log.info("# get Chat Room, roomID : " + roomId);
+    	//log.info("# get Chat Room, roomID : " + roomId);
 
         model.addAttribute("room", chatRoomDao.findRoomById(roomId));
     }

@@ -18,6 +18,8 @@ public class Notice implements Serializable {
 	
 	public Notice() {}
 
+	
+	
 	private Notice(int noticeno, String userid, String noticetitle, Date noticedate, String noticecontent,
 			String notice_upfile, String notice_refile, int readcount, int importance) {
 		super();
@@ -31,6 +33,9 @@ public class Notice implements Serializable {
 		this.readcount = readcount;
 		this.importance = importance;
 	}
+
+
+
 
 	public int getNoticeno() {
 		return noticeno;
@@ -103,7 +108,7 @@ public class Notice implements Serializable {
 	public void setImportance(int importance) {
 		this.importance = importance;
 	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

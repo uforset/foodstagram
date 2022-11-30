@@ -24,7 +24,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.circle.foodstagram.member.model.vo.Member;
 import com.circle.foodstagram.member.service.MailSendService;
 import com.circle.foodstagram.member.service.MemberService;
+import com.circle.foodstagram.notification.model.service.NotificationService;
+import com.circle.foodstagram.notification.model.vo.Notification;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Controller
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -37,6 +42,10 @@ public class MemberController {
 	
 	@Autowired
 	private MailSendService mailService;
+	
+	@Autowired
+	private NotificationService notificationService;
+	
 	// 뷰 페이지 이동 처리용 --------------------------------------------------
 	@RequestMapping("enrollPage.do")
 	public String moveEnrollPage() {
@@ -152,6 +161,17 @@ public class MemberController {
 								+ "또는 로그인 제한 회원인지 관리자에게 문의하세요.");
 						viewName = "common/error";
 			}
+			
+//			//readcheck 정보 요청
+//			Notification n = notificationService.selectNotification(userid);
+//			log.info("notification" + n);
+//			
+//			//n.getN_readcheck();
+//			if(n.getN_readcheck().equals("Y")) {
+//				model.addAttribute("read", "read");
+//			}else {
+//				model.addAttribute("read", "unread");
+//			}
 			
 			return viewName;
 		}
