@@ -20,6 +20,6 @@ public interface NoticeService {
 	ArrayList<Notice> selectList(Paging page);
 	int selectSearchTListCount(String keyword);
 	int selectSearchDListCount(SearchDate date);
-
+	
 	
 }

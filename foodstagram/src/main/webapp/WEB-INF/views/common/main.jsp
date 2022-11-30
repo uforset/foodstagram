@@ -19,7 +19,6 @@
             width: 930px;
             background-color: #FAFAFA;
         }
-
         td img {
             width: 290px;
             height: 290px;
@@ -27,7 +26,6 @@
             overflow: hidden;
             object-fit: cover;
         }
-
         /* 모달창 */
         .modal {
             position: fixed;
@@ -39,13 +37,11 @@
             justify-content: center;
             align-items: center;
         }
-
         .modal .bg {
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
         }
-
         .modalBox {
             position: absolute;
             background-color: #fff;
@@ -53,17 +49,14 @@
             height: 550px;
             padding: 10px;
         }
-
         .modalBox button {
             display: block;
             width: 80px;
             margin: 0 auto;
         }
-
         .hidden {
             display: none;
         }
-
         #otherProfile img {
             width: 33px;
             height: 33px;
@@ -72,7 +65,6 @@
             border: none;
             margin-bottom: 10px;
         }
-
         .closeBtn {
             display: inline-block;
             position: relative;
@@ -81,11 +73,9 @@
             cursor: pointer;
             display: block;
         }
-
         .closeBtn a {
             display: block;
         }
-
         .dot {
             display: inline-block;
             position: relative;
@@ -94,19 +84,15 @@
             cursor: pointer;
             display: block;
         }
-
         .dot i {
             color: #ececec;
         }
-
         .dot a {
             display: block;
         }
-
         .dot i:hover {
             color: #F95E25;
         }
-
         .modalImg img {
             display: inline-block;
             position: relative;
@@ -116,26 +102,21 @@
             object-fit: cover;
             border: none;
         }
-
         ul:not(.replyList) {
             display: flex;
         }
-
         ul li:not(.modalImg) {
             position: relative;
             left: -10px;
         }
-
         ul li ol {
             display: flex;
         }
-
         .id {
             position: relative;
             bottom: 20px;
             font-weight: bold;
         }
-
         .addFriend {
             padding: 5px;
             margin-left: 20px;
@@ -147,7 +128,6 @@
             border-radius: 10px;
             font-size: 14px;
         }
-
         .modalContent {
             padding-bottom: 20px;
             border-bottom: 1px solid #E5E5E5;
@@ -157,13 +137,10 @@
             font-size: 14px;
             overflow: auto;
         }
-
         .modalContent span a {
             color: rgb(116, 77, 116);
         }
-
         /* 하트, 댓글등 */
-
         .lr {
             position: relative;
             top: 380px;
@@ -174,24 +151,19 @@
             line-height: 33px;
             padding: 5px 0 10px 0;
         }
-
         .lr li {
             margin-left: 18px;
         }
-
         .fa-heart:hover {
             color: red;
         }
-
         .countingLike {
             font-weight: bold;
         }
-
         .resetBtn a {
             padding: 5px;
             display: block;
         }
-
         #recipe,
         #restaurant {
             width: 80px;
@@ -204,21 +176,17 @@
             background-color: #E5E5E5;
             font-size: 13px;
         }
-
         #restaurant:hover {
             background-color: #F95E25;
         }
-
         #recipe:hover {
             background-color: #F95E25;
         }
-
         .replyBox {
             position: relative;
             top: 475px;
             right: 430px;
         }
-
         .replyRig {
             width: 400px;
             height: 25px;
@@ -227,8 +195,6 @@
             border: #F0F0F0;
             transition: 0.5s ease-out;
         }
-
-
         .replyBtn {
             width: 80px;
             border: none;
@@ -241,12 +207,10 @@
             cursor: pointer;
             margin-left: -100px;
         }
-
         .replyBtn:hover {
             display: block;
             color: #F95E25;
         }
-
         .replyList {
             position: relative;
             top: 345px;
@@ -256,11 +220,9 @@
             padding: 10px;
             overflow: auto;
         }
-
         .replyList li {
             margin-bottom: 5px;
         }
-
         .chatBot {
             position: fixed;
             bottom: 3%;
@@ -399,15 +361,12 @@ scenarioId: "Njk=",
         const open = () => {
             document.querySelector(".modal").classList.remove("hidden");
         }
-
         const close = () => {
             document.querySelector(".modal").classList.add("hidden");
         }
-
         document.querySelector(".openBtn").addEventListener("click", open);
         document.querySelector(".closeBtn").addEventListener("click", close);
         document.querySelector(".bg").addEventListener("click", close);
-
     </script>
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>

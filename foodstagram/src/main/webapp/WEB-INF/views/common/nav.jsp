@@ -14,6 +14,7 @@
     <link href="./css/reset.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <title></title>
+
     <style>
         * {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -42,6 +43,7 @@ nav ul .searchBox {
     padding-left: 30px;
 }
 
+
 nav ul li ol {
     display: flex;
 }
@@ -50,6 +52,7 @@ nav ul li ol {
 .logo {
     width: 40px;
 }
+
 
 .h1 {
     margin-left: 10px;
@@ -60,6 +63,7 @@ nav ul li ol {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 
 nav ul li ol:first-child {
     margin-right: -15px;
@@ -73,6 +77,7 @@ i {
     color: #E5E5E5;
     transition: 0.6s ease-out;
 }
+
 
 i:hover {
     color: #F95E25;
@@ -94,12 +99,10 @@ i:hover {
 
 }
 
-
 #shareBtn:hover {
     display: block;
     cursor: pointer;
 }
-
 
 #shareBtn {
     padding: 0 10px 0 10px;
@@ -126,6 +129,7 @@ i:hover {
     padding: 12px 20px;
 }
 
+
 .shareContent:hover {
     background-color: #F95E25;
 }
@@ -133,6 +137,7 @@ i:hover {
 .share:hover .shareContent {
     display: block;
 }
+
 
 .noneRead {
     width: 5px;
@@ -171,6 +176,31 @@ li {list-style: none;}
             }
         }
     </script>
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url: "readCheck.do",
+			type: "get",
+			data: {userid: "${loginMember.userid}" },
+			dataType: 'json',
+			success: function(data, jqXHR, textStatus){
+				//alert("readcheck : " + data.read);
+				if( data.read == "read" ) {
+					//
+				} else {
+					console.log("hi")
+					$("ol.navlist").html(  $("ol.navlist").html() + "<li class='noneRead'></li>" )
+					
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log("xxxxxxxxxxxxxxxxxxxx");
+				console.log(jqXHR + ", " + textStatus + ", " + errorThrown);
+			}
+		});
+	});
+	</script>
 </head>
 
 <body>
@@ -227,18 +257,22 @@ li {list-style: none;}
             </li>
             <!--실행메뉴들 순서대로 홈(메인페이지), 친구메신저, 게시물 등록(촬영 및 업로드), 내프로필(마이페이지), 공지사항 이동 -->
             <li style="width: 350px;margin-left: 350px;">
-                <ol>
+
+                <ol class = "navlist">
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
                     <li><a href="write.html"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
                     <li><a href="${ pageContext.servletContext.contextPath }/mpage.do"><img src="resources/images/profile.jpg" id="profile"></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/nlist.do"><i class="fa-solid fa-bell fa-2x"></i></a></li>
-                    <li class="noneRead"></li>
+                    <%-- <c:if test="${ read eq 'unread'}" ><li class="noneRead"></li></c:if> --%>
+
                 </ol>
             </li>
         </ul>
     </nav>
+	
+
 
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>
