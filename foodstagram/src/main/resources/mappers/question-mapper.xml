@@ -15,7 +15,7 @@
 
 	<resultMap type="Question" id="questionAttaches">
 	    <collection property="attaches" column="{atch_parent_no=q_no}"
-	    ofType="AttachVO" 
+	    ofType="Attach" 
 	    select="attachMapper.getAttachListByParent"> 
 	    </collection>
 	</resultMap>

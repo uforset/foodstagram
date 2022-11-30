@@ -11,4 +11,7 @@ public interface AttachService {
 	
 	Attach getAttach(int atch_no);
 	int deleteAttach(int atch_no);
+	
+	//다운로드 횟수증가
+	int increaseDownHit(int atch_no);
 }

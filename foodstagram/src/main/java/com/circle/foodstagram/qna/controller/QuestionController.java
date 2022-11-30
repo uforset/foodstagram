@@ -250,10 +250,10 @@ public class QuestionController {
 				attaches.add(attachService.getAttach(atch_no)); //하나씩 가져와서 List에 저장 
 			}
 			
-			// 저장된 파일 삭제처리
+			// 저장된 파일 삭제처리			getDeletAtchNoList() 첨부파일들을 삭제하고 삭제한 기본키를 리스트로 리턴함(서버에서 파일삭제)
 			List<Integer> atchNoList = attachUtils.getDeletAtchNoList(attaches, "question_upfiles", request);
 			for( int atch_no : atchNoList) {
-				attachService.deleteAttach(atch_no);
+				attachService.deleteAttach(atch_no);	// DB에서 파일삭제
 				log.info(atch_no + "번 첨부파일 DB제거완료.");
 			}
 		}
@@ -263,7 +263,6 @@ public class QuestionController {
 			//첨부파일이 있다면 등록함.
 			// 파일 로컬에 업로드
 			if(boFiles != null && boFiles.length > 0) {
-				 //String savePath = request.getSession().getServletContext().getRealPath("resources/question_upfiles");
 				 List<Attach> attaches=
 						 attachUtils.getAttachListByMultiparts(boFiles, "Question", "question_upfiles", request);
 		         //실제로 파일경로에 선택된 파일 올리고 List<Attach> return  (파일업로드)
@@ -292,6 +291,9 @@ public class QuestionController {
 			if (qnaService.updateQuestion(question) > 0) {
 				log.info("질문수정 성공.");
 				strResult = "{ \"result\":\"success\" }";
+			} else {
+				log.info("질문수정중 오류발생.");
+				return strResult;
 			}
 			
 		} catch (Exception e) {
@@ -302,4 +304,7 @@ public class QuestionController {
 		return strResult;
 	}
 	
+	
+	
+
 }

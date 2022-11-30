@@ -33,5 +33,10 @@ public class AttachServiceImpl implements AttachService {
 	public int deleteAttach(int atch_no) {
 		return attachDao.deleteAttach(atch_no);
 	}
+
+	@Override
+	public int increaseDownHit(int atch_no) {
+		return attachDao.increaseDownHit(atch_no);
+	}
 	
 }
