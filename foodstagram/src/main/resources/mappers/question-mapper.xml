@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="questionMapper">
+
+	<resultMap type="Question" id="resultQuestion">
+		<id column="q_no" property="q_no"/>
+		<result column="userid" property="userid" />
+		<result column="q_title" property="q_title" />
+		<result column="q_date" property="q_date" />
+		<result column="q_content" property="q_content" />
+		<result column="answercheck" property="answercheck" />
+	</resultMap>
+
+	<resultMap type="Question" id="questionAttaches">
+	    <collection property="attaches" column="{atch_parent_no=q_no}"
+	    ofType="AttachVO" 
+	    select="attachMapper.getAttachListByParent"> 
+	    </collection>
+	</resultMap>
+
+	<select id="selectMyListCount" parameterType="string" resultType="_int">
+		select count(*)
+		from question
+		where userid = #{userid}
+	</select>
+
+	<select id="selectMyQuestionList" parameterType="Map" resultMap="resultQuestion">
+	select * 
+	from (select ROWNUM RNUM, q.*
+		  from (select * 
+		  		from question 
+		  		where userid = #{userid}
+		  		order by q_no DESC) q)
+	where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<insert id="insertQuestion" parameterType="Question">
+		insert into question   (q_no,
+								userid,
+								q_title,
+								q_date,
+								q_content,
+								answercheck)
+					values 	   (default,
+								#{userid},
+								#{q_title},
+								default,
+								#{q_content},
+								'N')
+		<selectKey keyProperty="q_no" resultType="int" order="AFTER">
+			select max(q_no) from question
+		</selectKey>
+	</insert>
+	
+	<select id="getQuestion" parameterType="int" resultType="Question" resultMap="questionAttaches">
+		select * from question
+		where q_no = #{q_no}
+	</select>
+	
+	<update id="updateQuestion" parameterType="Question">
+		update Question set 
+							q_title=#{q_title},
+							q_date = SYSDATE,
+							q_content = #{q_content}
+						where 
+							q_no = #{q_no}
+	</update>
+</mapper>

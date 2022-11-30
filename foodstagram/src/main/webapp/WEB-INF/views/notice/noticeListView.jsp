@@ -431,6 +431,7 @@ th.last_bg {
 </script>
 </head>
 <body>
+
 	<c:import url="/WEB-INF/views/common/nav.jsp" />
 	<!-- Wrap -->
 	<div id="wrap">
@@ -533,6 +534,7 @@ th.last_bg {
 									</tr>
 								</c:forEach>
 						</table>
+
 
 						<center>
 							<br>

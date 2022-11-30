@@ -14,7 +14,7 @@
     <link href="./css/reset.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <title></title>
-    
+
     <style>
         * {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -31,21 +31,29 @@ nav {
     padding-top: 30px;
     padding-bottom: -10px;
 }
+
 nav ul {
     display: flex;
     text-align: center;
 }
+
 nav ul .searchBox {
     position: relative;
     left: 150px;
     padding-left: 30px;
 }
+
+
 nav ul li ol {
     display: flex;
 }
+
+
 .logo {
     width: 40px;
 }
+
+
 .h1 {
     margin-left: 10px;
     font-size: 32px;
@@ -55,19 +63,27 @@ nav ul li ol {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+
 nav ul li ol:first-child {
     margin-right: -15px;
 }
+
 nav ul li:last-child ol li a {
     margin-left: 30px;
 }
+
 i {
     color: #E5E5E5;
     transition: 0.6s ease-out;
 }
+
+
 i:hover {
     color: #F95E25;
 }
+
+
 /* 이미지 및 이미지크기 고정 설정 */
 /* 동그란 프로필 이미지 */
 #profile {
@@ -75,21 +91,26 @@ i:hover {
     border-radius: 50%;
     overflow: hidden;
 }
+
 #profile img {
     max-width: 100%;
     height: auto;
     display: block;
+
 }
+
 #shareBtn:hover {
     display: block;
     cursor: pointer;
 }
+
 #shareBtn {
     padding: 0 10px 0 10px;
     position: relative;
     top: 10px;
     left: 5px;
 }
+
 .shareContent {
     display: none;
     position: absolute;
@@ -100,24 +121,31 @@ i:hover {
     transition: 0.5s ease-in-out;
     border-radius: 20px;
 }
+
 .shareContent a {
     display: block;
     color: rgb(37, 37, 37);
     font-size: 14px;
     padding: 12px 20px;
 }
+
+
 .shareContent:hover {
     background-color: #F95E25;
 }
+
 .share:hover .shareContent {
     display: block;
 }
+
+
 .noneRead {
     width: 5px;
     height: 5px;
     background-color: red;
     border-radius: 50%;
 }
+
 .searchBtn{
     position:relative;
     bottom: 33px;
@@ -125,6 +153,7 @@ i:hover {
     border-radius: 10px;
     background-color: pink;
 }
+
 li {list-style: none;}
 </style>
     <script>
@@ -228,15 +257,16 @@ li {list-style: none;}
             </li>
             <!--실행메뉴들 순서대로 홈(메인페이지), 친구메신저, 게시물 등록(촬영 및 업로드), 내프로필(마이페이지), 공지사항 이동 -->
             <li style="width: 350px;margin-left: 350px;">
+
                 <ol class = "navlist">
-                    <li><a href="${ pageContext.servletContext.contextPath }"><i class="fa-solid fa-house fa-2x"></i></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
                     <li><a href="write.html"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
                     <li><a href="${ pageContext.servletContext.contextPath }/mpage.do"><img src="resources/images/profile.jpg" id="profile"></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/nlist.do"><i class="fa-solid fa-bell fa-2x"></i></a></li>
                     <%-- <c:if test="${ read eq 'unread'}" ><li class="noneRead"></li></c:if> --%>
-                	
+
                 </ol>
             </li>
         </ul>

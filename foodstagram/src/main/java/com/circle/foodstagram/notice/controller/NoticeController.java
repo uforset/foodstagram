@@ -275,7 +275,8 @@ public class NoticeController {
 			} else {
 				return "notice/noticeDetailView";
 			}
-
+			
+			
 		} else {
 			model.addAttribute("message", noticeno + "번 게시글 조회 실패");
 			return "common/error";

@@ -1,7 +1,6 @@
 package com.circle.foodstagram.member.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +25,7 @@ public class Member implements Serializable{
 	private String email;
 	private String loginok;
 	private String admin;
-	}
+
+	
+}
+
