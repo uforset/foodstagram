@@ -32,5 +32,9 @@ public class AttachDao {
 	public int deleteAttach(int atch_no) {
 		return session.delete("attachMapper.deleteAttach", atch_no);
 	}
+
+	public int increaseDownHit(int atch_no) {
+		return session.update("attachMapper.increaseDownHit",atch_no);
+	}
 	
 }

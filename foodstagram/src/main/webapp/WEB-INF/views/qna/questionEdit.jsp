@@ -181,7 +181,7 @@ $(function(){
 							<input multiple="multiple"  type="file"  name="boFiles">
 							<c:forEach var="f" items="${q.attaches}" varStatus="st">
 								<div>
-									# 파일 ${st.count} <a style="color: #337ab7;" href="<c:url value='/attach/download/${f.atch_no}' />" target="_blank"> <span class="glyphicon glyphicon-save" aria-hidden="true"></span> ${f.atch_original_name}
+									# 파일 ${st.count} <a style="color: #337ab7;" href="<c:url value='/attachDownload.do/${f.atch_no}' />" target="_blank"> <span class="glyphicon glyphicon-save" aria-hidden="true"></span> ${f.atch_original_name}
 									</a> Size : ${f.atch_fancy_size} Down : ${f.atch_down_hit}
 									<button class="btn_file_delete" data-atch-no="${f.atch_no}">
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

@@ -47,4 +47,9 @@
 		delete from attach where atch_no = #{atch_no}
 	</delete>
 	
+	<update id="increaseDownHit" parameterType="int">
+		update attach 
+		set atch_down_hit = atch_down_hit +1 
+		where atch_no = #{atch_no}
+	</update>
 </mapper>
