@@ -10,9 +10,9 @@ public interface QnaService {
 
 	int insertQuestion(Question question);
 	int updateQuestion(Question question);
-	int deleteQuestion();
+	int deleteQuestion(int q_no);
 	
-	ArrayList<Question> selectAllQuestionList();
+	ArrayList<Question> selectAllQuestionList(Map<String, Object> map);
 	int selectListCount();
 	
 	Question getQuestion(int id);
@@ -23,7 +23,8 @@ public interface QnaService {
 	
 	int updateAnswerCheck();
 	
-	int insertAnswer();
-	int updateAnswer();
+	int insertAnswer(Answer answer);
+	int updateAnswer(Answer answer);
+	int deleteAnswer(int a_id);
 	
 }

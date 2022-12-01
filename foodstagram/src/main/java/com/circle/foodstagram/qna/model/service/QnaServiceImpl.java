@@ -33,21 +33,19 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public int deleteQuestion() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteQuestion(int q_no) {
+		return questionDao.deleteQuestion(q_no);
 	}
 
 	@Override
-	public ArrayList<Question> selectAllQuestionList() {
+	public ArrayList<Question> selectAllQuestionList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return questionDao.selectAllQuestionList(map);
 	}
 
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return questionDao.selectListCount();
 	}
 
 	@Override
@@ -74,20 +72,24 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public int insertAnswer() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertAnswer(Answer answer) {
+		return answerDao.insertAnswer(answer);
 	}
 
 	@Override
-	public int updateAnswer() {
+	public int updateAnswer(Answer answer) {
 		// TODO Auto-generated method stub
-		return 0;
+		return answerDao.updateAnswer(answer);
 	}
 
 	@Override
 	public Answer getAnswer(int ref) {
 		return answerDao.getAnswer(ref);
+	}
+
+	@Override
+	public int deleteAnswer(int a_id) {
+		return answerDao.deleteAnswer(a_id);
 	}
 
 

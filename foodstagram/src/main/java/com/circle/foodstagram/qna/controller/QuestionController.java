@@ -46,8 +46,24 @@ public class QuestionController {
 	
 	// 페이지 이동 메소드
 	@GetMapping("question.do")
-	public String moveQuestionView() {
-		return "qna/question";
+	public String moveQuestionView(HttpSession session, Model model) {
+		try {
+			Member loginMember = (Member) session.getAttribute("loginMember");
+			//String userid = loginMember.getUserid();
+			boolean checkAdmin = loginMember.getAdmin().equals("Y");
+			if (checkAdmin) {
+				//관리자인경우
+				return "redirect:questionManage.do";
+			} else {
+				//관리자가 아닌경우
+				return "qna/question";
+			}
+			
+		} catch (Exception e) {
+			// 아마 로그인상태가 아닌경우
+			model.addAttribute("message", "로그인상태가 아닙니다.");
+			return "common/error";
+		}
 	}
 	
 	@GetMapping("questionReg.do")
@@ -56,7 +72,7 @@ public class QuestionController {
 	}
 	
 	@GetMapping("questionReg.do/{id}")
-	public String moveQuestionRegForm2(
+	public String moveQuestionModifyForm(
 				@PathVariable Integer id, Model model) {
 		
 		Question q;
@@ -89,8 +105,15 @@ public class QuestionController {
 			ModelAndView mv) {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		String userid = ((Member)session.getAttribute("loginMember")).getUserid();
+		Member loginMember = ((Member)session.getAttribute("loginMember"));
+		String userid = loginMember.getUserid();
+		//관리자인지 확인
+		if( loginMember != null && loginMember.getAdmin().equals("Y")  ) {
+			mv.setViewName("redirect:questionManage.do");
+			return mv;
+		}
 		//로그인 판단 인터셉터에서 하면 좋을지도
+		
 		if(userid == null) {
 			mv.addObject("message", " 로그인 상태가 아님.");
 			mv.setViewName("common/error");
@@ -250,7 +273,7 @@ public class QuestionController {
 				attaches.add(attachService.getAttach(atch_no)); //하나씩 가져와서 List에 저장 
 			}
 			
-			// 저장된 파일 삭제처리			getDeletAtchNoList() 첨부파일들을 삭제하고 삭제한 기본키를 리스트로 리턴함(서버에서 파일삭제)
+			// 저장된 파일 삭제처리	getDeletAtchNoList() 첨부파일들을 삭제하고 삭제한 기본키를 리스트로 리턴함(서버에서 파일삭제)
 			List<Integer> atchNoList = attachUtils.getDeletAtchNoList(attaches, "question_upfiles", request);
 			for( int atch_no : atchNoList) {
 				attachService.deleteAttach(atch_no);	// DB에서 파일삭제
@@ -307,4 +330,122 @@ public class QuestionController {
 	
 	
 
+	// 질문 리스트보기 (관리자)
+	@GetMapping("questionManage.do")
+	public ModelAndView getQuestionAllListMethod(
+			@RequestParam(name="page", required=false) String page,
+			HttpSession session, ModelAndView mv) {
+		try {
+			Member loginMember = (Member) session.getAttribute("loginMember");
+			//String userid = loginMember.getUserid();
+			boolean checkAdmin = loginMember.getAdmin().equals("Y");
+			if (checkAdmin) {
+				//관리자인경우
+				
+				Map<String,Object> map = new HashMap<String,Object>();
+				
+				
+				int currentPage = 1;
+				if(page != null) {
+					currentPage = Integer.parseInt(page);
+				}
+				
+				int listCount=0;
+				int limit = 10; 
+				listCount = qnaService.selectListCount();
+				log.info("등록된 질문개수 : " + listCount);
+				// 페이징 계산
+				int maxPage = (int)((double)listCount / limit + 0.9);
+
+				int endPage = (int)(Math.ceil(currentPage / 10.0)) * 10;
+				int startPage = endPage-9;
+				
+				if(maxPage < endPage) {
+					endPage = maxPage;
+				}
+				
+				int startRow = (currentPage - 1) * limit + 1;
+				int endRow = startRow + limit - 1;
+				
+				//페이징 계산 처리 끝 ---------------------------------------
+				ArrayList<Question> list = null;
+				map.put("startRow", startRow);
+				map.put("endRow", endRow);
+				//map.put("userid", userid);
+				list = qnaService.selectAllQuestionList(map); //모든 질문리스트 검색 row userid전달
+				if(list != null && list.size() > 0) {
+					log.info("리스트확인");
+					log.info(list);
+					for(Question q : list) {
+						log.info(q);
+					}
+					mv.addObject("list", list);
+					mv.addObject("listCount", listCount);
+					mv.addObject("maxPage", maxPage);
+					mv.addObject("currentPage", currentPage);
+					mv.addObject("startPage", startPage);
+					mv.addObject("endPage", endPage);
+					mv.addObject("limit", limit);
+					
+					mv.setViewName("qna/questionAllList");
+				} else {
+					mv.addObject("message", currentPage + " 질문 목록 조회 실패.");
+					mv.setViewName("common/error");
+				}
+
+			} else {
+				//관리자가 아닌경우
+				mv.addObject("message", "관리자가 아닙니다.");
+				mv.setViewName("common/error");
+			}
+			
+		} catch (Exception e) {
+			// 로그인상태가 아닌경우
+			mv.addObject("message", "로그인상태가 아닙니다.");
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	@PostMapping("questionDelete.do")
+	@ResponseBody
+	public String questionDeleteMethod( 
+			Question question,
+			HttpServletRequest request) {
+		String strResult = "{ \"result\":\"FAIL\" }";
+		
+		try {
+			// 삭제를위해 첨부파일들 가져오는 작업
+			question = qnaService.getQuestion(question.getQ_no()); 
+			// 가져옴.
+			List<Attach> attaches = question.getAttaches();
+			log.info(attaches);
+			//첨부파일이 있을경우 삭제
+			if (attaches !=null && attaches.size() > 0) {
+				// 저장된 파일 삭제처리	getDeletAtchNoList() 첨부파일들을 삭제하고 삭제한 기본키를 리스트로 리턴함(서버에서 파일삭제)
+				List<Integer> atchNoList = attachUtils.getDeletAtchNoList(attaches, "question_upfiles", request);
+				for( int atch_no : atchNoList) {
+					attachService.deleteAttach(atch_no);	// DB에서 파일삭제
+					log.info(atch_no + "번 첨부파일 DB제거완료.");
+				} 
+			}// 첨부파일 제거끝
+			
+			//첨부파일 제거후 질문글 삭제
+			
+			if ( qnaService.deleteQuestion(question.getQ_no()) > 0) {
+				log.info("질문 삭제 성공.");
+				strResult = "{ \"result\":\"success\" }";
+			} else {
+				log.info("질문 삭제 실패.");
+			}
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return strResult;
+		}
+		
+		
+		return strResult;
+	}
 }

@@ -27,15 +27,16 @@ public class QuestionDao {
 	public int updateQuestion(Question question) {
 		return session.update("questionMapper.updateQuestion", question);
 		}
-	public int deleteQuestion() {
-		return 0;
+	public int deleteQuestion(int q_no) {
+		return session.delete("questionMapper.deleteQuestion", q_no);
 		}
 	
-	public ArrayList<Question> selectAllQuestionList(){
-		return null;
+	public ArrayList<Question> selectAllQuestionList(Map<String, Object> map){
+		List<Question> list = session.selectList("questionMapper.selectAllQuestionList",map);
+		return (ArrayList<Question>)list;
 		}
 	public int selectListCount() {
-		return 0;
+		return session.selectOne("questionMapper.selectListCount");
 		}
 	
 	public Question getQuestion(int id) {

@@ -14,14 +14,17 @@ public class AnswerDao {
 	public int updateAnswerCheck() {
 		return 0;
 	}
-	public int insertAnswer() {
-		return 0;
+	public int insertAnswer( Answer answer ) {
+		return session.insert("answerMapper.insertAnswer",answer);
 	}
-	public int updateAnswer() {
-		return 0;
+	public int updateAnswer(Answer answer) {
+		return session.update("answerMapper.updateAnswer", answer);
 	}
 
 	public Answer getAnswer(int ref) {
 		return session.selectOne("answerMapper.getAnswer",ref);
+	}
+	public int deleteAnswer(int a_id) {
+		return session.delete("answerMapper.deleteAnswer", a_id);
 	}
 }

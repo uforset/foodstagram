@@ -15,7 +15,7 @@ public class NotificationDao {
 	@Autowired
 	private SqlSessionTemplate session;
 
-	@Autowired
+
 	public ArrayList<Notification> selectList(){
 		List<Notification> list = session.selectList("notificationMapper.selectNotiAll");
 		return (ArrayList<Notification>)list;

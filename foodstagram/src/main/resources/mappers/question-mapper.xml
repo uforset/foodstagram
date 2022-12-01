@@ -14,7 +14,7 @@
 	</resultMap>
 
 	<resultMap type="Question" id="questionAttaches">
-	    <collection property="attaches" column="{atch_parent_no=q_no}"
+	    <collection property="attaches"   column="{atch_parent_no=q_no}"
 	    ofType="Attach" 
 	    select="attachMapper.getAttachListByParent"> 
 	    </collection>
@@ -24,6 +24,20 @@
 		select count(*)
 		from question
 		where userid = #{userid}
+	</select>
+
+	<select id="selectListCount" resultType="_int">
+		select count(*)
+		from question
+	</select>
+
+	<select id="selectAllQuestionList" parameterType="Map" resultMap="resultQuestion">
+	select * 
+	from (select ROWNUM RNUM, q.*
+		  from (select * 
+		  		from question 
+		  		order by answercheck ,q_no) q)
+	where rnum between #{startRow} and #{endRow}
 	</select>
 
 	<select id="selectMyQuestionList" parameterType="Map" resultMap="resultQuestion">
@@ -67,4 +81,9 @@
 						where 
 							q_no = #{q_no}
 	</update>
+	
+	<delete id="deleteQuestion" parameterType="int">
+		delete from question
+			where q_no = #{q_no}
+	</delete>
 </mapper>

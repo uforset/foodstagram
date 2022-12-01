@@ -90,7 +90,7 @@ public class AttachUtils {
 		}
 	}
 	
-	/** 다중 Attach 에서 각각 업로드한 파일 삭제 처리후 List<int>리턴(atch_no) */
+	/** 다중 Attach 에서 각각 업로드한 파일 삭제 처리후 List<Integer>리턴(atch_no) */
 	public List<Integer> getDeletAtchNoList(List<Attach> attaches, String path, HttpServletRequest request) {
 		List<Integer> atchNoList = new ArrayList<Integer>();
 		uploadPath = request.getSession().getServletContext().getRealPath("resources");

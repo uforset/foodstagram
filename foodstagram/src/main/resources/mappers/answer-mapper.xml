@@ -16,4 +16,30 @@
 		select * from answer where a_ref = #{a_ref}
 	</select>
 
+	<insert id="insertAnswer" parameterType="Answer">
+		insert into answer (a_id,
+							a_ref,
+							userid,
+							a_date,
+							a_content)
+					values (default,
+							#{a_ref},
+							#{userid},
+							default,
+							#{a_content})
+	</insert>
+
+	<update id="updateAnswer" parameterType="Answer">
+		update answer set
+					a_content = #{a_content},
+					userid = #{userid},
+					a_date = SYSDATE
+				where
+					a_id = #{a_id}
+	</update>
+	
+	<delete id="deleteAnswer" parameterType="int">
+		delete from answer 
+				where a_id = #{a_id}
+	</delete>
 </mapper>
