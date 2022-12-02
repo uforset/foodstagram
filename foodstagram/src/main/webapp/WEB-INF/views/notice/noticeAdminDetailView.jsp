@@ -1,112 +1,498 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
-<link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
+<title>공지사항</title>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+	rel="stylesheet">
 <style>
-	table {
-		margin-top:50px;
-	}
-	
-	th {
-		font-weight:normal;
-		font-size: 16px;
-	}
-	
-	td {
-		width: 25rem;
-		height:3rem; 
-		border:3px solid #f8f9fa; 
-		margin-bottom:20px;
-	}
-	.button {
-		width: 100px;
-		height: 45px;
-		 font-size: 16px;
-		letter-spacing: 2px;
-		color: #000;
-		background-color: #f1f3f5;
-		border: none;
-		border-radius: 45px;
-		cursor: pointer;
-		outline: none;
-		transition: 0.6s;
-		margin-top:50px;
-		margin-left:10px;
-	}
-	
-	.button:hover {
-		background-color:salmon;
-	}
+/*Layout*/
+#wrap {
+	width: 1274px;
+	position: relative;
+	text-align: center;
+	margin: 0 auto;
+	background: #fff;
+	text-align: left;
+}
 
-	footer{
-         width:100%;
-/*             margin-top: 205px; */
-            padding-top: 250px;
-            background-color: #333;
-            height: 150px;
-            text-align: center;
-            color: white;
-            font-weight: 200;
-  }
+#header {
+	width: 1274px;
+	position: fixed;
+	background: #fff;
+	height: 191px;
+	z-index: 99;
+	left: 50%;
+	top: 0;
+	margin-left: -637px;
+}
+
+#container {
+	width: 956px;
+	position: relative;
+	margin: 0 auto;
+	padding-top: 191px;
+	/* background:#f5f3ed; */
+	min-height: 700px;
+}
+
+#scontainer00 {
+	width: 956px;
+	position: relative;
+	margin: 0 auto;
+	padding-top: 191px;
+	background: #fff;
+	min-height: 700px;
+}
+
+#scontainer01 {
+	width: 956px;
+	position: relative;
+	margin: 0 auto;
+	padding-top: 191px;
+	background: #ece5d6;
+	min-height: 700px;
+}
+
+.s_container {
+	width: 956px;
+	margin: 0 auto;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	position: relative;
+	line-height: 22px;
+}
+
+.m_container {
+	width: 956px;
+	margin: 0 auto;
+	padding-bottom: 60px;
+}
+/*Basic*/
+#board_area {
+	text-align: center;
+	font-size: 12px;
+	color: #666;
+	min-height: 20px;
+	font-family: 'NanumGothic', 'Malgun Gothic', 'verdana', 'arial', 'dotum',
+		'돋움';
+	position: relative;
+}
+
+#board_area a:link, #board_area a:visited, #board_area a:active {
+	color: #666;
+	text-decoration: none;
+}
+
+.a_right {
+	position: absolute;
+	top: 20px;
+	right: 0;
+}
+ a:link { text-decoration:none; color:#2f2f2f;}
+ a:visited { text-decoration:none;color:#2f2f2f;}
+ a:active {text-decoration:none; color:#2f2f2f; }
+ a:hover { text-decoration:none; color:#8f8f8f;}
+
+#board_area a:hover {
+	color: #2f2f2f;
+	/*color:#d60c0c; (red)*/
+	/*color:#ff7200; (orange)*/
+}
+
+.color_red {
+	color: #d60c0c;
+}
+/* 버튼 */
+.board_btn {
+	margin-top: 10px;
+	margin-bottom: 20px;
+	text-align: center;
+	overflow: hidden;
+	width: 100%;
+}
+
+.board_bt_style01:hover {
+	background-color: #F95E25;
+}
+
+.board_bt_style01 {
+	border: 0px;
+	color: #fff;
+	background: #666c74;
+	width: 83px;
+	height: 30px;
+	line-height: 29px;
+	font-size: 14px;
+	cursor: pointer;
+	border-radius: 5px;
+	text-align: center;
+}
+
+input.board_bt_style02 {
+	border: 0px;
+	width: 83px;
+	height: 30px;
+	line-height: 29px;
+	color: #7c7b7b;
+	background: #e7e7e7;
+	font-size: 0.9em;
+	cursor: pointer;
+}
+
+input.board_bt_style03 {
+	border: 0px;
+	width: 50px;
+	height: 25px;
+	line-height: 25px;
+	color: #fff;
+	background: #666c74;
+	font-size: 1em;
+	cursor: pointer;
+}
+/*LIST*/
+.free_board, .free_board_view, .free_board_write {
+	align: center;
+	width: 1000px;
+	border-top: 2px solid #a17d33;
+}
+
+.free_board th {
+	border-bottom: 1px solid #ddd;
+	padding: 15px 10px;
+	background: url("../notice_img/line_bg.gif") no-repeat center right;
+}
+
+.free_board td, .free_board_view td {
+	border-bottom: 1px solid #ddd;
+	padding: 15px 10px;
+}
+
+.bor_l {
+	border-left: 3px solid #ddd;
+}
+
+.bor_r {
+	border-right: 3px solid #ddd;
+}
+
+.title_area {
+	text-align: left;
+}
+
+.title_area span {
+	font-weight: bold;
+	color: #dd4949;
+}
+
+.bt_list {
+	padding: 6px 25px;
+	background: #005faf;
+	color: #fff;
+	font-weight: bold;
+	border: 0px solid;
+}
+
+.board_search {
+	float: right;
+	width: 280px;
+	*width: 280px;
+	height: 39px;
+	margin: 0;
+	text-align: right;
+}
+
+.board_search select {
+	height: 25px;
+}
+
+.search_b {
+	width: 200px;
+	height: 25px;
+	text-align: left;
+	margin-left: 3px;
+}
+
+.board_bottom_bar {
+	width: 130px;
+	_background: #326cb4;
+	border: 1px #ddd solid;
+	color: #666;
+	height: 23px;
+	margin-left: 3px;
+	line-height: 23px;
+}
+
+/*VIEW*/
+.free_board_view {
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+
+.free_board_view th {
+	border-bottom: 1px solid #ddd;
+	padding: 15px 8px;
+	background: url("../notice_img/line_bg.gif") no-repeat center right;
+	text-align: center;
+}
+
+.free_board_view td {
+	text-align: left;
+	padding: 5px 10px;
+}
+
+.board_title01 {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.board_b {
+	border-bottom: 1px solid #ddd;
+}
+
+.board_bn {
+	border-bottom: none;
+}
+
+.view_pd {
+	padding: 15px;
+	line-height: 20px;
+}
+
+.board_data {
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.board_data2 {
+	font-size: 14px;
+	font-weight: normal;
+	margin-left: 10px;
+	
+}
+
+th.board_stitle {
+	font-weight: normal;
+	font-size: 11px;
+}
+
+th.a_left {
+	text-align: left;
+}
+
+.number {
+	margin: 20px 0;
+	clear: both;
+}
+
+.number img {
+	vertical-align: middle;
+}
+
+td.notice {
+	background: #fff;
+}
+
+.notice span {
+	font-weight: bold;
+}
+
+span.notice_bg {
+	height: 10px;
+	width: 30px;
+	margin-top: 1px;
+	padding: 4px 5px 0px 5px;
+	text-align: center;
+	background: #a17d33;
+}
+
+th.last_bg {
+	background: none;
+}
+
+.board_fLeft {
+	float: left;
+	width: 60%;
+	text-align: left;
+}
+
+.board_fRight {
+	float: right;
+	width: 30%;
+	text-align: right;
+}
+
+.p {
+	display: block;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+}
+.button {
+	width: 80px;
+	height: 35px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	font-family: '나눔고딕';
+	letter-spacing: 1px;
+	background-color: #827f7f;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
+	transition: 0.1s;
+}
+/*Footer*/
+#footer {
+	width: 100%;
+	position: relative;
+	clear: both;
+	background: #332722;
+	height: 63px;
+}
 </style>
 </head>
 <body>
-<!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
-<%-- <c:import url="/WEB-INF/views/common/menubar.jsp" /> --%>
 
-<br>
-<table align="center" width="500" cellspacing="0" 
-cellpadding="5"  class="table">
-	<tr><th>제 목</th><td>${ notice.noticetitle }</td></tr>
-	<tr><th>작성자</th><td>${ notice.userid }</td></tr>
-	<tr><th>날 짜</th><td>${ notice.noticedate }</td></tr>
-	<tr><th>조회수</th><td>${notice.readcount}</td></tr>
-	<tr><th>중요도</th>
-	<td><c:if test="${ notice.importance eq 1 }">일반</c:if>
-		<c:if test="${ notice.importance eq 2 }">중요</c:if>
-	</td></tr>
-	<tr><th>첨부파일</th>
-		<td>
-			<!-- 첨부파일이 있다면, 파일명 클릭시 다운로드 실행되게 함 -->
-			<c:if test="${ !empty notice.notice_upfile }">
-				<c:url var="nfd" value="/nfdown.do">
-					<c:param name="ofile" value="${ notice.notice_upfile }" />
-					<c:param name="rfile" value="${ notice.notice_refile }" />
-				</c:url>
-				<a href="${ nfd }">${ notice.notice_upfile }</a>
-			</c:if>
-			<!-- 첨부파일이 없다면 공백으로 처리함 -->
-			<c:if test="${ empty notice.notice_upfile }">
-				&nbsp;
-			</c:if>
-		</td>
-	</tr>
-	<tr><th>내 용</th><td>${ notice.noticecontent }</td></tr>
-	<tr><th colspan="2">
-		<button onclick="javascript:history.go(-1);" class="button">목록</button>
-		
-		<!-- 수정페이지로 이동 버튼 -->
-		<c:url var="movenup" value="/nmoveup.do">
-			<c:param name="noticeno" value="${ notice.noticeno }" />			
-		</c:url>
-		<button onclick="javascript:location.href='${ movenup }';" class="button">수정</button>
-		<!-- 삭제하기 버튼 -->
-		<c:url var="ndel" value="/ndel.do">
-			<c:param name="noticeno" value="${ notice.noticeno }" />
-			<c:param name="rfile" value="${ notice.notice_refile }" />
-		</c:url>
-		<button onclick="javascript:location.href='${ ndel }';" class="button">글삭제</button>
-	</th></tr>
-</table>
-<br>
-<footer>
-<br><br> Copyright ©Circle: Project 'Foodstagram' <br><br>
-</footer>
+	<!-- Wrap -->
+	<div id="wrap">
+		<!-- Header -->
+		<div id="header">
+			<c:import url="/WEB-INF/views/common/nav.jsp" />
+		</div>
+		<!-- END Header -->
+		<!-- Container -->
+		<div id="scontainer00">
+			<div class="s_container">
+				<ul class="stab">
+					<!--Button-->
+					<div class="board_btn">
+						<input type="button" class="board_bt_style01" title=""
+							value="목록으로" name=""
+							onclick="location.href ='${ pageContext.servletContext.contextPath }/nlist.do';">
+						<p></p>
+					</div>
+			</div>
+
+			</ul>
+			<div id="board_area">
+				<!--Board_View-->
+				<table cellpadding="0" cellspacing="0" class="free_board_view"
+					summary="">
+					<colgroup>
+						<col width="85">
+						<col width="*">
+						<col width="85">
+						<col width="100">
+						<col width="85">
+						<col width="80">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>&nbsp;&nbsp;&nbsp;&nbsp;<img
+								src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_01.png"
+								border="0" alt="제목">
+							<td colspan="4" class="board_title01">${ notice.noticetitle }&nbsp;&nbsp;&nbsp;&nbsp;
+								<c:if test="${ notice.importance eq 1 }"></c:if> <c:if
+									test="${ notice.importance eq 2 }">
+									<img
+										src="${ pageContext.servletContext.contextPath }/resources/notice_img/notice.png">
+								</c:if>
+							<td style="text-align: right;"><span class="mr2"> <img
+									src="../notice_img/empty.png" width="16" height="16" border="0"
+									alt=""></a></span> <span class="mr2"><img
+									src="../notice_img/empty.png" width="17" height="16" border="0"
+									alt=""></a></span></td>
+						</tr>
+						<tr>
+							<th><img
+								src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_02.png"
+								border="0" alt="작성자 "></th>
+							<td class="board_data">${ notice.userid }</td>
+							<th><img
+								src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_04.png"
+								border="0" alt="등록일 "></th>
+							<td class="board_data">${ notice.noticedate }</td>
+							<th><img
+								src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_06.png"
+								border="0" alt="조회수"></th>
+							<td class="board_data">${ notice.readcount }</td>
+						</tr>
+
+						<tr>
+							<td colspan="6" class="board_data2">
+								<!-- 파일이 그림일 경우 출력(gif/jpg) -->
+								<p style="line-height: 2;"></p>
+								<p align="justify" style="text-align: justify; line-height: 2;">
+									<span style="font-family:"나눔고딕", "NanumGothic" , Sans-serif; font-size: 10pt;">
+										<pre style="padding: 30px">${ notice.noticecontent } <br><br><br><br><br><br></pre></span>
+								</p>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<!-- END View -->
+			<table cellpadding="20px" cellspacing="0" class="pre_next" summary="">
+				<tbody>
+					<tr class="board_data">
+						<th><img
+							src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_05.png"
+							width="41" height="14" border="0" alt="첨부파일"></th>
+						<td>
+							<!-- 첨부파일이 있다면, 파일명 클릭시 다운로드 실행되게 함 --> <c:if
+								test="${!empty notice.notice_upfile }">
+								<c:url var="nfd" value="/nfdown.do">
+									<c:param name="ofile" value="${notice.notice_upfile }" />
+									<c:param name="rfile" value="${notice.notice_refile }" />
+								</c:url>
+								<a href="${ nfd }">${notice.notice_upfile }</a>
+							</c:if> <!-- 첨부파일이 없다면 공백처리함 --> <c:if
+								test="${empty notice.notice_upfile }">&nbsp; </c:if>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!--END Board-->
+
+			<!-- Footer Start -->
+			<!-- Footer End -->
+			<!--Button-->
+<%-- 				<input type="button" class="board_bt_style01" title="" value="목록으로"
+					name=""
+					onclick="location.href ='${ pageContext.servletContext.contextPath }/nlist.do';">
+ --%>				
+
+ 					<br><br>
+					<!-- 수정페이지로 이동 버튼 -->
+					<tr align="center">
+					<th colspan="2">
+					<div class="board_btn">
+					<c:url var="movenup" value="/nmoveup.do" >
+						<c:param name="noticeno" value="${ notice.noticeno }" />
+					</c:url>
+					<button type="button" onclick="location.href='${ movenup }';" class="board_bt_style01">수정</button>
+					<!-- 삭제하기 버튼 -->
+					<c:url var="ndel" value="/ndel.do">
+						<c:param name="noticeno" value="${ notice.noticeno }" />
+						<c:param name="rfile" value="${ notice.notice_refile }" />
+					</c:url>
+					<button type="button" onclick="javascript:location.href='${ ndel }';"
+						class="board_bt_style01" >삭제</button>
+						</div>
+						</th></tr>
+				</div>
+				</div>
+			</div>
 </body>
 </html>

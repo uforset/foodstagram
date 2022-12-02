@@ -103,6 +103,7 @@ public class MemberDao {
 		return (ArrayList<Member>)list;
 	}
 
+
 	public ArrayList<Member> searchLoginok(SearchPaging searchpaging) {
 		List<Member> list = session.selectList("memberMapper.searchLoginok", searchpaging);
 		return (ArrayList<Member>)list;
@@ -126,6 +127,23 @@ public class MemberDao {
 	}
 
 
-
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

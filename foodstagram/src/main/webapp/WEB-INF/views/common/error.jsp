@@ -29,8 +29,8 @@ context root => first/src/main/webapp 을 의미함
 root 에서 출발시키는 경로를 웹에서 절대경로라고 함
 -->
 <!-- jsp 페이지에서 컨트롤러를 요청할 때는 반드시 컨텍스트 루트에서 실행시키도록 함 -->
-<c:url var="movemain" value="/loginPage.do" />
-<a href="${ movemain }">시작페이지로 이동</a>
+<c:url var="movenlist" value="/nlist.do" />
+<a href="${ movenlist }">이전 페이지로 이동</a>
 <!-- 상대경로 : 현재 문서를 기준으로 대상까지의 경로
 		같은 폴더에 있으면 : 파일명.확장자, 폴더명/파일명.확장자
 		다른 폴더에 있으면 : ./(현재 폴더), ../(한단계 위로)		

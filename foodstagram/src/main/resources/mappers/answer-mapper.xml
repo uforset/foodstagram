@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="answerMapper">
+
+	<resultMap type="Answer" id="resultAnswer">
+		<id column="a_id" property="a_id"/>
+		<result column="a_ref" property="a_ref" />
+		<result column="userid" property="userid" />
+		<result column="a_date" property="a_date" />
+		<result column="a_content" property="a_content" />
+	</resultMap>
+
+	<select id="getAnswer" parameterType="int" resultType="Answer">
+		select * from answer where a_ref = #{a_ref}
+	</select>
+
+	<insert id="insertAnswer" parameterType="Answer">
+		insert into answer (a_id,
+							a_ref,
+							userid,
+							a_date,
+							a_content)
+					values (default,
+							#{a_ref},
+							#{userid},
+							default,
+							#{a_content})
+	</insert>
+
+	<update id="updateAnswer" parameterType="Answer">
+		update answer set
+					a_content = #{a_content},
+					userid = #{userid},
+					a_date = SYSDATE
+				where
+					a_id = #{a_id}
+	</update>
+	
+	<delete id="deleteAnswer" parameterType="int">
+		delete from answer 
+				where a_id = #{a_id}
+	</delete>
+</mapper>

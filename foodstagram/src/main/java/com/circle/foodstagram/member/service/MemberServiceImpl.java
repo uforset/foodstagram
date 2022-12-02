@@ -86,7 +86,7 @@ public class MemberServiceImpl implements MemberService{
 	public ArrayList<Member> selectList2(Object object) {
 		return memberDao.selectList2();
 	}
-//추가
+
 	@Override
 	public ArrayList<Member> selectList() {
 		return memberDao.selectList();
@@ -131,7 +131,6 @@ public class MemberServiceImpl implements MemberService{
 	public int aupdateMember(Member member) {
 		return memberDao.aupdateMember(member);
 	}
-
 
 
 

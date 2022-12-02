@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="attachMapper">
+
+	<insert id="insertAttach" parameterType="Attach">
+		insert into attach (atch_no,
+							atch_parent_no,
+							atch_category,
+							atch_file_name,
+							atch_original_name,
+							atch_file_size,
+							atch_fancy_size,
+							atch_content_type,
+							atch_path,
+							atch_down_hit,
+							atch_reg_date)
+					values (default,
+							#{atch_parent_no},
+							#{atch_category},
+							#{atch_file_name},
+							#{atch_original_name},
+							#{atch_file_size},
+							#{atch_fancy_size},
+							#{atch_content_type},
+							#{atch_path},
+							0,
+							default)
+	</insert>
+
+<!-- 	<select id="getAttachListByParent" parameterType="Attach" resultType="Attach">
+		select atch_no
+			, atch_file_name
+	        , atch_original_name
+	        , atch_fancy_size
+	        , atch_down_hit
+	        , TO_CHAR(atch_reg_date, 'YYYY.MM.DD') AS atch_reg_date
+	    FROM  attach
+	   WHERE  atch_parent_no = #{atch_parent_no}
+	   AND 	  atch_category = 'Question'
+	</select> 아래처럼 수정 다른매퍼도, 중복코드 수정 -->
+
+	<select id="getAttachListByParent" parameterType="Attach" resultType="Attach">
+		select atch_no
+			, atch_file_name
+	        , atch_original_name
+	        , atch_fancy_size
+	        , atch_down_hit
+	        , TO_CHAR(atch_reg_date, 'YYYY.MM.DD') AS atch_reg_date
+	    FROM  attach
+	   WHERE  atch_parent_no = #{atch_parent_no}
+	   AND 	  atch_category = #{atch_category}
+	</select>
+	
+	<select id="getAttach" parameterType="int" resultType="Attach">
+		select * from attach where atch_no = #{atch_no}
+	</select>
+	
+	<delete id="deleteAttach" parameterType="int">
+		delete from attach where atch_no = #{atch_no}
+	</delete>
+	
+	<update id="increaseDownHit" parameterType="int">
+		update attach 
+		set atch_down_hit = atch_down_hit +1 
+		where atch_no = #{atch_no}
+	</update>
+</mapper>

@@ -26,7 +26,12 @@ import com.circle.foodstagram.common.SearchPaging;
 import com.circle.foodstagram.member.model.vo.Member;
 import com.circle.foodstagram.member.service.MailSendService;
 import com.circle.foodstagram.member.service.MemberService;
+import com.circle.foodstagram.notification.model.service.NotificationService;
+import com.circle.foodstagram.notification.model.vo.Notification;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Controller
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -39,6 +44,10 @@ public class MemberController {
 
 	@Autowired
 	private MailSendService mailService;
+	
+	@Autowired
+	private NotificationService notificationService;
+	
 	// 뷰 페이지 이동 처리용 --------------------------------------------------
 	@RequestMapping("enrollPage.do")
 	public String moveEnrollPage() {
@@ -299,6 +308,7 @@ public class MemberController {
 		}else {
 			model.addAttribute("message", 
 					member.getUserid() + " : 회원 정보 수정 실패!");
+
 			return "common/error";
 		}
 
@@ -329,38 +339,6 @@ public class MemberController {
 		return viewName;
 	}
 	
-	//	회원 관리 이동용- 임시
-//	@RequestMapping("mlist.do") //main.do 파일 요청이 오면 메소드가 진행되게끔 하라는 의미 public
-//	String MemberPageView() { 
-//		return "member/memberListView"; // 내보낼 뷰파일명 리턴
-//	}
-	
-	//회원관리이동용 회원전체목록 처리용
-//	@RequestMapping("mlist.do")
-//	public String memberListViewMethod(Model model) {
-//		ArrayList<Member> list = memberService.selectList();
-//		
-//		if(list.size() > 0) {
-//			model.addAttribute("list", list);
-//			return "member/memberListView";
-//		}else {
-//			model.addAttribute("message", "회원 정보가 존재하지 않습니다.");
-//			return "common/error";
-//		}
-//	}
-
-	//로그인 제한/가능 변경 처리용
-//	@RequestMapping("loginok.do")
-//	public String changeLoginOKMethod(Member member, Model model) {
-//		logger.info("loginok.do : " + member.getUserid() + ", " + member.getLoginok());
-//
-//		if(memberService.updateLoginOK(member) > 0) {
-//			return "redirect:mmlist.do";
-//		}else {
-//			model.addAttribute("message", "로그인 제한/허용 처리 오류 발생");
-//			return "common/error";
-//		}
-//	}
 
 	//회원 검색 처리용 
 	@RequestMapping(value="msearch.do", method=RequestMethod.POST)
@@ -398,7 +376,7 @@ public class MemberController {
 			return "common/error";
 		}
 	}
-	
+
 	
 //	//게시글 페이지 단위로 목록보기 요청 처리용
 	@RequestMapping("mmlist.do")

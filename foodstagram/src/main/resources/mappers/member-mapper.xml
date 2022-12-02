@@ -80,12 +80,10 @@
 	</update>
 
 	<!-- 회원 전체 조회용 -->
-	<!-- <select id="selectList" resultMap="resultList"> select * from member 
-		order by userid asc </select> -->
-
 	<select id="getListCount" resultType="_int">
 		select count(*) from member
 	</select>
+
 
 	<!-- loginok 값 변경용 -->
 	<update id="updateLoginOK" parameterType="Member">

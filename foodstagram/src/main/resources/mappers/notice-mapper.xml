@@ -81,7 +81,7 @@
 	<insert id="insertNotice" parameterType="Notice">
 		insert into notice (NOTICENO, NOTICETITLE, USERID, 
 		NOTICEDATE, NOTICE_UPFILE, NOTICE_REFILE, NOTICECONTENT, READCOUNT, IMPORTANCE) 
-		values ((select max(noticeno) + 1 from notice), 
+		values (DEFAULT, 
 				#{ noticetitle }, #{ userid }, sysdate, 
 				#{ notice_upfile, jdbcType=VARCHAR }, 
 				#{ notice_refile, jdbcType=VARCHAR }, 
@@ -113,7 +113,6 @@
 			<if test="importance == 0">
 			, importance = default
 			</if>
-			
 		where noticeno = #{ noticeno }
 	</update>
 	
@@ -138,6 +137,5 @@
 			where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 	</select>
-	
-	
+
 </mapper>
