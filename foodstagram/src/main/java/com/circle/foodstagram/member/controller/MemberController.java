@@ -2,12 +2,15 @@ package com.circle.foodstagram.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import com.circle.foodstagram.member.model.vo.KakaoLoginApi;
 import com.circle.foodstagram.common.Paging;
 import com.circle.foodstagram.common.SearchPaging;
 import com.circle.foodstagram.member.model.vo.Member;
@@ -29,6 +34,8 @@ import com.circle.foodstagram.member.service.MemberService;
 import com.circle.foodstagram.notification.model.service.NotificationService;
 import com.circle.foodstagram.notification.model.vo.Notification;
 
+
+import lombok.extern.slf4j.Slf4j;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -44,7 +51,9 @@ public class MemberController {
 
 	@Autowired
 	private MailSendService mailService;
-	
+
+	public Logger log;
+
 	@Autowired
 	private NotificationService notificationService;
 	
@@ -53,6 +62,33 @@ public class MemberController {
 	public String moveEnrollPage() {
 		return "member/enrollPage";
 	}
+
+	// 아이디 찾기 페이지 이동
+	@RequestMapping("findIDPage.do")
+	public String findIDPage() {
+		return "member/findIDPage";
+	}
+	
+	// 비밀번호 찾기 페이지 이동
+		@RequestMapping("pw_find.do")
+		public String pw_find() {
+			return "member/pw_find";
+		}
+	
+	// -------------------------------------------------------------
+	// 카카오 연동 객체 생성
+	KakaoLoginApi kakao_loginapi = new KakaoLoginApi();
+	
+	//로그인 페이지로 이동시, 카카오 로그인 버튼에 연결할 url 보냄
+		@RequestMapping(value="loginPage.do", method = { RequestMethod.GET, RequestMethod.POST })
+		public String moveLoginPage(Model model, HttpSession session) {
+			
+			String kakaoAuthUrl = kakao_loginapi.getAuthorizationUrl(session);
+			model.addAttribute("kurl", kakaoAuthUrl);
+			
+			return "member/loginPage";
+		}
+	
 
 	// 회원정보 변경을 위한 본인 인증 페이지로 이동
 	@RequestMapping("moveup.do")
@@ -83,7 +119,6 @@ public class MemberController {
 			return "common/error";
 		}
 	}
-
 
 	// -------------------------------------------------------------
 
@@ -184,6 +219,15 @@ public class MemberController {
 					"로그인 세션이 존재하지 않습니다.");
 			return "common/error";
 		}
+
+		// 임시 로그인 후 새로운 비밀번호 설정
+		@RequestMapping(value="resetpwd.do", method=RequestMethod.POST)
+		public String resetpwdMethod(Member member, Model model, HttpServletRequest request){
+			logger.info("resetpwd.do : " + member);
+			
+			//새로운 암호가 전송이 왔다면, 패스워드 암호화 처리함
+			String userpwd = member.getUserpwd().trim();
+			if(userpwd != null && userpwd.length() > 0) {
 	}
 
 	// 비밀번호 이메일 인증
@@ -243,6 +287,7 @@ public class MemberController {
 		if(userpwd != null && userpwd.length() > 0) {
 			//기존 암호와 다른 값이면
 			if(!this.bcryptPasswordEncoder.matches(userpwd, originUserpassword)) {
+        
 				//member 에 새로운 패스워드를 암호화해서 기록함
 				member.setUserpwd(this.bcryptPasswordEncoder.encode(userpwd));
 			}

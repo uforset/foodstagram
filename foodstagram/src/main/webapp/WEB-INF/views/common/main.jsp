@@ -233,11 +233,11 @@
         }
         
         .searchBtn{
-        	position:relative;
-        	bottom: 33px;
-        	left: 90px;
-        	border-radius: 10px;
-        	background-color: pink;
+           position:relative;
+           bottom: 33px;
+           left: 90px;
+           border-radius: 10px;
+           background-color: pink;
         }
         
     </style>
