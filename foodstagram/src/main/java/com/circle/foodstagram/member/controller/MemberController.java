@@ -87,9 +87,6 @@ public class MemberController {
 
 	// -------------------------------------------------------------
 
-	
-
-
 	//회원 가입 처리용
 	@RequestMapping(value="enroll.do", method=RequestMethod.POST)
 	public String memberInsertMethod(Member member, Model model) {
@@ -109,7 +106,6 @@ public class MemberController {
 			//회원 가입 실패
 			model.addAttribute("message", "회원 가입 실패!");
 			return "common/error";
-
 		}
 	}
 
@@ -312,6 +308,7 @@ public class MemberController {
 		}else {
 			model.addAttribute("message", 
 					member.getUserid() + " : 회원 정보 수정 실패!");
+
 			return "common/error";
 		}
 
@@ -342,76 +339,44 @@ public class MemberController {
 		return viewName;
 	}
 	
-	//	회원 관리 이동용- 임시
-//	@RequestMapping("mlist.do") //main.do 파일 요청이 오면 메소드가 진행되게끔 하라는 의미 public
-//	String MemberPageView() { 
-//		return "member/memberListView"; // 내보낼 뷰파일명 리턴
-//	}
-	
-	//회원관리이동용 회원전체목록 처리용
-//	@RequestMapping("mlist.do")
-//	public String memberListViewMethod(Model model) {
-//		ArrayList<Member> list = memberService.selectList();
-//		
-//		if(list.size() > 0) {
-//			model.addAttribute("list", list);
-//			return "member/memberListView";
-//		}else {
-//			model.addAttribute("message", "회원 정보가 존재하지 않습니다.");
-//			return "common/error";
-//		}
-//	}
 
-	//로그인 제한/가능 변경 처리용
-	@RequestMapping("loginok.do")
-	public String changeLoginOKMethod(Member member, Model model) {
-		logger.info("loginok.do : " + member.getUserid() + ", " + member.getLoginok());
+	//회원 검색 처리용 
+	@RequestMapping(value="msearch.do", method=RequestMethod.POST)
+	public String memberSearchMethod(
+			HttpServletRequest request, Model model) {
+		String action = request.getParameter("action");
+		String keyword = request.getParameter("keyword");
 
-		if(memberService.updateLoginOK(member) > 0) {
-			return "redirect:mmlist.do";
+		//서비스 메소드 리턴값 받을 리스트 준비
+		ArrayList<Member> list = null;
+
+		switch(action) {
+
+		case "userid": 	list = memberService.selectSearchUserid(keyword);
+		break;
+
+		case "loginok": list = memberService.selectSearchLoginOK(keyword);
+		break;
+		
+		case "email": list = memberService.selectSearchEmail(keyword);
+		break;
+
+		case "0" : list = memberService.selectList2(null);
+		break;
+
+		}
+
+		if(list.size() > 0) {
+			model.addAttribute("list", list);
+			return "member/memberListView";
 		}else {
-			model.addAttribute("message", "로그인 제한/허용 처리 오류 발생");
+			model.addAttribute("message", 
+					action + " 검색에 대한 " + keyword 
+					+ " 결과가 존재하지 않습니다.");
 			return "common/error";
 		}
 	}
 
-	//회원 검색 처리용 
-//	@RequestMapping(value="msearch.do", method=RequestMethod.POST)
-//	public String memberSearchMethod(
-//			HttpServletRequest request, Model model) {
-//		String action = request.getParameter("action");
-//		String keyword = request.getParameter("keyword");
-//
-//		//서비스 메소드 리턴값 받을 리스트 준비
-//		ArrayList<Member> list = null;
-//
-//		switch(action) {
-//
-//		case "userid": 	list = memberService.selectSearchUserid(keyword);
-//		break;
-//
-//		case "loginok": list = memberService.selectSearchLoginOK(keyword);
-//		break;
-//		
-//		case "email": list = memberService.selectSearchEmail(keyword);
-//		break;
-//
-//		case "0" : list = memberService.selectList2(null);
-//		break;
-//
-//		}
-//
-//		if(list.size() > 0) {
-//			model.addAttribute("list", list);
-//			return "member/memberListView";
-//		}else {
-//			model.addAttribute("message", 
-//					action + " 검색에 대한 " + keyword 
-//					+ " 결과가 존재하지 않습니다.");
-//			return "common/error";
-//		}
-//	}
-	
 	
 //	//게시글 페이지 단위로 목록보기 요청 처리용
 	@RequestMapping("mmlist.do")
@@ -521,6 +486,140 @@ public class MemberController {
 				}
 			}
 			
+			// 회원 로그인 여부 (활성/비활성) 검색용
+			@RequestMapping(value="msearchLogin.do", method=RequestMethod.GET)
+			public String memberSearchWriterMethod(
+					@RequestParam("keyword") String keyword, 
+					@RequestParam(name="page", required=false) String page,
+					Model model) {
+				int currentPage = 1;
+				if(page != null) {
+					currentPage = Integer.parseInt(page);
+				}
+				
+				ArrayList<Member> list = null;
+				
+				int limit = 10;
+				
+				int listCount = memberService.getSearchLoginCount(keyword);
+
+				int maxPage = (int)((double)listCount / limit + 0.9);
+
+				int startPage = (currentPage / 10) * 10 + 1;
+
+				int endPage = startPage + 10 - 1;
+				
+				if(maxPage < endPage) {
+					endPage = maxPage;
+				}
+				
+				//쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
+				int startRow = (currentPage - 1) * limit + 1;
+				int endRow = startRow + limit - 1;
+				
+				//페이징 계산 처리 끝 ---------------------------------------
+				SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
+				list = memberService.searchLoginok(searchpaging);
+				
+				if(list.size() > 0) {
+					model.addAttribute("list", list);
+					model.addAttribute("listCount", listCount);
+					model.addAttribute("maxPage", maxPage);
+					model.addAttribute("currentPage", currentPage);
+					model.addAttribute("startPage", startPage);
+					model.addAttribute("endPage", endPage);
+					model.addAttribute("limit", limit);
+					model.addAttribute("action", "login");
+					model.addAttribute("keyword", keyword);
+					return "member/memberListView";
+				}else {
+					model.addAttribute("message", 
+							keyword + "로 검색된 공지글 정보가 없습니다.");
+					return "common/error";
+				}
+			}
+			
+			// 회원 이메일 검색용	
+			@RequestMapping(value="msearchEmail.do", method=RequestMethod.GET)
+			public String memberSearchEmailMethod(
+					@RequestParam("keyword") String keyword, 
+					@RequestParam(name="page", required=false) String page,
+					Model model) {
+				int currentPage = 1;
+				if(page != null) {
+					currentPage = Integer.parseInt(page);
+				}
+				
+				ArrayList<Member> list = null;
+				
+				int limit = 10;
+				
+				int listCount = memberService.getSearchEmailCount(keyword);
+
+				int maxPage = (int)((double)listCount / limit + 0.9);
+
+				int startPage = (currentPage / 10) * 10 + 1;
+
+				int endPage = startPage + 10 - 1;
+				
+				if(maxPage < endPage) {
+					endPage = maxPage;
+				}
+
+				int startRow = (currentPage - 1) * limit + 1;
+				int endRow = startRow + limit - 1;
+				
+				//페이징 계산 처리 끝 ---------------------------------------
+				SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
+				
+				list = memberService.searchEmail(searchpaging);
+				
+				if(list.size() > 0) {
+					model.addAttribute("list", list);
+					model.addAttribute("listCount", listCount);
+					model.addAttribute("maxPage", maxPage);
+					model.addAttribute("currentPage", currentPage);
+					model.addAttribute("startPage", startPage);
+					model.addAttribute("endPage", endPage);
+					model.addAttribute("limit", limit);
+					model.addAttribute("action", "userid");
+					model.addAttribute("keyword", keyword);
+					return "member/memberListView";
+				}else {
+					model.addAttribute("message", 
+							keyword + "로 검색된 공지글 정보가 없습니다.");
+					return "common/error";
+				}
+			}
+			 
+			//수정페이지 이동
+			@RequestMapping("amoveup.do")
+			public String moveAdminUpdatePage(@RequestParam String userid, Model model) {
+				Member member = memberService.selectMember(userid);
+				if(member != null) {
+					model.addAttribute("member", member);
+					return "member/adminupdatePage";
+				} else {
+					model.addAttribute("message", userid + " : 회원 조회 실패!");
+					return "common/error";
+				}
+			}
+			
+			 //관리자 회원 정보 수정
+			@RequestMapping(value="amupdate.do", method=RequestMethod.POST)
+			public String memberUpdate(Member member, Model model) {		
+				logger.info("amupdate.do : " + member);
+				
+				logger.info("after : " + member);
+				
+				if(memberService.aupdateMember(member) > 0) {
+					return "redirect:mmlist.do";
+				}else {
+					model.addAttribute("message", member.getUserid() + " : 회원 정보 수정 실패!");
+					return "common/error";
+				}
+				
+			}
 }
 
 
