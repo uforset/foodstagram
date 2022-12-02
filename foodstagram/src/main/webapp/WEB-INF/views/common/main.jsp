@@ -11,9 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="resources/css/reset.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
-    <link href="resources/css/style.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <title>Foodstagram</title>
     <style>
         /* 메인페이지 */
@@ -22,7 +19,6 @@
             width: 930px;
             background-color: #FAFAFA;
         }
-
         td img {
             width: 290px;
             height: 290px;
@@ -30,7 +26,6 @@
             overflow: hidden;
             object-fit: cover;
         }
-
         /* 모달창 */
         .modal {
             position: fixed;
@@ -42,13 +37,11 @@
             justify-content: center;
             align-items: center;
         }
-
         .modal .bg {
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
         }
-
         .modalBox {
             position: absolute;
             background-color: #fff;
@@ -56,17 +49,14 @@
             height: 550px;
             padding: 10px;
         }
-
         .modalBox button {
             display: block;
             width: 80px;
             margin: 0 auto;
         }
-
         .hidden {
             display: none;
         }
-
         #otherProfile img {
             width: 33px;
             height: 33px;
@@ -75,7 +65,6 @@
             border: none;
             margin-bottom: 10px;
         }
-
         .closeBtn {
             display: inline-block;
             position: relative;
@@ -84,11 +73,9 @@
             cursor: pointer;
             display: block;
         }
-
         .closeBtn a {
             display: block;
         }
-
         .dot {
             display: inline-block;
             position: relative;
@@ -97,19 +84,15 @@
             cursor: pointer;
             display: block;
         }
-
         .dot i {
             color: #ececec;
         }
-
         .dot a {
             display: block;
         }
-
         .dot i:hover {
             color: #F95E25;
         }
-
         .modalImg img {
             display: inline-block;
             position: relative;
@@ -119,26 +102,21 @@
             object-fit: cover;
             border: none;
         }
-
         ul:not(.replyList) {
             display: flex;
         }
-
         ul li:not(.modalImg) {
             position: relative;
             left: -10px;
         }
-
         ul li ol {
             display: flex;
         }
-
         .id {
             position: relative;
             bottom: 20px;
             font-weight: bold;
         }
-
         .addFriend {
             padding: 5px;
             margin-left: 20px;
@@ -150,7 +128,6 @@
             border-radius: 10px;
             font-size: 14px;
         }
-
         .modalContent {
             padding-bottom: 20px;
             border-bottom: 1px solid #E5E5E5;
@@ -160,13 +137,10 @@
             font-size: 14px;
             overflow: auto;
         }
-
         .modalContent span a {
             color: rgb(116, 77, 116);
         }
-
         /* 하트, 댓글등 */
-
         .lr {
             position: relative;
             top: 380px;
@@ -177,24 +151,19 @@
             line-height: 33px;
             padding: 5px 0 10px 0;
         }
-
         .lr li {
             margin-left: 18px;
         }
-
         .fa-heart:hover {
             color: red;
         }
-
         .countingLike {
             font-weight: bold;
         }
-
         .resetBtn a {
             padding: 5px;
             display: block;
         }
-
         #recipe,
         #restaurant {
             width: 80px;
@@ -207,21 +176,17 @@
             background-color: #E5E5E5;
             font-size: 13px;
         }
-
         #restaurant:hover {
             background-color: #F95E25;
         }
-
         #recipe:hover {
             background-color: #F95E25;
         }
-
         .replyBox {
             position: relative;
             top: 475px;
             right: 430px;
         }
-
         .replyRig {
             width: 400px;
             height: 25px;
@@ -230,8 +195,6 @@
             border: #F0F0F0;
             transition: 0.5s ease-out;
         }
-
-
         .replyBtn {
             width: 80px;
             border: none;
@@ -244,12 +207,10 @@
             cursor: pointer;
             margin-left: -100px;
         }
-
         .replyBtn:hover {
             display: block;
             color: #F95E25;
         }
-
         .replyList {
             position: relative;
             top: 345px;
@@ -259,11 +220,9 @@
             padding: 10px;
             overflow: auto;
         }
-
         .replyList li {
             margin-bottom: 5px;
         }
-
         .chatBot {
             position: fixed;
             bottom: 3%;
@@ -272,78 +231,39 @@
             height: 150px;
             background-color: pink;
         }
+        
+        .searchBtn{
+           position:relative;
+           bottom: 33px;
+           left: 90px;
+           border-radius: 10px;
+           background-color: pink;
+        }
+        
     </style>
 </head>
+<!-- TWC chatbot Scripts -->
+<script src="https://public-common-sdk.s3.ap-northeast-2.amazonaws.com/sdk/seller/Twc.plugin.js"></script>
+
+<script>
+(function() {
+ Twc('init', {
+   brandKey: "m0qEkQGszGQPOJycVHShoA",
+   channelType: "scenario",
+scenarioId: "Njk=",
+   buttonOption: {
+     showLauncher: true,
+     zIndex: 10,
+     bottom: 25,
+     right: 25
+    }
+  })
+})();
+</script>
+<!--  End TWC chatbot Scripts -->
 
 <body>
-    <nav>
-        <ul>
-            <!--클릭시 홈으로이동-->
-            <li>
-                <ol>
-                    <li><a href="${ pageContext.servletContext.contextPath }/main.do"> <img src="resources/images/logo.png" class="logo"></a></li>
-                    <li><a href="${ pageContext.servletContext.contextPath }/main.do">
-                            <h1 class="h1">𝓕𝓸𝓸𝓭𝓼𝓽𝓪𝓰𝓻𝓪𝓶</h1>
-                        </a>
-                    </li>
-                    <li class="share">
-                        <i class="fas fa-regular fa-chevron-down fa-1x" id="shareBtn">
-                            <div class="shareContent"><a href="#">공유하기</a></div>
-                        </i></a>
-                    </li>
-                </ol>
-            </li>
-
-            <li style="text-align: center;">
-                <span>
-                    <select id="test" onchange="Change()"
-                        style="width: 95px;height:2.5rem; border:none; top:48px;text-align:center; right:308px;">
-                        <option value="1">음식 키워드</option>
-                        <option value="2">다른 사용자</option>
-                        <option value="3">여행지</option>
-                    </select>
-
-                    <!-- <span id="d1" style="position:relative; bottom: 40px; left: 160px;"> -->
-                    <span id="d1" style="position:relative; bottom: 40px; left: 160px;">
-                        <form action="searchTitle.do" method="get">
-                            <input type="search" name="keyword"
-                                style="width: 200px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
-                            <i class="fas fa-search fa-1x" class="btn" type="submit" value="검색"
-                                style="position:relative;bottom: 28px;left: 80px;"><a href="#"> </a></i>
-                        </form>
-                    </span>
-                    <span id="d2" style="display: none;position:relative; bottom: 40px; left: 160px;">
-                        <form action="searchWriter.do" method="get">
-                            <input type="search" name="keyword"
-                                style="width: 200px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
-                            <a href="#"> <i class="fas fa-search fa-1x" class="btn" type="submit" value="검색"
-                                    style="position:relative;bottom: 28px;left: 80px;"></i></a>
-                        </form>
-                    </span>
-                    <span id="d3" style="display: none;position:relative; bottom: 40px; left: 160px;">
-                        <form action="searchWriter.do" method="get">
-                            <input type="search" name="keyword"
-                                style="width: 200px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
-                            <a href="#"> <i class="fas fa-search fa-1x" class="btn" type="submit" value="검색"
-                                    style="position:relative;bottom: 28px;left: 80px;"></i></a>
-                        </form>
-                    </span>
-            </li>
-            <!--실행메뉴들 순서대로 홈(메인페이지), 친구메신저, 게시물 등록(촬영 및 업로드), 내프로필(마이페이지), 공지사항 이동 -->
-            <li style="width: 350px;margin-left: 350px;">
-                <ol>
-                    <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
-                    <li><a href="chat.html"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
-                    <li><a href="write.html"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
-                    <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
-                    <li><a href="mypage.html"><img src="resources/images/profile.jpg" id="profile"></a></li>
-                    <li><a href="#"><i class="fa-solid fa-bell fa-2x"></i></a></li>
-                    <li class="noneRead"></li>
-                </ol>
-            </li>
-        </ul>
-    </nav>
-
+ <c:import url="/WEB-INF/views/common/nav.jsp" />
     <section>
         <table class="mainPage">
             <tr>
@@ -433,7 +353,7 @@
             </tr>
         </table>
     </section>
-    <div class="chatBot">챗봇 들어갈 영역</div>
+
 
 
     <script>
@@ -441,34 +361,12 @@
         const open = () => {
             document.querySelector(".modal").classList.remove("hidden");
         }
-
         const close = () => {
             document.querySelector(".modal").classList.add("hidden");
         }
-
         document.querySelector(".openBtn").addEventListener("click", open);
         document.querySelector(".closeBtn").addEventListener("click", close);
         document.querySelector(".bg").addEventListener("click", close);
-
-        function Change() {
-            var key = test.value;
-            if (key == 1) {
-                document.all["d1"].style.display = "block";
-                document.all["d2"].style.display = "none";
-                document.all["d3"].style.display = "none";
-            }
-            if (key == 2) {
-                document.all["d1"].style.display = "none";
-                document.all["d2"].style.display = "block";
-                document.all["d3"].style.display = "none";
-            }
-            if (key == 3) {
-                document.all["d1"].style.display = "none";
-                document.all["d2"].style.display = "none";
-                document.all["d3"].style.display = "block";
-            }
-        }
-
     </script>
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>

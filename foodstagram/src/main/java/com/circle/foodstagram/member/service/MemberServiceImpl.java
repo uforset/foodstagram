@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.circle.foodstagram.common.Paging;
+import com.circle.foodstagram.common.SearchPaging;
 import com.circle.foodstagram.member.dao.MemberDao;
 import com.circle.foodstagram.member.model.vo.Member;
 
@@ -69,6 +71,11 @@ public class MemberServiceImpl implements MemberService{
 	public ArrayList<Member> selectSearchUserid(String keyword) {
 		return memberDao.selectSearchUserid(keyword);
 	}
+	
+	@Override
+	public ArrayList<Member> selectSearchEmail(String keyword) {
+		return memberDao.selectSearchEmail(keyword);
+	}
 
 	@Override
 	public ArrayList<Member> selectSearchLoginOK(String keyword) {
@@ -79,4 +86,53 @@ public class MemberServiceImpl implements MemberService{
 	public ArrayList<Member> selectList2(Object object) {
 		return memberDao.selectList2();
 	}
+
+	@Override
+	public ArrayList<Member> selectList() {
+		return memberDao.selectList();
+	}
+
+	@Override
+	public ArrayList<Member> selectList(Paging page) {
+		return memberDao.selectList(page);
+	}
+
+	@Override
+	public int getSearchIdCount(String keyword) {
+		return memberDao.getSearchIdCount(keyword);
+	}
+
+	@Override
+	public ArrayList<Member> searchId(SearchPaging searchpaging) {
+		return memberDao.searchId(searchpaging);
+	}
+
+	@Override
+	public int getSearchEmailCount(String keyword) {
+		return memberDao.getSearchEmailCount(keyword);
+	}
+
+	@Override
+	public int getSearchLoginCount(String keyword) {
+		return memberDao.getSearchLoginCount(keyword);
+	}
+
+	@Override
+	public ArrayList<Member> searchLoginok(SearchPaging searchpaging) {
+		return memberDao.searchLoginok(searchpaging);
+	}
+
+	@Override
+	public ArrayList<Member> searchEmail(SearchPaging searchpaging) {
+		return memberDao.searchEmail(searchpaging);
+	}
+
+	@Override
+	public int aupdateMember(Member member) {
+		return memberDao.aupdateMember(member);
+	}
+
+
+
+
 }

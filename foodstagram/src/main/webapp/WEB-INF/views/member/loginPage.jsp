@@ -15,7 +15,46 @@
   <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
   <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
   <script type="text/javascript">
- 
+//애플리케이션 등록하고 발급받은 javascript 앱키를 사용해야 함
+  Kakao.init('a6d2a7aa522e1a56f705fac9d21e56e1');
+  //sdk 초기화여부 판단
+  console.log(Kakao.isInitialized());
+
+  //카카오 로그인
+  function kakaoLogin(){	
+  	Kakao.Auth.login({	
+  		success : function(response) {				
+  			Kakao.API.request({
+  				url : '/v2/user/me',
+  				success : function(response) {
+  					console.log(response)
+  				},
+  				fail : function(error) {
+  					console.log(error)
+  				},
+  			})
+  		},
+  		fail : function(error) {
+  			console.log(error);				
+  		},
+  	})
+  }
+
+  //카카오로그아웃  
+  function kakaoLogout() {
+      if (Kakao.Auth.getAccessToken()) {
+        Kakao.API.request({
+          url: '/v1/user/unlink',
+          success: function (response) {
+          	console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+        Kakao.Auth.setAccessToken(undefined)
+      }
+  } 
   </script>
 </head>
 <body>
@@ -61,42 +100,7 @@
   </script>
   <br>
   <!-- 구글 로그인 -->
-  <!-- 
-  <script>
-        function handleCredentialResponse(response) {
-        	const responsePayload = parseJwt(response.credential);
-        	console.log("ID: " + responsePayload.sub);
-            console.log('Full Name: ' + responsePayload.name);
-            console.log('Given Name: ' + responsePayload.given_name);
-            console.log('Family Name: ' + responsePayload.family_name);
-            console.log("Image URL: " + responsePayload.picture);
-            console.log("Email: " + responsePayload.email);
-        }
-        function parseJwt (token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-
-            return JSON.parse(jsonPayload);
-        };
-        window.onload = function () {
-          google.accounts.id.initialize({
-            client_id: "134558823520-frjf75vdh2eia14jqkkrfaqlcme9cvkm.apps.googleusercontent.com",
-            callback: handleCredentialResponse
-          });
-          google.accounts.id.renderButton(
-            document.getElementById("buttonDiv"),
-            { theme: "outline", size: "large" }  // customization attributes
-          );
-          
-        }
-    </script>
-    
-    <div align="center" id="buttonDiv"></div>
-     -->
-     
+  
      <script src="https://accounts.google.com/gsi/client" async defer></script>
       <div id="g_id_onload"
          data-client_id="134558823520-frjf75vdh2eia14jqkkrfaqlcme9cvkm.apps.googleusercontent.com"
@@ -114,44 +118,8 @@
      
     <br>
     <!-- 카카오 로그인 -->
-    <script type="text/javascript">
-    Kakao.init('a6d2a7aa522e1a56f705fac9d21e56e1');
-    console.log(Kakao.isInitialized());
-    function kakaoLogin(){	
-    	Kakao.Auth.login({	
-    		success : function(response) {				
-    			Kakao.API.request({
-    				url : '/v2/user/me',
-    				success : function(response) {
-    					console.log(response)
-    				},
-    				fail : function(error) {
-    					console.log(error)
-    				},
-    			})
-    		},
-    		fail : function(error) {
-    			console.log(error);				
-    		},
-    	})
-    }
 
-    //카카오로그아웃  
-    function kakaoLogout() {
-        if (Kakao.Auth.getAccessToken()) {
-          Kakao.API.request({
-            url: '/v1/user/unlink',
-            success: function (response) {
-            	console.log(response)
-            },
-            fail: function (error) {
-              console.log(error)
-            },
-          })
-          Kakao.Auth.setAccessToken(undefined)
-        }
-    }  
-    </script>
+   
     <center>
 	<div id="kakao_id_login" class="kakao_id_login" style="text-align: center">
 	<a href="<c:url value='${kurl}'/>" class="cp"> 
