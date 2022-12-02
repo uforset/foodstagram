@@ -202,34 +202,6 @@ public class MemberController {
 		return viewName;
 	}
 
-	//로그아웃 처리용
-	@RequestMapping("logout.do")
-	public String logoutMethod(HttpServletRequest request, 
-			Model model) {
-		//로그인할 때 생성된 세션객체를 찾아서 없앰
-		HttpSession session = request.getSession(false);
-		//request 가 가진 세션id 에 대한 세션객체가 있으면 리턴
-		//없으면 null 리턴
-
-		if(session != null) {
-			session.invalidate(); //세션 객체를 없앰
-			return "common/main";
-		}else {
-			model.addAttribute("message", 
-					"로그인 세션이 존재하지 않습니다.");
-			return "common/error";
-		}
-
-		// 임시 로그인 후 새로운 비밀번호 설정
-		@RequestMapping(value="resetpwd.do", method=RequestMethod.POST)
-		public String resetpwdMethod(Member member, Model model, HttpServletRequest request){
-			logger.info("resetpwd.do : " + member);
-			
-			//새로운 암호가 전송이 왔다면, 패스워드 암호화 처리함
-			String userpwd = member.getUserpwd().trim();
-			if(userpwd != null && userpwd.length() > 0) {
-	}
-
 	// 비밀번호 이메일 인증
 	@RequestMapping("PWDmailCheck.do")
 	public String pwdmailCheck(@RequestParam("email") String email, HttpSession session, Model model) {
