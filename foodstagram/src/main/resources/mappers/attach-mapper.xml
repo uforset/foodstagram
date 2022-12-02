@@ -29,7 +29,7 @@
 							default)
 	</insert>
 
-	<select id="getAttachListByParent" parameterType="Attach" resultType="Attach">
+<!-- 	<select id="getAttachListByParent" parameterType="Attach" resultType="Attach">
 		select atch_no
 			, atch_file_name
 	        , atch_original_name
@@ -39,6 +39,18 @@
 	    FROM  attach
 	   WHERE  atch_parent_no = #{atch_parent_no}
 	   AND 	  atch_category = 'Question'
+	</select> 아래처럼 수정 다른매퍼도, 중복코드 수정 -->
+
+	<select id="getAttachListByParent" parameterType="Attach" resultType="Attach">
+		select atch_no
+			, atch_file_name
+	        , atch_original_name
+	        , atch_fancy_size
+	        , atch_down_hit
+	        , TO_CHAR(atch_reg_date, 'YYYY.MM.DD') AS atch_reg_date
+	    FROM  attach
+	   WHERE  atch_parent_no = #{atch_parent_no}
+	   AND 	  atch_category = #{atch_category}
 	</select>
 	
 	<select id="getAttach" parameterType="int" resultType="Attach">

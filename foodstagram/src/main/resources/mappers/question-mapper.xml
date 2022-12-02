@@ -13,8 +13,15 @@
 		<result column="answercheck" property="answercheck" />
 	</resultMap>
 
-	<resultMap type="Question" id="questionAttaches">
+<!-- 	<resultMap type="Question" id="questionAttaches">
 	    <collection property="attaches"   column="{atch_parent_no=q_no}"
+	    ofType="Attach" 
+	    select="attachMapper.getAttachListByParent"> 
+	    </collection>
+	</resultMap> -->
+
+	<resultMap type="Question" id="questionAttaches">
+	    <collection property="attaches"   column="{atch_parent_no=q_no, atch_category=atch_category}"
 	    ofType="Attach" 
 	    select="attachMapper.getAttachListByParent"> 
 	    </collection>
@@ -69,10 +76,12 @@
 	</insert>
 	
 	<select id="getQuestion" parameterType="int" resultType="Question" resultMap="questionAttaches">
-		select * from question
+		select q.*, 'Question' atch_category 
+		from question q 
 		where q_no = #{q_no}
 	</select>
-	
+
+
 	<update id="updateQuestion" parameterType="Question">
 		update Question set 
 							q_title=#{q_title},
