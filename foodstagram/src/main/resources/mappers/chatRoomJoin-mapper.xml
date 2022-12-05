@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatRoomJoinMapper">
+
+	<resultMap type="ChatRoomJoin" id="resultChatRoomJoin">
+		<id column="crj_no" property="crj_no" />
+		<result column="userid" property="userid" />
+		<result column="chat_room_id" property="chat_room_id" />
+	</resultMap>
+
+	<select id="getChatRoomJoinByRoomId" parameterType="string" resultMap="resultChatRoomJoin">
+		select * from chat_room_join
+		where chat_room_id= #{chat_room_id}
+	</select>
+	
+	<insert id="insertChatRoomJoin" parameterType="ChatRoomJoin">
+		insert into chat_room_join(userid, chat_room_id)
+							values(#{userid}, #{chat_room_id})
+	</insert>
+</mapper>

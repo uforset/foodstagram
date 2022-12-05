@@ -15,10 +15,11 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		var roomName = "${room.name}";
-		var roomId = "${room.roomId}";
+		var roomName = "${room.title}";
+		var roomId = "${room.chat_room_id}";
 
-		var username = "mine"
+		var username = "${ loginMember.userid }";
+		
 		console.log(roomName + ", " + roomId + ", " + username);
 
 		var sockJs = new SockJS("${pageContext.request.contextPath}/stomp");
@@ -83,7 +84,7 @@
 
 		<div class="container">
 			<div class="col-6">
-				<h1>[[${room.name}]]</h1>
+				<h1>[[${room.title}]]</h1>
 			</div>
 			<div>
 				<div id="msgArea" class="col"></div>

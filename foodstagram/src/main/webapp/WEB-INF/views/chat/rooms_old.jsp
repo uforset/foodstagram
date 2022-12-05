@@ -7,7 +7,7 @@
         <div class="container">
             <div>
                 <c:forEach var="room" items="${ list }">
-                	<li><a href="/foodstagram/chat/room?roomId=${room.chat_room_id}">[${room.title}]</a></li>
+                	<li><a href="/foodstagram/chat/room?roomId=${room.roomId}">[${room.name}]</a></li>
                 </c:forEach>
             </div>
         </div>

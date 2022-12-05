@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.circle.foodstagram.chat.model.dto.ChatMessageDTO;
-import com.circle.foodstagram.chat.model.vo.Chat;
+import com.circle.foodstagram.chat.model.vo.ChatMessage;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @Controller
 public class StompWebSocketController {
 
@@ -63,6 +65,8 @@ public class StompWebSocketController {
 
 	@MessageMapping(value = "/chat/message")
 	public void message(ChatMessageDTO message) {
+		log.info("send message....");
+		//메세지 DB인풋
 		template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
 	}
 

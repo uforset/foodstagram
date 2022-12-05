@@ -14,12 +14,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Chat implements Serializable {
-	private int no;
-	private String memberId;
-	private int srNo;
-	private String chatContent;
-	private Date sendDate;
+public class ChatRoomJoin implements Serializable {
 	
-	private String vaildYN;
+
+	private static final long serialVersionUID = -6469094334402005344L;
+	private int crj_no;
+	private String userid;
+	private String chat_room_id;
 }
