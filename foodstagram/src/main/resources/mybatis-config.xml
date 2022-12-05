@@ -19,6 +19,11 @@
 		<typeAlias type="com.circle.foodstagram.qna.model.vo.Question" alias="Question" />
 		<typeAlias type="com.circle.foodstagram.qna.model.vo.Answer" alias="Answer" />
 		<typeAlias type="com.circle.foodstagram.common.attach.model.vo.Attach" alias="Attach" />
+		<typeAlias type="com.circle.foodstagram.board.model.vo.Board" alias="Board" />
+		 <typeAlias type="com.circle.foodstagram.board.model.vo.Board_reply" alias="Board_reply" />
+      	<typeAlias type="com.circle.foodstagram.board.model.vo.Board_like" alias="Board_like" />
+      	<typeAlias type="com.circle.foodstagram.board.model.vo.Board_tag" alias="Board_tag" />
+      	<typeAlias type="com.circle.foodstagram.board.model.vo.Tag" alias="Tag" />
 	</typeAliases>
 	
 	<mappers>
@@ -28,5 +33,6 @@
 		<mapper resource="mappers/question-mapper.xml" />
 		<mapper resource="mappers/answer-mapper.xml" />
 		<mapper resource="mappers/attach-mapper.xml" />
+		<mapper resource="mappers/board-mapper.xml" />
 	</mappers>
 </configuration>
