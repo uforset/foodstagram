@@ -356,6 +356,19 @@ public class MemberController {
 		return viewName;
 	}
 	
+   //로그인 제한/가능 변경 처리용
+   @RequestMapping("loginok.do")
+   public String changeLoginOKMethod(Member member, Model model) {
+      logger.info("loginok.do : " + member.getUserid() + ", " + member.getLoginok());
+
+      if(memberService.updateLoginOK(member) > 0) {
+         return "redirect:mmlist.do";
+      }else {
+         model.addAttribute("message", "로그인 제한/허용 처리 오류 발생");
+         return "common/error";
+      }
+   }
+	
 
 	//회원 검색 처리용 
 	@RequestMapping(value="msearch.do", method=RequestMethod.POST)
