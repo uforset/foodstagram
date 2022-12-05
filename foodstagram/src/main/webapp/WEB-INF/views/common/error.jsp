@@ -1,39 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isErrorPage="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title></title>
+   <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Write Form(Take a pictures or upload images)</title>
+    <link href="resources/css/reset.css" rel="stylesheet">
+    <link href="resources/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
+
+<title>FoodStagram</title>
 </head>
+<c:import url="/WEB-INF/views/common/nav.jsp" />
+
 <body>
-<!-- 에러 메세지 출력 전담 페이지임 -->
-<%-- jsp 내장객체 exception 은 isErrorPage 속성이 true 일 때만 사용할 수 있음 --%>
-<%-- 에러 발생은 다른 jsp 에서 넘어오는 에러와 서버측 컨트롤러의 메소드에서 리턴하는 에러로 구분할 수 있음 --%>
-<h1>에러 페이지</h1>
+
+<br><br><br><br><br><br>
+
+<h1 align="center">Error Page</h1>
 <!-- 다른 jsp 에서 exception이 넘어온 경우의 처리 -->
 <c:set var="e" value="<%= exception %>" />
-<c:if test="${ !empty e }">  <!-- if(e != null)과 같음 -->
-	<h3>jsp 페이지 오류 발생 : ${ message }</h3>
+<c:if test="${ !empty e }">  <!-- if(e != null) 과 같음 -->
+	<h3 align="center"><%-- jsp 페이지 오류 발생 : ${ message } --%></h3>
 </c:if>
 
-<!-- 서버 측에서 서비스 요청에 대한 에러 메세지 리턴한 경우의 처리 -->
-<c:if test="${ empty e }">	 <!-- if(e != null)과 같음 -->
-	<h3>컨트롤러 요청 실패 메세지 : ${ message }</h3>
+<!-- 서버 측에서 서비스 요청에 대한 에러메세지 리턴한 경우의 처리 -->
+<c:if test="${ empty e }">  <!-- if(e == null) 과 같음 -->
+	<H3 align="center"><%-- 컨트롤러 요청 실패 메세지 : ${ message } --%></H3>
 </c:if>
 <hr>
-<!-- jstl 의 절대경로 표기법 : / == /context root 명
-context : application 을 의미함
-context root => first/src/main/webapp 을 의미함
-root 에서 출발시키는 경로를 웹에서 절대경로라고 함
--->
-<!-- jsp 페이지에서 컨트롤러를 요청할 때는 반드시 컨텍스트 루트에서 실행시키도록 함 -->
-<c:url var="movenlist" value="/nlist.do" />
-<a href="${ movenlist }">이전 페이지로 이동</a>
-<!-- 상대경로 : 현재 문서를 기준으로 대상까지의 경로
-		같은 폴더에 있으면 : 파일명.확장자, 폴더명/파일명.확장자
-		다른 폴더에 있으면 : ./(현재 폴더), ../(한단계 위로)		
- -->
+
+<c:url var="movemain" value="/main.do" />
+<h3 align="center"><a href="javascript:history.go(-1);">◀ 이전 페이지로 이동</a></h3><br><br>
+<hr>
+<h3 align="center"><a href="${ movemain }">▶시작 페이지로 이동</a></h3>
+
+<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>
 </html>
