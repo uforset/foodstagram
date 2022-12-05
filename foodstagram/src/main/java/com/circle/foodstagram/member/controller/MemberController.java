@@ -88,6 +88,47 @@ public class MemberController {
 			
 			return "member/loginPage";
 		}
+		
+		@RequestMapping(value = "/kcallback.do", produces = "application/json", 
+				method = { RequestMethod.GET, RequestMethod.POST })
+		public String kakaoLogin(
+				@RequestParam("code") String code, 
+				Model model, HttpSession session) throws Exception {
+
+			// 결과값을 node에 담아줌
+			JsonNode node = kakao_loginapi.getAccessToken(code); // accessToken에 사용자의 로그인한 모든 정보가 들어있음
+			JsonNode accessToken = node.get("access_token"); // 사용자의 정보
+			JsonNode userInfo = kakao_loginapi.getKakaoUserInfo(accessToken);
+
+			// 회원가입시 사용		
+			String kid = null;//카카오 로그인 id 값 받아오기
+			// 유저정보 카카오에서 가져오기 Get properties
+			JsonNode properties = userInfo.path("properties");
+			JsonNode kakao_account = userInfo.path("kakao_account");// 값 가져올 수 있지만 사용은 안함		
+			kid = userInfo.path("id").asText();
+			
+			// *값 받아온 것을 회원 정보와 확인해야함*//
+			Member member = new Member();
+			// 아이디 저장되 있는 이름 만들기
+			String checkid = "@K" + kid;// 카카오 아이디 저장 값
+			member.setUserid(checkid);
+			
+			// 간편 로그인 아이디에 해당하는 회원 정보 확인하러가기
+			//Member loginMember = memberService.selectLogin(member);
+			//if(loginMember != null) {//해당하는 아이디가 있으면 로그인 완료
+			if(checkid != null) {  //테스트용 조건임	
+				//카카오 로그인 세션에 저장
+				session.setAttribute("loginMember", member); // 세션 생성			
+				
+				return "member/loginPage";
+				
+			}else {
+				model.addAttribute("message", "카카오 로그인 회원 조회 실패");
+				return "common/error_login";
+				
+			}
+
+		}// end kakaoLogin()
 	
 
 	// 회원정보 변경을 위한 본인 인증 페이지로 이동
@@ -101,7 +142,7 @@ public class MemberController {
 			return "member/checkself";
 		}else {
 			model.addAttribute("message", userid + " : 회원 조회 실패!");
-			return "common/error";
+			return "common/error_login";
 		}
 	}
 
@@ -116,7 +157,7 @@ public class MemberController {
 			return "member/updatePage";
 		}else {
 			model.addAttribute("message", userid + " : 회원 조회 실패!");
-			return "common/error";
+			return "common/error_login";
 		}
 	}
 
@@ -140,7 +181,7 @@ public class MemberController {
 		}else {
 			//회원 가입 실패
 			model.addAttribute("message", "회원 가입 실패!");
-			return "common/error";
+			return "common/error_login";
 		}
 	}
 
@@ -196,11 +237,30 @@ public class MemberController {
 			model.addAttribute("message",
 					"로그인 실패 : 아이디나 암호 확인하세요.<br>"
 							+ "또는 로그인 제한 회원인지 관리자에게 문의하세요.");
-			viewName = "common/error";
+			viewName = "common/error_login";
 		}
 
 		return viewName;
 	}
+	
+	//로그아웃
+	@RequestMapping("logout.do")
+	public String logoutMethod(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession(false);
+		
+		if(session != null) {
+			session.invalidate();
+			return "member/loginPage";
+		}else {
+			model.addAttribute("message", "로그인 세션이 존재하지 않습니다.");
+			return "common/error_login";
+		}
+		
+	}
+	
+	
+	
 
 	// 비밀번호 이메일 인증
 	@RequestMapping("PWDmailCheck.do")
@@ -216,7 +276,7 @@ public class MemberController {
 		}else {
 			model.addAttribute("message", 
 					"비밀번호 찾기 메일 전송 실패.");
-			return "common/error";
+			return "common/error_login";
 		}
 	}
 	//리턴 타입으로 String, ModelAndView 를 사용할 수 있음
@@ -233,7 +293,7 @@ public class MemberController {
 			mv.setViewName("member/myinfoPage");
 		}else {
 			mv.addObject("message", userid + " : 회원 정보 조회 실패!");
-			mv.setViewName("common/error");
+			mv.setViewName("common/error_login");
 		}
 
 		return mv;		
@@ -282,7 +342,7 @@ public class MemberController {
 		}else {
 			model.addAttribute("message", 
 					member.getUserid() + " : 회원 정보 수정 실패!");
-			return "common/error";
+			return "common/error_login";
 		}
 
 	}
@@ -297,7 +357,7 @@ public class MemberController {
 			return "redirect:logout.do";
 		}else {
 			model.addAttribute("message", userid + " : 회원 삭제 실패!");
-			return "common/error";
+			return "common/error_login";
 		}
 	}
 
@@ -326,7 +386,7 @@ public class MemberController {
 			model.addAttribute("message", 
 					member.getUserid() + " : 회원 정보 수정 실패!");
 
-			return "common/error";
+			return "common/error_login";
 		}
 
 	}
@@ -350,7 +410,7 @@ public class MemberController {
 		}else {  //로그인 실패
 			model.addAttribute("message", 
 					"본인 인증 실패 : 암호를 확인하세요.");
-			viewName = "common/error";
+			viewName = "common/error_login";
 		}
 
 		return viewName;
@@ -390,7 +450,7 @@ public class MemberController {
 			model.addAttribute("message", 
 					action + " 검색에 대한 " + keyword 
 					+ " 결과가 존재하지 않습니다.");
-			return "common/error";
+			return "common/error_login";
 		}
 	}
 
@@ -446,7 +506,7 @@ public class MemberController {
 				}else {
 					mv.addObject("message", 
 							currentPage + " 페이지 목록 조회 실패.");
-					mv.setViewName("common/error");
+					mv.setViewName("common/error_login");
 				}
 				
 				return mv;
@@ -499,7 +559,7 @@ public class MemberController {
 				}else {
 					model.addAttribute("message", 
 							keyword + "로 검색된 공지글 정보가 없습니다.");
-					return "common/error";
+					return "common/error_login";
 				}
 			}
 			
@@ -552,7 +612,7 @@ public class MemberController {
 				}else {
 					model.addAttribute("message", 
 							keyword + "로 검색된 공지글 정보가 없습니다.");
-					return "common/error";
+					return "common/error_login";
 				}
 			}
 			
@@ -605,7 +665,7 @@ public class MemberController {
 				}else {
 					model.addAttribute("message", 
 							keyword + "로 검색된 공지글 정보가 없습니다.");
-					return "common/error";
+					return "common/error_login";
 				}
 			}
 			 
@@ -618,7 +678,7 @@ public class MemberController {
 					return "member/adminupdatePage";
 				} else {
 					model.addAttribute("message", userid + " : 회원 조회 실패!");
-					return "common/error";
+					return "common/error_login";
 				}
 			}
 			
@@ -633,7 +693,7 @@ public class MemberController {
 					return "redirect:mmlist.do";
 				}else {
 					model.addAttribute("message", member.getUserid() + " : 회원 정보 수정 실패!");
-					return "common/error";
+					return "common/error_login";
 				}
 				
 			}

@@ -290,9 +290,22 @@
             background-color: #E5E5E5;
             font-size: 13px;
         }
+        
+        .logout,
+        .adminMember {
+            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+            color: #333;
+            background-color: #E5E5E5;
+            font-size: 13px;
+        }
 
         .adminMember:hover,
-        .updateProfile:hover {
+        .updateProfile:hover, .logout:hover {
             background-color: #F95E25;
         }
 
@@ -338,7 +351,9 @@
                 <ul>
                     <li><span id="id">user001</span></li>
                     <li><a href="#"><button class="updateProfile">프로필 편집</button></a></li>
-                <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+                <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>
+                <li><a href="${ pageContext.servletContext.contextPath }/loginPage.do"><button class="logout">로그아웃</button></a></li>
+                  
                     
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                <%--  <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y' }">

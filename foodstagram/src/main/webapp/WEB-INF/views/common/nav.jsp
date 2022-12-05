@@ -108,7 +108,7 @@ i:hover {
     left: 5px;
 }
 
-.shareContent {
+.logout2 {
     display: none;
     position: absolute;
     z-index: 1;
@@ -119,18 +119,18 @@ i:hover {
     border-radius: 20px;
 }
 
-.shareContent a {
+.logout2 a {
     display: block;
     color: rgb(37, 37, 37);
     font-size: 14px;
     padding: 12px 20px;
 }
 
-.shareContent:hover {
+.logout2:hover {
     background-color: #F95E25;
 }
 
-.share:hover .shareContent {
+.share:hover .logout2 {
     display: block;
 }
 
@@ -186,7 +186,7 @@ li {list-style: none;}
                     </li>
                     <li class="share">
                         <i class="fas fa-regular fa-chevron-down fa-1x" id="shareBtn">
-                            <div class="shareContent"><a href="#">공유하기</a></div>
+                            <div class="logout2"><a href="${ pageContext.servletContext.contextPath }/loginPage.do">로그아웃</a></div>
                         </i></a>
                     </li>
                 </ol>
