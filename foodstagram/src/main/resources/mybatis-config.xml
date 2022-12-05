@@ -22,6 +22,11 @@
 		<typeAlias type="com.circle.foodstagram.chat.model.vo.ChatMessage" alias="ChatMessage" />
 		<typeAlias type="com.circle.foodstagram.chat.model.vo.ChatRoom" alias="ChatRoom" />
 		<typeAlias type="com.circle.foodstagram.chat.model.vo.ChatRoomJoin" alias="ChatRoomJoin" />
+		<typeAlias type="com.circle.foodstagram.board.model.vo.Board" alias="Board" />
+		 <typeAlias type="com.circle.foodstagram.board.model.vo.Board_reply" alias="Board_reply" />
+      	<typeAlias type="com.circle.foodstagram.board.model.vo.Board_like" alias="Board_like" />
+      	<typeAlias type="com.circle.foodstagram.board.model.vo.Board_tag" alias="Board_tag" />
+      	<typeAlias type="com.circle.foodstagram.board.model.vo.Tag" alias="Tag" />
 	</typeAliases>
 	
 	<mappers>
@@ -34,5 +39,6 @@
 		<mapper resource="mappers/chatMessage-mapper.xml" />
 		<mapper resource="mappers/chatRoom-mapper.xml" />
 		<mapper resource="mappers/chatRoomJoin-mapper.xml" />
+		<mapper resource="mappers/board-mapper.xml" />
 	</mappers>
 </configuration>

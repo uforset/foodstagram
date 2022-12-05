@@ -80,17 +80,10 @@
 	</update>
 
 	<!-- 회원 전체 조회용 -->
-	<!-- <select id="selectList" resultMap="resultList"> select * from member 
-		order by userid asc </select> -->
-
 	<select id="getListCount" resultType="_int">
 		select count(*) from member
 	</select>
-	
-	<select id="getSearchIdCount" resultType="_int" parameterType="string">
-		select count(*) from member
-		where userid like '%' || #{ keyword } || '%'
-	</select>
+
 
 	<!-- loginok 값 변경용 -->
 	<update id="updateLoginOK" parameterType="Member">
@@ -130,7 +123,21 @@
 		userid not like '%admin%'
 		order by userid asc
 	</select>
-
+	
+	<select id="getSearchLoginCount" resultType="_int" parameterType="string">
+		select count(*) from member
+		where loginok like '%' || #{ keyword } || '%'
+	</select>
+	
+<select id="getSearchIdCount" resultType="_int" parameterType="string">
+		select count(*) from member
+		where userid like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchEmailCount" resultType="_int" parameterType="string">
+		select count(*) from member
+		where email like '%' || #{ keyword } || '%'
+	</select>
 
 
 	<select id="selectList" parameterType="Paging"
@@ -157,5 +164,38 @@
 			where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 	</select>
+	
+				<select id="searchEmail" resultMap="resultList" parameterType="SearchPaging">
+		<![CDATA[
+				select *
+			from (select rownum rnum, userid, userpwd, username, gender, birth_date,
+			email, loginok, admin
+			from (select * from member
+		             where email like '%' || #{keyword} || '%'
+		             order by userid desc
+		              )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+				<select id="searchLoginok" resultMap="resultList" parameterType="SearchPaging">
+		<![CDATA[
+				select *
+			from (select rownum rnum, userid, userpwd, username, gender, birth_date,
+			email, loginok, admin
+			from (select * from member
+		             where loginok like '%' || #{keyword} || '%'
+		             order by userid desc
+		              )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<update id="aupdateMember" parameterType="Member">
+		update member
+		set email = #{ email }
+		where userid = #{ userid } 
+	</update>
+
 
 </mapper>

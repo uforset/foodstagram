@@ -36,17 +36,20 @@ public class HomeController {
 		return "home";
 	}
 	
-	// @RequestMapping : 메소드 연결해주는 의미 ... 조심 : 404 에러 주요 원인 
 	@RequestMapping("loginPage.do") //main.do 파일 요청이 오면 메소드가 진행되게끔 하라는 의미 
-	public String forwardMainView() {
+	public String forwardLoginView() {
 		return "member/loginPage"; // 내보낼 뷰파일명 리턴
 	}
 	
-//	임시 - 내 페이지 이동용
+    // 내 페이지 이동용
 	@RequestMapping("mpage.do") //main.do 파일 요청이 오면 메소드가 진행되게끔 하라는 의미 
 	public String MemberPageView() {
 		return "member/mypage"; // 내보낼 뷰파일명 리턴
 	}
 	
+	@RequestMapping("main.do") //main.do 파일 요청이 오면 메소드가 진행되게끔 하라는 의미 
+	public String forwardMainView() {
+	     return "common/main"; // 내보낼 뷰파일명 리턴
+	}
 	
 }

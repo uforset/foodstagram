@@ -86,7 +86,7 @@ public class MemberServiceImpl implements MemberService{
 	public ArrayList<Member> selectList2(Object object) {
 		return memberDao.selectList2();
 	}
-//추가
+
 	@Override
 	public ArrayList<Member> selectList() {
 		return memberDao.selectList();
@@ -107,6 +107,30 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.searchId(searchpaging);
 	}
 
+	@Override
+	public int getSearchEmailCount(String keyword) {
+		return memberDao.getSearchEmailCount(keyword);
+	}
+
+	@Override
+	public int getSearchLoginCount(String keyword) {
+		return memberDao.getSearchLoginCount(keyword);
+	}
+
+	@Override
+	public ArrayList<Member> searchLoginok(SearchPaging searchpaging) {
+		return memberDao.searchLoginok(searchpaging);
+	}
+
+	@Override
+	public ArrayList<Member> searchEmail(SearchPaging searchpaging) {
+		return memberDao.searchEmail(searchpaging);
+	}
+
+	@Override
+	public int aupdateMember(Member member) {
+		return memberDao.aupdateMember(member);
+	}
 
 
 

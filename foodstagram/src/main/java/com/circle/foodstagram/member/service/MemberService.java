@@ -25,5 +25,11 @@ public interface MemberService {
 	ArrayList<Member> selectList();//추가
 	ArrayList<Member> selectList(Paging page); //한 페이지 출력할 게시글 조회용
 	int getSearchIdCount(String keyword);
+	int getSearchEmailCount(String keyword);
+	int getSearchLoginCount(String keyword);
 	ArrayList<Member> searchId(SearchPaging searchpaging);
+	ArrayList<Member> searchLoginok(SearchPaging searchpaging);
+	ArrayList<Member> searchEmail(SearchPaging searchpaging);
+	int aupdateMember(Member member);
+
 }

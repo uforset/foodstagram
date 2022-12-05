@@ -14,7 +14,6 @@
     <link href="./css/reset.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <title></title>
-
     <style>
         * {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -43,7 +42,6 @@ nav ul .searchBox {
     padding-left: 30px;
 }
 
-
 nav ul li ol {
     display: flex;
 }
@@ -52,7 +50,6 @@ nav ul li ol {
 .logo {
     width: 40px;
 }
-
 
 .h1 {
     margin-left: 10px;
@@ -63,7 +60,6 @@ nav ul li ol {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 
 nav ul li ol:first-child {
     margin-right: -15px;
@@ -77,7 +73,6 @@ i {
     color: #E5E5E5;
     transition: 0.6s ease-out;
 }
-
 
 i:hover {
     color: #F95E25;
@@ -99,10 +94,12 @@ i:hover {
 
 }
 
+
 #shareBtn:hover {
     display: block;
     cursor: pointer;
 }
+
 
 #shareBtn {
     padding: 0 10px 0 10px;
@@ -129,7 +126,6 @@ i:hover {
     padding: 12px 20px;
 }
 
-
 .shareContent:hover {
     background-color: #F95E25;
 }
@@ -138,7 +134,6 @@ i:hover {
     display: block;
 }
 
-
 .noneRead {
     width: 5px;
     height: 5px;
@@ -146,65 +141,47 @@ i:hover {
     border-radius: 50%;
 }
 
-.searchBtn{
-    position:relative;
+.searchBtn {
+    position: relative;
     bottom: 33px;
     left: 90px;
     border-radius: 10px;
-    background-color: pink;
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    transition: 0.5s ease-out;
+}
+
+.searchBtn:hover {
+   color:#F95E25;
 }
 
 li {list-style: none;}
 </style>
     <script>
-        function Change() {
-            var key = test.value;
+        function Change2() {
+            var key = test2.value;
             if (key == 1) {
-                document.all["d1"].style.display = "block";
-                document.all["d2"].style.display = "none";
-                document.all["d3"].style.display = "none";
+                document.all["d4"].style.display = "block";
+                document.all["d5"].style.display = "none";
+                document.all["d6"].style.display = "none";
             }
             if (key == 2) {
-                document.all["d1"].style.display = "none";
-                document.all["d2"].style.display = "block";
-                document.all["d3"].style.display = "none";
+                document.all["d4"].style.display = "none";
+                document.all["d5"].style.display = "block";
+                document.all["d6"].style.display = "none";
             }
             if (key == 3) {
-                document.all["d1"].style.display = "none";
-                document.all["d2"].style.display = "none";
-                document.all["d3"].style.display = "block";
+                document.all["d4"].style.display = "none";
+                document.all["d5"].style.display = "none";
+                document.all["d6"].style.display = "block";
             }
         }
     </script>
-    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
-    <script type="text/javascript">
-	$(function(){
-		$.ajax({
-			url: "readCheck.do",
-			type: "get",
-			data: {userid: "${loginMember.userid}" },
-			dataType: 'json',
-			success: function(data, jqXHR, textStatus){
-				//alert("readcheck : " + data.read);
-				if( data.read == "read" ) {
-					//
-				} else {
-					console.log("hi")
-					$("ol.navlist").html(  $("ol.navlist").html() + "<li class='noneRead'></li>" )
-					
-				}
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				console.log("xxxxxxxxxxxxxxxxxxxx");
-				console.log(jqXHR + ", " + textStatus + ", " + errorThrown);
-			}
-		});
-	});
-	</script>
 </head>
 
 <body>
-	<nav>
+   <nav>
         <ul>
             <!--클릭시 홈으로이동-->
             <li>
@@ -224,21 +201,21 @@ li {list-style: none;}
 
             <li style="text-align: center;">
                 <span>
-                    <select id="test" onchange="Change()"
+                    <select id="test2" onchange="Change2()"
                         style="width: 95px;height:2.5rem; border:none; top:48px;text-align:center; right:308px;">
                         <option value="1">음식 키워드</option>
                         <option value="2">다른 사용자</option>
                         <option value="3">여행지</option>
                     </select>
 
-                    <span id="d1" style="position:relative; bottom: 40px; left: 190px;">
+                    <span id="d4" style="position:relative; bottom: 40px; left: 190px;">
                         <form action="searchTitle.do" method="get">
                             <input type="search" name="keyword"  placeholder="'음식명'을 입력해주세요" required
                                 style="width: 260px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
                             <button onclick="#" class="searchBtn" type="search" name="keyword">검색</button>
                         </form>
                     </span>
-                    <span id="d2" style="display: none;position:relative; bottom: 40px; left: 190px;">
+                    <span id="d5" style="display: none;position:relative; bottom: 40px; left: 190px;">
                         <form action="searchWriter.do" method="get">
                             <input type="search" name="keyword" placeholder="'아이디'를 입력해주세요" required
                                 style="width: 260px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
@@ -246,7 +223,7 @@ li {list-style: none;}
 
                         </form>
                     </span>
-                    <span id="d3" style="display: none;position:relative; bottom: 40px; left: 190px;">
+                    <span id="d6" style="display: none;position:relative; bottom: 40px; left: 190px;">
                         <form action="searchLocalstore.do" method="get">
                             <input type="search" name="keyword" placeholder="'지역명 맛집'을 입력해주세요" required
                                 style="width: 260px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;"> 
@@ -257,22 +234,18 @@ li {list-style: none;}
             </li>
             <!--실행메뉴들 순서대로 홈(메인페이지), 친구메신저, 게시물 등록(촬영 및 업로드), 내프로필(마이페이지), 공지사항 이동 -->
             <li style="width: 350px;margin-left: 350px;">
-
-                <ol class = "navlist">
+                <ol>
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
-                    <li><a href="write.html"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
                     <li><a href="${ pageContext.servletContext.contextPath }/mpage.do"><img src="resources/images/profile.jpg" id="profile"></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/nlist.do"><i class="fa-solid fa-bell fa-2x"></i></a></li>
-                    <%-- <c:if test="${ read eq 'unread'}" ><li class="noneRead"></li></c:if> --%>
-
+                    <li class="noneRead"></li>
                 </ol>
             </li>
         </ul>
     </nav>
-	
-
 
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>

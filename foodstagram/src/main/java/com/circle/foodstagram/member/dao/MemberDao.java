@@ -104,6 +104,28 @@ public class MemberDao {
 	}
 
 
+	public ArrayList<Member> searchLoginok(SearchPaging searchpaging) {
+		List<Member> list = session.selectList("memberMapper.searchLoginok", searchpaging);
+		return (ArrayList<Member>)list;
+	}
+
+	public int getSearchLoginCount(String keyword) {
+		return session.selectOne("memberMapper.getSearchLoginCount", keyword);
+	}
+
+	public ArrayList<Member> searchEmail(SearchPaging searchpaging) {
+		List<Member> list = session.selectList("memberMapper.searchEmail", searchpaging);
+		return (ArrayList<Member>)list;
+	}
+
+	public int getSearchEmailCount(String keyword) {
+		return session.selectOne("memberMapper.getSearchEmailCount", keyword);
+	}
+
+	public int aupdateMember(Member member) {
+		return session.update("memberMapper.aupdateMember", member);
+	}
+
 
 	
 }
