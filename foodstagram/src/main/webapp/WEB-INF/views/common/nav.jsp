@@ -141,12 +141,19 @@ i:hover {
     border-radius: 50%;
 }
 
-.searchBtn{
-    position:relative;
+.searchBtn {
+    position: relative;
     bottom: 33px;
     left: 90px;
     border-radius: 10px;
-    background-color: pink;
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    transition: 0.5s ease-out;
+}
+
+.searchBtn:hover {
+   color:#F95E25;
 }
 
 li {list-style: none;}
@@ -230,7 +237,7 @@ li {list-style: none;}
                 <ol>
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
-                    <li><a href="write.html"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
                     <li><a href="${ pageContext.servletContext.contextPath }/mpage.do"><img src="resources/images/profile.jpg" id="profile"></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/nlist.do"><i class="fa-solid fa-bell fa-2x"></i></a></li>
