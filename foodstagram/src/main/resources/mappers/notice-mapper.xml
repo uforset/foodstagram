@@ -10,15 +10,22 @@
 		<result column="noticedate" property="noticedate" />
 		<result column="userid" property="userid" />
 		<result column="noticecontent" property="noticecontent" />
-		<result column="notice_upfile" property="notice_upfile" />
-		<result column="notice_refile" property="notice_refile" />
 		<result column="readcount" property="readcount" />
 		<result column="importance" property="importance" />
 	</resultMap>
-	
+
+	<resultMap type="Notice" id="noticeAttaches">
+		<collection property="attaches"
+			column="{atch_parent_no=noticeno}" 
+			ofType="Attach"
+			select="attachMapper.getAttachListByParent2">
+		</collection>
+	</resultMap>
+
 	<select id="selectAll" resultMap="resultNotice">
 		select * from notice
-		order by noticeno desc
+		order by
+		noticeno desc
 	</select>
 	
 	<select id="getListCount" resultType="_int" >
@@ -42,8 +49,7 @@
 			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
 						  NOTICEDATE, USERID, 
 						  NOTICECONTENT,  
-			               NOTICE_UPFILE, NOTICE_REFILE, 
-			               READCOUNT, IMPORTANCE
+			              READCOUNT, IMPORTANCE
 			       FROM (SELECT * FROM NOTICE
 			       		  where noticetitle like '%' || #{ keyword } || '%'
 			               ORDER BY NOTICENO DESC
@@ -58,8 +64,7 @@
 			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
 						  NOTICEDATE, USERID, 
 						  NOTICECONTENT,  
-			               NOTICE_UPFILE, NOTICE_REFILE, 
-			               READCOUNT, IMPORTANCE
+			              READCOUNT, IMPORTANCE
 			       FROM (SELECT * FROM NOTICE
 			       		   where noticedate between #{ begin } and #{ end }
 			               ORDER BY NOTICENO DESC
@@ -80,11 +85,9 @@
 	
 	<insert id="insertNotice" parameterType="Notice">
 		insert into notice (NOTICENO, NOTICETITLE, USERID, 
-		NOTICEDATE, NOTICE_UPFILE, NOTICE_REFILE, NOTICECONTENT, READCOUNT, IMPORTANCE) 
+		NOTICEDATE, NOTICECONTENT, READCOUNT, IMPORTANCE) 
 		values (DEFAULT, 
 				#{ noticetitle }, #{ userid }, sysdate, 
-				#{ notice_upfile, jdbcType=VARCHAR }, 
-				#{ notice_refile, jdbcType=VARCHAR }, 
 				#{ noticecontent }, default ,
 				<if test="importance != 0">
 				#{ importance }
@@ -98,21 +101,6 @@
 		update notice
 		set noticetitle = #{ noticetitle },
 			noticecontent = #{ noticecontent}
-			<if test="notice_upfile != null">
-			, notice_upfile = #{ notice_upfile }
-			, notice_refile = #{ notice_refile }
-			</if>
-			<if test="notice_upfile == null">
-			, notice_upfile = null
-			, notice_refile = null
-			</if>
-			
-			<if test="importance != 0">
-			, importance = #{ importance }
-			</if>
-			<if test="importance == 0">
-			, importance = default
-			</if>
 		where noticeno = #{ noticeno }
 	</update>
 	
@@ -128,7 +116,6 @@
 			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
 						  NOTICEDATE, USERID, 
 						  NOTICECONTENT,  
-			               NOTICE_UPFILE, NOTICE_REFILE, 
 			               READCOUNT, IMPORTANCE
 			       FROM (SELECT * FROM NOTICE 
 			              ORDER BY IMPORTANCE DESC, 
