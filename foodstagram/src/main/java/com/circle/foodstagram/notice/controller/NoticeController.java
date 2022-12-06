@@ -3,7 +3,7 @@ package com.circle.foodstagram.notice.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,28 +13,41 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.circle.foodstagram.notice.controller.NoticeController;
+import com.circle.foodstagram.common.AttachUtils;
 import com.circle.foodstagram.common.Paging;
 import com.circle.foodstagram.common.SearchDate;
+import com.circle.foodstagram.common.SearchPaging;
+import com.circle.foodstagram.common.attach.model.service.AttachService;
+import com.circle.foodstagram.common.attach.model.vo.Attach;
 import com.circle.foodstagram.member.model.vo.Member;
 import com.circle.foodstagram.notice.model.service.NoticeService;
 import com.circle.foodstagram.notice.model.vo.Notice;
 import com.circle.foodstagram.notification.model.service.NotificationService;
-import com.circle.foodstagram.common.SearchPaging;
+
+import lombok.extern.log4j.Log4j;
 
 @Controller
+@Log4j
 public class NoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 
 	@Autowired
 	private NoticeService noticeService;
 	
+	@Autowired
+	private AttachUtils attachUtils;
+	
+	@Autowired
+	private AttachService attachService;
+
 	@Autowired
 	private NotificationService notificationService;
 
@@ -110,7 +123,7 @@ public class NoticeController {
 	    
 		ArrayList<Notice> list = noticeService.selectList(paging);
 		
-		// 공지사항 들어왔으니까 readCheck Y로 업데이트 해줌
+		// 공지사항 listView로 이동시 readCheck Y로 업데이트 해줌
 		String userid = ((Member) session.getAttribute("loginMember")).getUserid();
 		notificationService.updateNotification(userid);
 		//notification의 readCheck를 userid 를 이용해서 Y로 업데이트 
@@ -287,15 +300,15 @@ public class NoticeController {
 	// 공지글 삭제 요청 처리용
 	@RequestMapping("ndel.do")
 	public String noticeDeleteMethod(@RequestParam("noticeno") int noticeno,
-			@RequestParam(name = "rfile", required = false) String renameFileName, Model model,
+			@RequestParam(name = "boFiles", required = false) MultipartFile[] boFiles, Model model,
 			HttpServletRequest request) {
 
 		if (noticeService.deleteNotice(noticeno) > 0) {
 			// 첨부된 파일이 있는 공지일때는 저장 폴더에 있는
 			// 첨부파일도 삭제함
-			if (renameFileName != null) {
+			if (boFiles != null && boFiles.length > 0) {
 				new File(request.getSession().getServletContext().getRealPath("resources/notice_upfiles") + "\\"
-						+ renameFileName).delete();
+						+ boFiles).delete();
 			}
 
 			return "redirect:nlist.do";
@@ -306,157 +319,161 @@ public class NoticeController {
 	}
 
 	// 파일업로드 기능이 있는 공지글 등록 요청 처리용
+//	@ResponseBody (ajax때만 사용)	
 	@RequestMapping(value = "ninsert.do", method = RequestMethod.POST)
 	public String noticeInsertMethod(Notice notice, Model model, HttpServletRequest request,
-			@RequestParam(name = "upfile", required = false) MultipartFile mfile) {
-		logger.info("ninsert.do : " + mfile);
-		logger.info("제목 : "+ notice.getNoticetitle());
-		// 업로드된 파일 저장 폴더 지정
-		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
-																					
-		// 첨부파일이 있을 때만 업로드된 파일을 지정된 폴더로 옮기기
-		if (!mfile.isEmpty()) {
-			// 전송온 파일이름 추출함
-			String fileName = mfile.getOriginalFilename();
+			@RequestParam(name = "boFiles", required = false) MultipartFile[] boFiles) {
+		
+		String strResult = "{ \"result\":\"FAIL\" }";																		
+		
+//		if (boFiles != null) {
+//			// 첨부파일이 있을때
+//			// notice.setAttaches(파일리스트); 넣어줌
+//		}
+		//첨부파일 처리
 
-			// 다른 공지글의 첨부파일과
-			// 파일명이 중복되어서 오버라이팅되는 것을 막기 위해
-			// 파일명을 변경해서 폴더에 저장하는 방식을 사용할 수 있음
-			// 변경 파일명 : 년월일시분초.확장자
-			if (fileName != null && fileName.length() > 0) {
-				// 바꿀 파일명에 대한 문자열 만들기
-				// 공지글 등록 요청시점의 날짜시간정보를 이용함
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				// 변경할 파일이름 만들기
-				String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis()));
-				// 원본 파일의 확장자를 추출해서, 변경 파일명에 붙여줌
-				renameFileName += "." + fileName.substring(fileName.lastIndexOf(".") + 1);
-
-				// 파일 객체 만들기
-				File originFile = new File(savePath + "\\" + fileName);
-				File renameFile = new File(savePath + "\\" + renameFileName);
-
-				// 업로드된 파일 저장시키고, 바로 이름바꾸기 실행함
-				try {
-					mfile.transferTo(renameFile);
-				} catch (Exception e) {
-					e.printStackTrace();
-					model.addAttribute("message", "전송파일 저장 실패!");
-					return "common/error";
-				}
-
-				// notice 객체에 첨부파일명 기록 저장하기
-				notice.setNotice_upfile(fileName);
-				notice.setNotice_refile(renameFileName);
+		try {
+			if(boFiles != null && boFiles.length > 0) {
+				//String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
+				List<Attach> attaches=
+						 attachUtils.getAttachListByMultiparts(boFiles, "Notice", "notice_upfiles", request);
+		         //실제로 파일경로에 선택된 파일 올리고 List<Attach> return  (파일업로드)
+				 // (boFiles, 게시판, 폴더이름)
+				 log.info(attaches);
+				 notice.setAttaches(attaches);
 			}
 
-		} // 첨부파일이 있을 때만
-
-		if (noticeService.insertNotice(notice) > 0) {
-			return "redirect:nlist.do";
-		} else {
-			model.addAttribute("message", "새 공지글 등록 실패!");
-			return "common/error";
+		} catch (Exception e) {
+			log.info("파일 업로드중 에러발생");
+			e.printStackTrace();
 		}
+			// 글등록
+			if (noticeService.insertNotice(notice) > 0 ) {
+				
+				log.info("공지등록성공" + notice.toString());
+				return "notice/noticeListView";
+				//strResult = "{ \"result\":\"success\" }"; 
+				
+			}else {
+				log.info("공지등록실패");
+				return "common/error"; 	
+			}
+			List<Attach> attaches= notice.getAttaches();
+			int noticeno = notice.getNoticeno();
+			if( attaches != null && attaches.size() > 0) {
+				for(Attach a : attaches) { //하나씩 db에 저장
+					a.setAtch_parent_no(noticeno); //저장한 게시글 번호 첨부파일vo에 세팅
+					log.info("db에 저장할 첨부파일 vo" + a);
+					if( attachService.insertAttach(a) > 0) {//하나씩 db에 저장
+					log.info("성공!" + a);
+				}else {
+					log.info("첨부파일 등록 실패..." + a);
+					return "common/error";
+					
+				}
+			}
+		}
+		//strResult = "{ \"result\":\"success\" }";
+		return "notice/noticeListView";
 	}
-
-	// 첨부파일 다운로드 요청 처리용
-	@RequestMapping("nfdown.do")
-	public ModelAndView fileDownMethod(ModelAndView mv, HttpServletRequest request,
-			@RequestParam("ofile") String notice_upfile, 
-			@RequestParam("rfile") String notice_refile) {
-		// 공지사항 첨부파일 저장 폴더 경로 지정
-		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
-
-		// 저장 폴더에서 읽을 파일에 대한 파일 객체 생성함
-		File renameFile = new File(savePath + "\\" + notice_refile);
-		// 파일다운시 내보낼 파일 객체 생성
-		File originFile = new File(notice_upfile);
-
-		mv.setViewName("filedown"); // 등록된 파일다운로드 처리용 뷰클래스의 id명
-		mv.addObject("renameFile", renameFile);
-		mv.addObject("originFile", originFile);
-
-		return mv;
-	}
+				
+//	// 첨부파일 다운로드 요청 처리용
+//	@RequestMapping("nfdown.do")
+//	public ModelAndView fileDownMethod(ModelAndView mv, HttpServletRequest request,
+//			@RequestParam("ofile") String notice_upfile, 
+//			@RequestParam("rfile") String notice_refile) {
+//		// 공지사항 첨부파일 저장 폴더 경로 지정
+//		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
+//
+//		// 저장 폴더에서 읽을 파일에 대한 파일 객체 생성함
+//		File renameFile = new File(savePath + "\\" + notice_refile);
+//		// 파일다운시 내보낼 파일 객체 생성
+//		File originFile = new File(notice_upfile);
+//
+//		mv.setViewName("filedown"); // 등록된 파일다운로드 처리용 뷰클래스의 id명
+//		mv.addObject("renameFile", renameFile);
+//		mv.addObject("originFile", originFile);
+//
+//		return mv;
+//	}
 
 	// 공지글 수정 요청 처리용
-	@RequestMapping(value = "nupdate.do")
+	@PostMapping("nupdate.do")
+	//@ResponseBody
 	public String noticeUpdateMethod(Notice notice, Model model,
-			@RequestParam(name = "delFlag", required = false) String delFlag,
-			@RequestParam(name = "upfile", required = false) MultipartFile mfile, 
+			@RequestParam(name = "boFiles", required = false) MultipartFile[] boFiles, 
 			HttpServletRequest request) {
 
 		// 공지사항 첨부파일 저장 폴더 경로 지정
-		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
+		String strResult = "{ \"result\":\"FAIL\" }";
 
-		// 첨부파일 수정 처리된 경우 --------------------------------
-		// 1. 원래 첨부파일이 있는데 삭제를 선택한 경우
-		if (notice.getNotice_upfile() != null && delFlag != null && delFlag.equals("yes")) {
-			// 저장 폴더에서 파일을 삭제함
-			new File(savePath + "\\" + notice.getNotice_refile()).delete();
-			// notice 의 파일정보도 제거함
-			notice.setNotice_upfile(null);
-			notice.setNotice_refile(null);
-		}
-
-		// 2. 새로운 첨부파일이 있을 때 : 공지글 첨부파일은 1개만 가능한 경우
-		if (!mfile.isEmpty()) {
-			// 저장 폴더의 이전 파일은 삭제함
-			if (notice.getNotice_upfile() != null) {
-				// 저장 폴더에서 파일을 삭제함
-				new File(savePath + "\\" + notice.getNotice_refile()).delete();
-				// notice 의 파일정보도 제거함
-				notice.setNotice_upfile(null);
-				notice.setNotice_refile(null);
-			}
-
-			// 이전 첨부파일이 없을 때 --------------------------
-			// 전송온 파일이름 추출함
-			String fileName = mfile.getOriginalFilename();
-
-			// 다른 공지글의 첨부파일과
-			// 파일명이 중복되어서 오버라이팅되는 것을 막기 위해
-			// 파일명을 변경해서 폴더에 저장하는 방식을 사용할 수 있음
-			// 변경 파일명 : 년월일시분초.확장자
-			if (fileName != null && fileName.length() > 0) {
-				// 바꿀 파일명에 대한 문자열 만들기
-				// 공지글 등록 요청시점의 날짜시간정보를 이용함
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				// 변경할 파일이름 만들기
-				String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis()));
-				// 원본 파일의 확장자를 추출해서, 변경 파일명에 붙여줌
-				renameFileName += "." + fileName.substring(fileName.lastIndexOf(".") + 1);
-
-				// 파일 객체 만들기
-				File originFile = new File(savePath + "\\" + fileName);
-				File renameFile = new File(savePath + "\\" + renameFileName);
-
-				// 업로드된 파일 저장시키고, 바로 이름바꾸기 실행함
-				try {
-					mfile.transferTo(renameFile);
+		// 잘가져옴. 이것을 이용해서 db에서 데이터 삭제시킨후 로컬서버에서도 첨부파일 삭제시키면됨
+		//for( int a_no :  question.getDelAtchNos())
+		//	log.info(a_no);
+		
+		// atch no를 이용해 db에 저장된 이름을 가져온후 파일을 삭제하고, db에도 atch no를 이용하여 삭제함.
+				// notice.getDelAtchNos() 수정중 삭제할파일이 있을경우 진행함. 
+				if(notice.getDelAtchNos() !=null && notice.getDelAtchNos().length > 0) { // 파일 삭제한경우
+					log.info("질문 수정중 파일수정확인. 파일제거 시작");
+					List<Attach> attaches = new ArrayList<Attach>();
+					
+					for( int atch_no :  notice.getDelAtchNos()) { 
+						attaches.add(attachService.getAttach(atch_no)); //하나씩 가져와서 List에 저장 
+					}
+					
+					// 저장된 파일 삭제처리			getDeletAtchNoList() 첨부파일들을 삭제하고 삭제한 기본키를 리스트로 리턴함(서버에서 파일삭제)
+					List<Integer> atchNoList = attachUtils.getDeletAtchNoList(attaches, "notice_upfiles", request);
+					for( int atch_no : atchNoList) {
+						attachService.deleteAttach(atch_no);	// DB에서 파일삭제
+						log.info(atch_no + "번 첨부파일 DB제거완료.");
+					}
+				}			
+				
+				try { 
+					//첨부파일이 있다면 등록함.
+					// 파일 로컬에 업로드
+					if(boFiles != null && boFiles.length > 0) {
+						 List<Attach> attaches=
+								 attachUtils.getAttachListByMultiparts(boFiles, "Notice", "notice_upfiles", request);
+				         //실제로 파일경로에 선택된 파일 올리고 List<Attach> return (파일업로드)
+						 // (boFiles, 게시판, 폴더이름)
+						 log.info(attaches);
+						 notice.setAttaches(attaches);
+						 
+							// DB에 저장
+						//List<Attach> attaches= notice.getAttaches();
+						int noticeno = notice.getNoticeno();
+						if( attaches != null && attaches.size()>0) {
+							for(Attach a : attaches) { // 하나씩 db에 저장
+								a.setAtch_parent_no(noticeno); // 저장한 게시글번호 첨부파일vo에 세팅
+								log.info("db에저장할 첨부파일vo" + a);
+								if( attachService.insertAttach(a) > 0 ) {// 하나씩 db에 저장
+									log.info("성공! " + a);
+								} else {
+									log.info("실패..." + a);
+									return "common/error";
+								}
+								return "notice/noticeListView";
+							}
+						} 
+					}
+					
+					// 업로드후 공지사항 update
+					if (noticeService.updateNotice(notice) > 0) {
+						log.info("공지수정 성공.");
+						return "notice/noticeListView";
+					} else {
+						log.info("질문수정중 오류발생.");
+						return "common/error";
+					}
+					
 				} catch (Exception e) {
+					log.info("파일 업로드중 에러발생");
 					e.printStackTrace();
-					model.addAttribute("message", "전송파일 저장 실패!");
-					return "common/error";
 				}
 
-				// notice 객체에 첨부파일명 기록 저장하기
-				notice.setNotice_upfile(fileName);
-				notice.setNotice_refile(renameFileName);
-			} // 이름바꾸기해서 저장 처리
-
-		} // 새로운 첨부파일이 있을 때만
-
-		// -------------------------------------------------------------
-
-		if (noticeService.updateNotice(notice) > 0) {
-			return "redirect:nlist.do";
-		} else {
-			model.addAttribute("message", notice.getNoticeno() + "번 공지 수정 실패!");
-			return "common/error";
-		}
-	}
-
+				return "common/error";
+			}
+			
 
 }
