@@ -1,11 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공지 수정</title>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/reset.css?v=1669255025">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/swiper.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/site.css?v=1669255025"> -->
+
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+<!-- <script src="https://www.eyes.co.kr/assets/js/libs/swiper.min.js"></script>
+<script src="https://www.eyes.co.kr/assets/js/libs/chart.min.js"></script>
+<script src="https://www.eyes.co.kr/assets/js/libs/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="https://www.eyes.co.kr/assets/js/site.js?v=1669259435"></script> -->
+
 <style>
 h2 {
 	text-align: center;
@@ -90,7 +103,7 @@ textarea {
 	width: 400px; 
 	height: 14rem; 
 	border: 1px solid black; 
-	margin-top: 5px;
+	margin-top: 10px;
 	margin-bottom: 1px;
 	padding-left: 5px;
 	padding-top: 5px;
@@ -119,11 +132,7 @@ input::tbox {
  <div class="container">
 	<form action="nupdate.do" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="noticeno" value="${ notice.noticeno }">
-	<c:if test="${ !empty notice.notice_upfile }">
-	<!-- 첨부파일이 있는 공지글이라면 -->
-		<input type="hidden" name="notice_upfile" value="${ notice.notice_upfile }">
-		<input type="hidden" name="notice_refile" value="${ notice.notice_refile }">
-	</c:if>
+
 <table align="center" width="500" cellspacing="0" height="30" cellpadding="5" class="table">
 	<tr>
 	<th style="width: 80px;">제 목</th>
@@ -150,16 +159,24 @@ input::tbox {
 	</tr>	
 	<tr>
 	<th>첨부파일</th>
-		<td>	
-			<!-- 원래 첨부파일이 있는 경우 -->
-			<c:if test="${ !empty notice.notice_upfile }">
-				${ notice.notice_upfile } &nbsp; 
-				<input type="checkbox" name="delFlag" value="yes"
+		<td>
+		<!-- 원래 첨부파일이 있는 경우 -->
+			<%-- <c:if test="${ !empty notice.attaches }">
+				${ notice.attaches } &nbsp; 
+								<input type="checkbox" name="delFlag" value="yes"
 				style="width: 1rem; height: 1rem; border: 1px solid black;"> 파일삭제 <br>
-			</c:if>
-			<br>
-			<input class="tbox" type="file" name="upfile" 
-				style="width: 406px; height: 2rem; border: 1px solid black;" multiple>
+			</c:if> --%>
+			<input multiple="multiple"  type="file"  name="boFiles">
+			<c:forEach var="f" items="${notice.attaches}" varStatus="st">
+				<div>
+					# 파일 ${st.count} <a style="color: #337ab7;" href="<c:url value='/attachDownload.do/${f.atch_no}' />" target="_blank"> 
+					${f.atch_original_name}</a>									 
+					Size : ${f.atch_fancy_size} Down : ${f.atch_down_hit}
+					<button class="btn_file_delete" data-atch-no="${f.atch_no}">
+					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					</button>
+					</div>
+			</c:forEach>	
 		</td>
 	</tr>
 	<tr>
