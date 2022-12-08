@@ -10,9 +10,9 @@
 <style>
 body {
 	margin: 0 auto;
+
 }
 
-/*건들지마  */
 img {
 	margin: 30px 0;
 }
@@ -36,7 +36,6 @@ img {
 }
 
 li img {
-	/* position: relative; */
 	width: 250px;
 	height: 541px;
 	overflow: hidden;

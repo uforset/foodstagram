@@ -497,7 +497,7 @@ public class MemberController {
 				ArrayList<Member> list = null;
 				
 				int limit = 10;
-				
+				logger.info("after : " + model);
 				int listCount = memberService.getSearchLoginCount(keyword);
 
 				int maxPage = (int)((double)listCount / limit + 0.9);

@@ -28,8 +28,9 @@ th, td {
 }
 
 .allBtn {
-         margin-top:20px;
-               width: 100px;
+			margin-top:20px;
+			margin-bottom:-10px;
+	            width: 100px;
             height: 30px;
             font-weight: bold;
             border: none;
@@ -41,10 +42,9 @@ th, td {
 }
 
 .allBtn:hover {
-   background-color:#F95E25;
+	background-color:#F95E25;
 }
 
-/* button:hover {background-color: #F95E25;} */
 </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -168,7 +168,7 @@ function changeLogin(element){
 
 <c:if test="${ empty action }">
 <!-- 전체목록 페이징 처리 -->
-<div style="text-align:center; margin:30px;"> <!-- 페이지 표시 영역 -->
+<div style="text-align:center; margin:10px 0 50px 0;"> <!-- 페이지 표시 영역 -->
    <!-- 1페이지로 이동 처리 -->
    <c:if test="${ currentPage eq 1 }">
       << &nbsp;

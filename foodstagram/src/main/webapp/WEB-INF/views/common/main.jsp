@@ -269,73 +269,7 @@ scenarioId: "Njk=",
             <tr>
                 <td>
                     <a href="#"><img src="resources/images/test1.png" class="openBtn"></a>
-                    <!-- 이미지 클릭시 모달창 -->
-                    <div class="modal hidden">
-                        <div class="bg"></div>
-                        <div class="modalBox">
-                            <ul>
-                                <div class="dot"><a href="#"><i class="fa-solid fa-ellipsis fa-2x"></i></a></div>
-                                <div class="closeBtn"><a href="#"><i class="fa-solid fa-x"></i></a></div>
-                                <!-- 컨텐츠 이미지 -->
-                                <a href="#">
-                                    <li class="modalImg"><img src="resources/images/test1.png"></li>
-                                </a>
-                                <li>
-                                    <!-- 다른 유저의 프로필사진, id, 글쓴내용, 지도  -->
-                                    <ol>
-                                        <li>
-                                            <span id="otherProfile"><a href="#"><img
-                                                        src="resources/images/test3.png"></a></span>
-                                            <span class="id">like_summer</span>
-                                            <span class="addFriend"><a href="#">친구 추가</a></span>
-                                            <p class="modalContent">오늘은 춥다 ㅠ<span><a href="#"><br>#겨울</a></span>
-                                            </p>
-                                            <!-- 임시 -->
-                                            <iframe
-                                                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d25311.64860821957!2d126.86131198716856!3d37.53253268002548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1z7YyM7Iqk7YOA!5e0!3m2!1sko!2skr!4v1667037455409!5m2!1sko!2skr"
-                                                width="435" height="200" style="border:0;" allowfullscreen=""
-                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-                                        </li>
-                                        <li>
-                                            <ol class="lr">
-                                                <!-- 좋아요 수 -->
-                                                <li><a href="#">
-                                                        <i class="fa-solid fa-heart"></i>
-                                                        <span class="countingLike">255</span>
-                                                    </a>
-                                                </li>
-                                                <!-- 댓글 -->
-                                                <li class="reply"><a href="#"><i class="fa-regular fa-message"></i></a>
-                                                </li>
-                                                <li><i class="fa-solid fa-paper-plane"></i></li>
-                                                <li><a href="#"><button id="recipe">레시피</button></a></li>
-                                                <li><a href="#"><button id="restaurant">주변맛집</button></a></li>
-
-                                            </ol>
-                                            <div>
-                                                <ul class="replyBox">
-                                                    <li><input class="replyRig"></li>
-                                                    <li><span class="replyBtn">댓글등록</span></li>
-                                                    <!-- 새로고침 -->
-                                                    <li class="resetBtn"><a href="#">
-                                                            <i class="fa-solid fa-arrows-rotate"></i>
-                                                        </a></li>
-                                                </ul>
-                                                <ul class="replyList">
-                                                    <li>댓글</li>
-                                                    <li>댓글</li>
-
-                                                </ul>
-
-                                            </div>
-                                        </li>
-                                    </ol>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--modal-->
+                    <!-- 이미지 클릭시 게시물 세부컨텐츠 이동 -->
                 </td>
 
                 <td><a href="#"><img src="resources/images/test2.png" class="image"></a></td>
@@ -353,21 +287,6 @@ scenarioId: "Njk=",
             </tr>
         </table>
     </section>
-
-
-
-    <script>
-        // 모달창
-        const open = () => {
-            document.querySelector(".modal").classList.remove("hidden");
-        }
-        const close = () => {
-            document.querySelector(".modal").classList.add("hidden");
-        }
-        document.querySelector(".openBtn").addEventListener("click", open);
-        document.querySelector(".closeBtn").addEventListener("click", close);
-        document.querySelector(".bg").addEventListener("click", close);
-    </script>
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>
 
