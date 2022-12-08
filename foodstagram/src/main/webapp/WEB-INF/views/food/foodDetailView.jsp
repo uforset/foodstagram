@@ -61,23 +61,21 @@
 <p></p>
 <p></p>
 <br>
-<!-- <div class="food-wrap">
-	<div class="food"> -->
+<div class="food-wrap">
+	<div class="food">
 		<!-- <div class="img">
 			<img src="resources/food_upfiles/pasta_alio_olio.jpg" alt="Hover Effect"></div> -->
-		<!-- <div class="info" style="line-height:160%"> -->
+		<div class="info" style="line-height:160%">
 		<!-- <script type="text/javascript" src="//openapi.foodsafetykorea.go.kr/api/266fe9be05ba49068142/I2790/xml/1/5"></script> -->
-		<!-- <h2>알리오 올리오</h2>
-			1인분당<br>
-			칼로리 : 402kcal<br>
-			탄수화물: 65.86g<br>
-			단백질: 12.23g<br>
-			지방: 9.46
-		 </div>
+			<h2>${ food.fname }</h2>
+			1인분 (${ food.fsize }g)<br>
+			칼로리 : ${ food.kcal }kcal<br>
+			탄수화물 : ${ food.carb }g<br>
+			단백질 : ${ food.protein }g<br>
+			지방 : ${ food.fat }g
+		</div>
 	</div>			
-</div> -->
-
-function foodDetail1()
+</div>
 
 <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script> 
 </body>

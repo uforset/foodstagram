@@ -5,7 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+	rel="stylesheet">
+	<link href="resources/css/reset.css" rel="stylesheet"> 
+    <link href="resources/css/style.css" rel="stylesheet"> 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 function isSame(){
@@ -25,7 +29,7 @@ function isSame(){
    return true; //전송함
 }
 </script>
-<link rel="stylesheet" href="<c:url value="/resources/css/common.css" />"> 
+<%-- <link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">  --%>
 <style type="text/css">
 th {
    font-size: 10pt;
@@ -43,9 +47,8 @@ td{
 }
 
 table{
-   background-color: #f8f9fa;
-   padding: 40px;
    border-spacing: 0 20px;
+   margin:0 auto;
 }
 
 form {
@@ -54,13 +57,30 @@ form {
     width: 100%;
     height: 100%;
 }
+form {
+		          width: 600px;
+          height: 350px;
+          margin: 50px auto;
+          padding: 15px 10px;
+          border-radius: 20px;
+          box-shadow: 2px 2px 10px grey;
+          box-sizing: border-box;
+          position: relative;
+}
 
 .from-button{
-   width: 7rem;
-   height: 1.5rem;
-   border: 0px;
-   background-color: #f8f9fa;
-   cursor: pointer;
+            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+            color: #333;
+            font-size: 13px;
+            cursor:pointer;
+}
+.from-button:hover {
+	background-color: #F95E25;
 }
 
 a {
@@ -79,15 +99,27 @@ a {
 .startPage:active {
   color : black;
 }
+input {
+	width: 200px;
+	height: 2rem;
+	border: 3px solid #f8f9fa;
+	border-radius: 20px;
+	margin-bottom: 15px; 
+}
+h2{font-size:20px; font-weight:bold; padding:20px 0 30px 0;}
+th {font-size:15px;}
 </style>
 
 </head>
 <body>
 <br><br>
-<h1 align="center">MyGallery</h1>
-<h2 align="center">회원 정보 수정 페이지</h2>
+
 <form action="resetpwd.do" method="POST"    onsubmit="return isSame();">
-   <table align="center"  class="table" style="text-align:center;">
+	<ul>
+		<li><img src="resources/images/name.png"></li>
+		<li><h2 align="center">비밀번호 수정</h2></li>
+	</ul>
+   <table align="center"  class="table" >
       <input type="hidden" name="userid" value="${ member.userid }" readonly>
       <tr>
          <th width="120">새비밀번호</th>
