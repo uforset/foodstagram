@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="/foodstagram/resources/css/reset.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
@@ -16,7 +17,7 @@
 
 <link type="text/css" rel="stylesheet" href="https://static.cdninstagram.com/rsrc.php/v3/yW/l/0,cross/GRBLtORsLSv68D1ULvQ1ZXlWNJTd1nq3EyhmpWE7yj6sPrzZdOfaaOJGNIqRzhKKJ4G1MYIIw_sSJ.css?_nc_x=Ij3Wp8lg5Kz" data-bootloader-hash="d4wCzse" crossorigin="anonymous" data-p=":24,48,9,25,4,108,53" data-c="1" onload="" onerror="" />
 <link type="text/css" rel="stylesheet" href="data:text/css; charset=utf-8,body._a3wf&#123;background:rgb(var(--ig-primary-background));color:rgb(var(--ig-primary-text));font-family:var(--font-family-system);font-size:var(--system-14-font-size);line-height:var(--system-14-line-height);margin:0;overflow-y:visible&#125;%23bootloader_Fm4crfp&#123;height:42px;&#125;.bootloader_Fm4crfp&#123;display:block!important;&#125;" data-bootloader-hash="Fm4crfp" data-p=":0" data-c="1" onload="" onerror="" />
-    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">    
 
 <script type="text/javascript">
 // 선택한 userid 저장용도임
@@ -65,6 +66,7 @@ function visibleUsers() {
 </script>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/nav.jsp" />
     <script type="application/json" data-content-len="91" data-sjs>
     {
         "require": [

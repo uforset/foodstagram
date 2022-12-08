@@ -52,6 +52,7 @@ nav ul li ol {
 }
 
 .h1 {
+	height: 32px;
     margin-left: 10px;
     font-size: 32px;
     font-weight: 700;
@@ -186,7 +187,7 @@ li {list-style: none;}
             <!--클릭시 홈으로이동-->
             <li>
                 <ol>
-                    <li><a href="${ pageContext.servletContext.contextPath }/main.do"> <img src="resources/images/logo.png" class="logo"></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/main.do"> <img src="/foodstagram/resources/images/logo.png" class="logo"></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do">
                             <h1 class="h1">𝓕𝓸𝓸𝓭𝓼𝓽𝓪𝓰𝓻𝓪𝓶</h1>
                         </a>
@@ -244,7 +245,7 @@ li {list-style: none;}
                     <c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ loginMember.userid }" />
                     </c:url>
-                    <li><a href="${ callMyinfo }"><img src="resources/images/profile.jpg" id="profile"></a></li>
+                    <li><a href="${ callMyinfo }"><img src="/foodstagram/resources/images/profile.jpg" id="profile"></a></li>
                     <!-- <li><a href="${ pageContext.servletContext.contextPath }/myinfo.do"><img src="resources/images/profile.jpg" id="profile"></a></li> -->
                     <li><a href="${ pageContext.servletContext.contextPath }/nlist.do"><i class="fa-solid fa-bell fa-2x"></i></a></li>
                     <%-- <c:if test="${ read eq 'unread'}" ><li class="noneRead"></li></c:if> --%>
