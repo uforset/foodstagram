@@ -9,7 +9,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 	rel="stylesheet">
 	<link href="resources/css/reset.css" rel="stylesheet"> 
-    <link href="resources/css/style.css" rel="stylesheet"> 
+	<link href="resources/css/style.css" rel="stylesheet"> 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 
@@ -76,17 +76,8 @@ form {
             border-radius: 10px;
             transition: 0.5s ease-in-out;
             color: #333;
-            background-color: #E5E5E5;
             font-size: 13px;
             cursor:pointer;
-}
-
-.from-button:hover {
-	background-color: #F95E25;
-}
-
-a {
-  text-decoration: none;
 }
 
 .startPage:link {
@@ -109,8 +100,6 @@ form {
           border-radius: 20px;
           box-shadow: 2px 2px 10px grey;
           box-sizing: border-box;
-          position: relative;
-          left: 100px;
 }
 input {
 	width: 200px;
@@ -125,7 +114,6 @@ th {font-size:15px;}
 </head>
 <body>
 <form>
-	<!-- <div height = "150"></div> -->
 	
 	<ul>
 		<li><img src="resources/images/name.png"></li>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -16,7 +17,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="resources/css/reset.css" rel="stylesheet">
 <link
-
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+	rel="stylesheet">
 <title>adminupdate</title>
 <style type="text/css">
 
@@ -28,23 +30,23 @@ table.qa-table {
 	border-collapse: collapse;
 	line-height: 1.5;
 	margin-top:50px;
-}
+} 
 
-.paging {
+ .paging {
 	position: fixed;
 	bottom: 100px;
 	width: 100%;
 	text-align: center;
 }
 
-input {
+ input:not(nav  input){
 	width: 200px;
 	height: 2rem;
 	border: 3px solid #f8f9fa;
 	border-radius: 20px;
 	margin-bottom: 15px;
+	cursor:pointer;
 }
-
 
 .mupdate {
 	          width: 600px;
@@ -55,8 +57,8 @@ input {
           box-shadow: 2px 2px 10px grey;
           box-sizing: border-box;
           position: relative;
-          left: 100px;
 }
+
 form ul:first-child {
     display: flex;
     padding-bottom: 15px;
@@ -106,8 +108,6 @@ form ul:first-child {
             font-size: 13px;">
 						&nbsp; <input type="reset" value="수정취소" style="margin:20px;
 	            width: 100px;
-                  &nbsp; <input type="reset" value="수정취소" style="margin:20px;
-               width: 100px;
             height: 30px;
             font-weight: bold;
             border: none;

@@ -5,6 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+	rel="stylesheet">
+	<link href="resources/css/reset.css" rel="stylesheet"> 
+    <link href="resources/css/style.css" rel="stylesheet"> 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 
@@ -54,11 +59,7 @@ td{
 	margin-left: -30px;
 }
 
-table{
-	background-color: #f8f9fa;
-	padding: 20px;
-	border-spacing: 0 20px;
-}
+
 
 form {
     margin-top: 50px;
@@ -68,11 +69,19 @@ form {
 }
 
 .from-button{
-	width: 7rem;
-	height: 1.5rem;
-	border: 0px;
-	background-color: #f8f9fa;
-	cursor: pointer;
+            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+            color: #333;
+            font-size: 13px;
+            cursor:pointer;
+}
+
+#check:hover {
+	background-color: #F95E25;
 }
 
 a {
@@ -91,12 +100,35 @@ a {
 .startPage:active {
   color : white;
 }
+form {
+		          width: 600px;
+          height: 350px;
+          margin: 50px auto;
+          padding: 15px 10px;
+          border-radius: 20px;
+          box-shadow: 2px 2px 10px grey;
+          box-sizing: border-box;
+          position: relative;
+}
+input {
+	width: 200px;
+	height: 2rem;
+	border: 3px solid #f8f9fa;
+	border-radius: 20px;
+	margin-bottom: 15px;
+}
+h2{font-size:20px; font-weight:bold; padding:20px;}
+th {font-size:15px;}
+
 </style>
 </head>
 <body>
-<div height = "150"></div>
-<h2 align="center">비밀번호 찾기</h2>
+
 <form action="PWDmailCheck.do" method="GET">
+	<ul>
+		<li><img src="resources/images/name.png"></li>
+		<li><h2 align="center">비밀번호 찾기</h2></li>
+	</ul>
 	<table  style="width: 20%; height: 100px; margin: auto; text-align: center;">
 		<tr>
 	  		<th width="120">아이디 :</th>
@@ -115,7 +147,7 @@ a {
 				<input type="submit" class="from-button" id="check" value="비밀번호찾기">
 			</th>
 			<td>
-				<a class="from-button" href="loginPage.do">시작페이지로 이동</a>
+				<a class="from-button" href="loginPage.do"><i class="fa-solid fa-house fa-2x" style="color:#F95E25;"></i></a>
 			</td>
 		</tr>
   	</table>
