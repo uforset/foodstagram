@@ -14,10 +14,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="resources/css/reset.css" rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-	rel="stylesheet">
+<!-- <link href="resources/css/reset.css" rel="stylesheet"> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
 <link href="resources/css/style.css" rel="stylesheet">
 
 <title>공지사항</title>
@@ -79,7 +77,6 @@ html, body {
 	text-align: center;
 	margin: 0 auto;
 	/* background: #bcae92; */
-	background: url(../notice_img/bg0314.jpg) left top;
 	background-size: contain;
 	background-attachment: fixed;
 }
@@ -395,7 +392,7 @@ th.last_bg {
 
 .img {
 	position: relative;
-	top: 8px;
+	top: 0px;
 }
 .b {
 	position: relative;
@@ -507,22 +504,52 @@ th.last_bg {
 										<td class="ttl_area"><a href="${ ndt }"
 											style="text-decoration: none;">${ n.noticetitle }</a>&nbsp;&nbsp;&nbsp;&nbsp;
 												<span class="img">
-												<c:if test="${ !empty n.notice_upfile }">
-														<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/upfile.png">
+												<c:if test="${ !empty n.attaches }">
+														<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/upfile.png">&nbsp;&nbsp;
 													</c:if></span>
-													<c:if test="${ empty n.notice_upfile }">&nbsp;&nbsp;</c:if>
+													<c:if test="${ empty n.attaches }">&nbsp;&nbsp;</c:if>
+													
 											<!-- new 3일간 표시 -->
-													<c:set var="now" value="<%=new java.util.Date()%>" /> <!-- 현재시간 -->
-													<fmt:formatDate var="nowday" value="${now }" pattern="dd" /> <!-- 현재 날짜 중 '일'만 추출 -->
-													<fmt:parseNumber var="nowNday" value="${nowday }" type="number" /> <!-- 날짜를 숫자로 변환 -->
-												 	<fmt:formatDate var="noticeDay" value="${n.noticedate }" pattern="dd" /> <!-- 공지 등록 날짜 중 '일'만 추출 -->
-													<fmt:parseNumber var="noticeNday" value="${noticeDay }" type="number" /> <!-- 날짜를 숫자로 변환 -->
-													&nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${nowNday - noticeNday lt 3 }"> <!-- 현재시간에서 공지등록 날짜를 뺀 숫자가 0,1,2 인 경우 -->
+												<%-- <!-- 현재시간 -->
+													<c:set var="now" value="<%=new java.util.Date()%>" /> 
+												<!-- 현재 날짜 중 '일'만 추출 -->
+													<fmt:formatDate var="nowday" value="${now }" pattern="dd" />
+												 <!-- 날짜를 숫자로 변환 -->
+													<fmt:parseNumber var="nowNday" value="${nowday }" type="number" />
+												<!-- 공지 등록 날짜 중 '일'만 추출 -->
+												 	<fmt:formatDate var="noticeDay" value="${n.noticedate }" pattern="dd" /> 
+												<!-- 게시글 작성날짜를 숫자로 -->
+													<fmt:parseNumber var="noticeNday" value="${noticeDay}" type="number" /> <!-- 날짜를 숫자로 변환 -->
+												<!-- 현재시간에서 공지등록 날짜를 뺀 숫자가 0,1,2 인 경우 -->
 													<!-- 3일동안은 new 표시 -->
+													<c:choose>
+													<c:when test="${nowday eq noticeDay }">
+													&nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${nowNday - noticeNday lt 3 }">
 													<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/btn_new.gif" alt ="" />
-												</c:if> 
-														
- 												<%-- &nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${ n.noticedate > '2022-11-23' }">
+													${nowNday - noticeNday} 
+													</c:if>
+													</c:when>
+													
+													<c:when test="${nowday ne noticeDay }" >
+													&nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${(nowNday + 30 ) - noticeNday lt 3 }">
+													<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/btn_new.gif" alt ="" />
+													${(nowNday + 30 ) - noticeNday }
+													</c:if>
+													</c:when>
+											</c:choose> --%>
+													
+													<c:set var="now" value="<%=new java.util.Date()%>" /> <!-- 현재시간 -->
+												<fmt:parseNumber value="${now.time / (1000*60*60*24)}"
+												integerOnly="true" var="today" /> <!-- 현재시간을 숫자로 --> <fmt:parseNumber
+												value="${n.noticedate.time / (1000*60*60*24)}" integerOnly="true"
+												var="chgDttm" /> 
+												<!-- 게시글 작성날짜를 숫자로 --> 
+												<c:if test="${today - chgDttm le 3}">
+												<!-- 3일동안은 new 표시 -->
+												<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/btn_new.gif" alt="new" />
+											</c:if> 
+									
+											<%-- &nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${ n.noticedate > '2022-11-23' }">
 													<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/btn_new.gif"></c:if> 
 													<c:if test="${ n.noticedate < '2022-11-23' }">&nbsp;</c:if>  --%>
 													

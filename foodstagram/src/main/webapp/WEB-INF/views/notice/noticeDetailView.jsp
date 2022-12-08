@@ -7,9 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-	rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/reset.css?v=1669255025">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/swiper.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/site.css?v=1669255025">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 <style>
 /*Layout*/
 #wrap {
@@ -110,7 +113,7 @@
 /* 버튼 */
 .board_btn {
 	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 40px;
 	text-align: center;
 	overflow: hidden;
 	width: 100%;
@@ -408,10 +411,10 @@ th.last_bg {
 							<td colspan="6" class="board_data2">
 								<!-- 파일이 그림일 경우 출력(gif/jpg) -->
 								<p style="line-height: 2;"></p>
-								<p align="justify" style="text-align: justify; 	line-height: 2;">
+								<p align="justify" style="text-align: justify; line-height: 2;">
 									<span style="font-family:"나눔고딕", "NanumGothic" , Sans-serif; font-size: 10pt;">
-										<pre style="padding: 30px">${ notice.noticecontent }<br><br><br><br><br><br></pre>
-									</span>
+										<div style="padding: 30px","font-family:"나눔고딕", "NanumGothic" , Sans-serif; font-size: 10pt;" >
+											${ notice.noticecontent } <br><br><br><br><br><br></div></span>
 								</p>
 								</p>
 						</td>
@@ -422,20 +425,18 @@ th.last_bg {
 			</div>
 			<!-- END View -->
 			<table cellpadding="20px" cellspacing="0" class="pre_next" summary="">
+				<br>
 				<tbody>
 					<tr class="board_data">
 						<th><img src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_05.png"
 							width="41" height="14" border="0" alt="첨부파일"></th>
 						<td>
-							<!-- 첨부파일이 있다면, 파일명 클릭시 다운로드 실행되게 함 --> 
-							<c:if test="${!empty notice.notice_upfile }">
-								<c:url var="nfd" value="/nfdown.do">
-									<c:param name="ofile" value="${notice.notice_upfile }" />
-									<c:param name="rfile" value="${notice.notice_refile }" />
-								</c:url>
-								<a href="${ nfd }">${notice.notice_upfile }</a>
-							</c:if> <!-- 첨부파일이 없다면 공백처리함 --> 
-							<c:if test="${empty notice.notice_upfile }">&nbsp; </c:if>
+							<c:forEach var="f" items="${ notice.attaches }" varStatus="st">
+								<div> 파일 ${st.count} <a href="<c:url value='/attachDownload.do/${f.atch_no}' />" target="_blank"> 
+						        <span class="glyphicon glyphicon-save" aria-hidden="true"></span> ${f.atch_original_name}
+						        </a> Size : ${f.atch_fancy_size} Down : ${f.atch_down_hit}
+						        </div>
+								</c:forEach>
 						</td>
 						</tr>
 						</tbody>

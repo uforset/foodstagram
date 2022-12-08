@@ -27,6 +27,6 @@ public class Question implements Serializable {
 	//private String q_upfile;
 	private String answercheck;
 	
-	private List<Attach> attaches ;      /*첨부파일 리스트    */ 
+	private List<Attach> attaches;      /*첨부파일 리스트    */ 
 	private int[] delAtchNos;  			/*삭제를 위한 글 번호  */
 }

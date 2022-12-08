@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatRoomMapper">
+	
+	<resultMap type="ChatRoom" id="resultChatRoom">
+		<id column="chat_room_id" property="chat_room_id" />
+		<result column="title" property="title" />
+	</resultMap>
+
+
+	<select id="findAllMyRooms" parameterType="string" resultMap="resultChatRoom">
+		select * from chat_room r
+		inner join chat_room_join j
+		on r.chat_room_id = j.chat_room_id
+		where userid = #{userid}
+	</select>
+
+	<select id="findRoomByUUId" parameterType="string" resultType="ChatRoom">
+		select * from chat_room
+		where chat_room_id = #{chat_room_id}
+	</select>
+
+	<insert id="insertChatRoom" parameterType="ChatRoom">
+		insert into chat_room values(#{chat_room_id}, #{title})
+	</insert>
+
+</mapper>

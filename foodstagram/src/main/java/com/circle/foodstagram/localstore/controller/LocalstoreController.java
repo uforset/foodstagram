@@ -27,5 +27,14 @@ public class LocalstoreController {
 			return "common/error";
 		}
 	}
+
+	
+	//푸드 영양정보 이동 용도
+	@RequestMapping(value="foodDetail.do")
+	public String foodDetailMethod() {
+		return "food/foodDetailView";
+	}
+			
+			
 	
 }
