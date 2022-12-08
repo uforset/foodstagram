@@ -166,7 +166,7 @@ input::tbox {
 								<input type="checkbox" name="delFlag" value="yes"
 				style="width: 1rem; height: 1rem; border: 1px solid black;"> 파일삭제 <br>
 			</c:if> --%>
-			<input multiple="multiple"  type="file"  name="boFiles">
+			<input multiple="multiple"  type="file"  name="boFiles" style="width: 406px; height: 2rem; border: 1px solid black;">
 			<c:forEach var="f" items="${notice.attaches}" varStatus="st">
 				<div>
 					# 파일 ${st.count} <a style="color: #337ab7;" href="<c:url value='/attachDownload.do/${f.atch_no}' />" target="_blank"> 

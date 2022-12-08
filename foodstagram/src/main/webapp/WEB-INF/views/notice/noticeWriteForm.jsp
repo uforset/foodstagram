@@ -138,8 +138,8 @@ input::tbox {
 				<tr>
 					<th>첨부파일</th>
 					<td>
-						<input class="tbox" type="file" name="upfile" id="file" value="파일추가"
-						style="width: 406px; height: 2rem; border: 1px solid black;" onclick="addFile()" multiple>
+						<input class="tbox" type="file" name="boFiles" id="file" value="파일추가"
+						style="width: 406px; height: 2rem; border: 1px solid black;"  multiple="multiple">
 					</td>
 				</tr>
 				<tr>
