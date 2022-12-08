@@ -11,7 +11,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./css/reset.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
     <title></title>
@@ -194,7 +193,7 @@ li {list-style: none;}
                     </li>
                     <li class="share">
                         <i class="fas fa-regular fa-chevron-down fa-1x" id="shareBtn">
-                            <div class="shareContent"><a href="#">공유하기</a></div>
+                            <div class="shareContent"><a href="#">로그아웃</a></div>
                         </i></a>
                     </li>
                 </ol>
