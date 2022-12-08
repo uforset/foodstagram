@@ -244,7 +244,7 @@
 </head>
 <!-- TWC chatbot Scripts -->
 <script src="https://public-common-sdk.s3.ap-northeast-2.amazonaws.com/sdk/seller/Twc.plugin.js"></script>
-
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script>
 (function() {
  Twc('init', {
