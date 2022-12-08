@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="foodMapper">
+
+	<resultMap type="Food" id="resultFood">
+		<id column="fno" property="fno" />
+		<result column="fname" property="fname" />
+		<result column="fsize" property="fsize" />
+		<result column="kcal" property="kcal" />
+		<result column="carb" property="carb" />
+		<result column="protein" property="protein" />
+		<result column="fat" property="fat" />
+	</resultMap>
+	
+	<select id="selectFoodAll" resultMap="resultFood">
+		select * from food
+		order by fno asc
+	</select>
+	
+	<select id="selectFood" parameterType="_int" resultType="Food">
+		select * from food
+		where fno = #{ fno }
+	</select>
+	
+</mapper>
