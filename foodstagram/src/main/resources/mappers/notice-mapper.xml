@@ -16,9 +16,9 @@
 
 	<resultMap type="Notice" id="noticeAttaches">
 		<collection property="attaches"
-			column="{atch_parent_no=noticeno}" 
+			column="{atch_parent_no=noticeno, atch_category=atch_category}" 
 			ofType="Attach"
-			select="attachMapper.getAttachListByParent2">
+			select="attachMapper.getAttachListByParent">
 		</collection>
 	</resultMap>
 
@@ -73,8 +73,9 @@
 		]]>
 	</select>
 	
-	<select id="selectNotice" parameterType="_int" resultMap="resultNotice">
-		select * from notice
+	<select id="selectNotice" parameterType="_int" resultType="Notice" resultMap="noticeAttaches">
+		select n.*, 'Notice' atch_category 
+		from notice n
 		where noticeno = #{ noticeno }
 	</select>
 	
@@ -95,6 +96,9 @@
 				<if test="importance == 0">
 				default
 				</if>)
+		<selectKey keyProperty="noticeno" resultType="int" order="AFTER">
+			select max(noticeno) from notice
+		</selectKey>
 	</insert>
 	
 	<update id="updateNotice" parameterType="Notice">

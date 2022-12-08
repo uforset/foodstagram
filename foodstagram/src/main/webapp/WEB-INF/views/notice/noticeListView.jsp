@@ -392,7 +392,7 @@ th.last_bg {
 
 .img {
 	position: relative;
-	top: 8px;
+	top: 0px;
 }
 .b {
 	position: relative;
@@ -505,11 +505,12 @@ th.last_bg {
 											style="text-decoration: none;">${ n.noticetitle }</a>&nbsp;&nbsp;&nbsp;&nbsp;
 												<span class="img">
 												<c:if test="${ !empty n.attaches }">
-														<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/upfile.png">
+														<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/upfile.png">&nbsp;&nbsp;
 													</c:if></span>
 													<c:if test="${ empty n.attaches }">&nbsp;&nbsp;</c:if>
+													
 											<!-- new 3일간 표시 -->
-												<!-- 현재시간 -->
+												<%-- <!-- 현재시간 -->
 													<c:set var="now" value="<%=new java.util.Date()%>" /> 
 												<!-- 현재 날짜 중 '일'만 추출 -->
 													<fmt:formatDate var="nowday" value="${now }" pattern="dd" />
@@ -525,20 +526,30 @@ th.last_bg {
 													<c:when test="${nowday eq noticeDay }">
 													&nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${nowNday - noticeNday lt 3 }">
 													<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/btn_new.gif" alt ="" />
-													<%-- ${nowNday - noticeNday}  --%>
+													${nowNday - noticeNday} 
 													</c:if>
 													</c:when>
 													
 													<c:when test="${nowday ne noticeDay }" >
 													&nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${(nowNday + 30 ) - noticeNday lt 3 }">
 													<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/btn_new.gif" alt ="" />
-													<%-- ${(nowNday + 30 ) - noticeNday } --%>
+													${(nowNday + 30 ) - noticeNday }
 													</c:if>
 													</c:when>
-											</c:choose>
+											</c:choose> --%>
 													
-													
- 												<%-- &nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${ n.noticedate > '2022-11-23' }">
+													<c:set var="now" value="<%=new java.util.Date()%>" /> <!-- 현재시간 -->
+												<fmt:parseNumber value="${now.time / (1000*60*60*24)}"
+												integerOnly="true" var="today" /> <!-- 현재시간을 숫자로 --> <fmt:parseNumber
+												value="${n.noticedate.time / (1000*60*60*24)}" integerOnly="true"
+												var="chgDttm" /> 
+												<!-- 게시글 작성날짜를 숫자로 --> 
+												<c:if test="${today - chgDttm le 3}">
+												<!-- 3일동안은 new 표시 -->
+												<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/btn_new.gif" alt="new" />
+											</c:if> 
+									
+											<%-- &nbsp;&nbsp;&nbsp;&nbsp;<c:if test="${ n.noticedate > '2022-11-23' }">
 													<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/btn_new.gif"></c:if> 
 													<c:if test="${ n.noticedate < '2022-11-23' }">&nbsp;</c:if>  --%>
 													

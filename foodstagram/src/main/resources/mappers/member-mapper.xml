@@ -56,12 +56,12 @@
 		}
 	</select>
 
-	<!-- 비밀번호 변경 -->
+	<!-- 회원 수정 -->
 	<update id="updateMember" parameterType="Member">
 		update member
-		set userpwd
-		= #{ userpwd }
-		where userid = #{ userid }
+		set userpwd = #{ userpwd },
+			email = #{ email }
+		where userid = #{ userid } 
 	</update>
 
 	<!-- 회원 탈퇴 -->
@@ -139,7 +139,7 @@
 		where loginok like '%' || #{ keyword } || '%'
 	</select>
 	
-<select id="getSearchIdCount" resultType="_int" parameterType="string">
+	<select id="getSearchIdCount" resultType="_int" parameterType="string">
 		select count(*) from member
 		where userid like '%' || #{ keyword } || '%'
 	</select>
@@ -147,6 +147,11 @@
 	<select id="getSearchEmailCount" resultType="_int" parameterType="string">
 		select count(*) from member
 		where email like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="SearchUserCount"  resultType="_int" parameterType="string">
+		select count(*) from member
+		where userid like '%' || #{ keyword } || '%'
 	</select>
 
 
@@ -195,6 +200,19 @@
 			email, loginok, admin
 			from (select * from member
 		             where loginok like '%' || #{keyword} || '%'
+		             order by userid desc
+		              )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+		<select id="searchUser" resultMap="resultList" parameterType="SearchPaging">
+		<![CDATA[
+				select *
+			from (select rownum rnum, userid, userpwd, username, gender, birth_date,
+			email, loginok, admin
+			from (select * from member
+		             where userid like '%' || #{keyword} || '%'
 		             order by userid desc
 		              )) 
 			where rnum >= #{startRow} and rnum <= #{endRow}

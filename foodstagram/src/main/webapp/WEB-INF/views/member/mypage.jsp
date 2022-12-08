@@ -277,7 +277,8 @@
             font-weight: bold;
             font-size: 16px;
         }
-
+		
+		.logout,
         .updateProfile,
         .adminMember {
             width: 100px;
@@ -290,9 +291,36 @@
             background-color: #E5E5E5;
             font-size: 13px;
         }
+        
+
+        .adminMember {
+            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+            color: #333;
+            background-color: #E5E5E5;
+            font-size: 13px;
+        }
+        
+         .delbutton {
+            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            background-color: #FAFAFA;
+            text-decoration:underline;
+            border-radius: 10px;
+            position:relative;
+            left:710px;
+            bottom:15px;
+            
+        }
 
         .adminMember:hover,
-        .updateProfile:hover {
+        .updateProfile:hover , .logout:hover,{
             background-color: #F95E25;
         }
 
@@ -336,24 +364,33 @@
             <li class="mypageImg"><a href="#"><img src="resources/images/profile.jpg"></a></li>
             <li>
                 <ul>
-                    <li><span id="id">user001</span></li>
-                    <li><a href="#"><button class="updateProfile">프로필 편집</button></a></li>
-                <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
-                    
+                    <li><span id="id">${ loginMember.userid }</span></li> 
+                    <c:url var="moveup" value="/moveup.do">
+            			<c:param name="userid" value="${ member.userid }"/>
+         			</c:url>
+                    <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
-               <%--  <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y' }">
-                    <li><a href="${ pageContext.servletContext.contextPath }/mlist.do"><button class="adminMember">회원관리</button></a></li>
-                    </c:if>   --%>
+                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
+                	<li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+                    </c:if>
+                    <li><a href="${ pageContext.servletContext.contextPath }/loginPage.do"><button class="logout">로그아웃</button></a></li>
                 </ul>
                 <ul>
                     <li>게시물 21</li>
                     <li>친구 10명</li>
                 </ul>
-                <ul>사용자 이름</ul>
-                <ul><button class="new">최신순 보기</button> <br>
+                <ul>이름 : ${ loginMember.username }</ul>
+                <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
+                	<ul><button class="new">최신순 보기</button> <br>
                     <button class="old">오래된순 보기</button></ul>
+                    <c:url var="mdel" value="/mdel.do">
+						<c:param name="userid" value="${ member.userid }"/>
+					</c:url>
+                     <button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
+                 </c:if>
             </li>
         </ul>
+        <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
         <table class="mainPage">
             <tr>
                 <td>
@@ -374,7 +411,7 @@
                                     <ol>
                                         <li>
                                             <span class="myPost"><a href="#"><img src="resources/images/profile.jpg"></a></span>
-                                            <span class="id">user001</span>
+                                            <span class="id">${ loginMember.userid }</span>
                                             <p class="modalContent">오늘은 춥다 ㅠ<span><a href="#"><br>#겨울</a></span>
                                             </p>
                                             <!-- 임시 -->
@@ -439,8 +476,27 @@
                 <td><a href="#">9</a></td>
             </tr>
         </table>
+      </c:if>
     </section>
-    <div class="chatBot">챗봇이 들어 갈 창</div>
+    <!-- TWC chatbot Scripts -->
+	<script src="https://public-common-sdk.s3.ap-northeast-2.amazonaws.com/sdk/seller/Twc.plugin.js"></script>
+
+	<script>
+	(function() {
+ 		Twc('init', {
+  	 	brandKey: "m0qEkQGszGQPOJycVHShoA",
+   		channelType: "scenario",
+		scenarioId: "Njk=",
+   		buttonOption: {
+     		showLauncher: true,
+     		zIndex: 10,
+     		bottom: 25,
+     		right: 25
+   		 	}
+  		})
+	})();
+	</script>
+	<!--  End TWC chatbot Scripts -->
 
 
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>

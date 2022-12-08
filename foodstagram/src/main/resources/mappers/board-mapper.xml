@@ -13,6 +13,13 @@
       <result column="B_READCOUNT" property="B_READCOUNT" />
       <result column="B_OPEN" property="B_OPEN" />
    </resultMap>
+
+    <resultMap type="Board" id="BoardAttaches">
+     <collection property="attaches"   column="{atch_parent_no=b_no, atch_category=atch_category}"
+     ofType="Attach" 
+     select="attachMapper.getAttachListByParent"> 
+     </collection>
+    </resultMap>
    
    <resultMap type="Board_reply" id="Board_reply">
       <result column="B_NO" property="B_NO" />
@@ -39,12 +46,7 @@
       <result column="tag_name" property="tag_name" />
    </resultMap>
    
-   <resultMap type="Board" id="BoardAttaches">
-       <collection property="attaches"   column="{atch_parent_no=b_no, atch_category=atch_category}"
-       ofType="Attach" 
-       select="attachMapper.getAttachListByParent"> 
-       </collection>
-   </resultMap>
+
    
    <insert id="insertOrigin" parameterType="Board">
       insert into board (B_NO, USERID, 
@@ -57,15 +59,6 @@
          select max(B_NO) from BOARD
       </selectKey>
    </insert>
-   
-<!--    <insert id="insertOrigin2" parameterType="Board">
-      insert into board (B_NO, USERID, 
-            B_CONTENT, B_CREATE_DATE, B_UP_DATE, 
-            B_READCOUNT, B_OPEN, B_ORIGINAL_IMG, B_RENAME_IMG)
-      values (default, #{userid}, 
-            #{b_content}, default, null, 
-            default, #{b_open}, #{b_original_img}, null)
-   </insert> -->
    
    <select id="boardListFive" parameterType="int" resultType="Board" resultMap="BoardAttaches">
       <![CDATA[

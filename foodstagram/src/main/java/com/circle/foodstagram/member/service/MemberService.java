@@ -32,4 +32,7 @@ public interface MemberService {
 	ArrayList<Member> searchEmail(SearchPaging searchpaging);
 	int aupdateMember(Member member);
 	ArrayList<Member> selectSearchUseridUsername(String keyword); // 채팅 유저검색용도
+	int selectSearchUserCount(String keyword);
+	ArrayList<Member> selectSearchUser(SearchPaging searchpaging);
+
 }

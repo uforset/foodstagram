@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css/reset.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
     <title></title>
     <style>
         * {
@@ -216,10 +217,10 @@ li {list-style: none;}
                         </form>
                     </span>
                     <span id="d5" style="display: none;position:relative; bottom: 40px; left: 190px;">
-                        <form action="searchWriter.do" method="get">
+                        <form action="searchUser.do" method="get">
                             <input type="search" name="keyword" placeholder="'아이디'를 입력해주세요" required
                                 style="width: 260px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
-                            <button onclick="#" class="searchBtn" type="search" name="keyword">검색</button>
+                            <button onclick="searchUser.do" class="searchBtn" type="submit" name="검색">검색</button>
 
                         </form>
                     </span>
@@ -234,19 +235,49 @@ li {list-style: none;}
             </li>
             <!--실행메뉴들 순서대로 홈(메인페이지), 친구메신저, 게시물 등록(촬영 및 업로드), 내프로필(마이페이지), 공지사항 이동 -->
             <li style="width: 350px;margin-left: 350px;">
-                <ol>
+                <ol class="navlist">
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
+                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
                     <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
+                    </c:if>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
-                    <li><a href="${ pageContext.servletContext.contextPath }/mpage.do"><img src="resources/images/profile.jpg" id="profile"></a></li>
+                    <c:url var="callMyinfo" value="/myinfo.do">
+                        <c:param name="userid" value="${ loginMember.userid }" />
+                    </c:url>
+                    <li><a href="${ callMyinfo }"><img src="resources/images/profile.jpg" id="profile"></a></li>
+                    <!-- <li><a href="${ pageContext.servletContext.contextPath }/myinfo.do"><img src="resources/images/profile.jpg" id="profile"></a></li> -->
                     <li><a href="${ pageContext.servletContext.contextPath }/nlist.do"><i class="fa-solid fa-bell fa-2x"></i></a></li>
-                    <li class="noneRead"></li>
+                    <%-- <c:if test="${ read eq 'unread'}" ><li class="noneRead"></li></c:if> --%>
                 </ol>
             </li>
         </ul>
     </nav>
-
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url: "readCheck.do",
+			type: "get",
+			data: {userid: "${loginMember.userid}" },
+			dataType: 'json',
+			success: function(data, jqXHR, textStatus){
+				//alert("readcheck : " + data.read);
+				if( data.read == "read" ) {
+					//
+				} else {
+					console.log("hi")
+					$("ol.navlist").append("<li class='noneRead'></li>")
+					
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log("xxxxxxxxxxxxxxxxxxxx");
+				console.log(jqXHR + ", " + textStatus + ", " + errorThrown);
+			}
+		});
+	});
+	</script>
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>
 
