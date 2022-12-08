@@ -356,6 +356,7 @@ public class NoticeController {
 			log.info("파일 업로드중 에러발생");
 			e.printStackTrace();
 		}
+
 		// 글등록
 		if (noticeService.insertNotice(notice) > 0) {
 			log.info("공지등록성공" + notice.toString());
@@ -375,6 +376,7 @@ public class NoticeController {
 				if (attachService.insertAttach(a) > 0) {// 하나씩 db에 저장
 					log.info("성공!" + a);					
 				} else {
+
 					log.info("첨부파일 등록 실패..." + a);
 					return "common/error";
 				}

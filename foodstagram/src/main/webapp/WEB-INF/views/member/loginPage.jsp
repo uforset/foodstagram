@@ -10,9 +10,9 @@
 <style>
 body {
 	margin: 0 auto;
+
 }
 
-/*건들지마  */
 img {
 	margin: 30px 0;
 }
@@ -36,7 +36,6 @@ img {
 }
 
 li img {
-	/* position: relative; */
 	width: 250px;
 	height: 541px;
 	overflow: hidden;
@@ -46,8 +45,9 @@ li img {
 	top: 27px;
 }
 
-.loginBtn {
+.loginBtn:hover {
 	cursor: pointer;
+	background-color: #F95E25;
 }
 
 form {
@@ -65,6 +65,8 @@ form {
 td a:hover {
 	color: red;
 }
+
+.btn:hover {color:#F95E25;}
 </style>
 <meta charset="UTF-8">
 <title>회원 로그인</title>
@@ -187,17 +189,17 @@ td a:hover {
 				<tr>
 					<th colspan="2"><input type="submit" value="로그인"
 						class="loginBtn"
-						style="width: 296px; height: 40px; font-weight: bold; border: none; border-radius: 10px; transition: 0.5s ease-in-out; color: #333; background-color: #E5E5E5; font-size: 16px; margin: 20px 0 10px 0;">
+						style="width: 296px; height: 40px; font-weight: bold; border: none; border-radius: 10px; transition: 0.5s ease-in-out; color: #333;font-size: 16px; margin: 20px 0 10px 0;">
 					</th>
 				</tr>
 			</table>
 			<br> <a href="findIDPage.do"
-				style="text-decoration: none; padding: 5px; border-radius: 10px; hover: background-color: #F95E25;">아이디찾기
+				class="btn" style="text-decoration: none; padding: 5px; border-radius: 10px; hover: background-color: #F95E25;">아이디찾기
 			</a>|
 			<td><a href="pw_find.do"
-				style="text-decoration: none; padding: 5px; border-radius: 10px;">비밀번호찾기
+				class="btn" style="text-decoration: none; padding: 5px; border-radius: 10px;">비밀번호찾기
 			</a>|<a href="enrollPage.do"
-				style="text-decoration: none; padding: 5px; border-radius: 10px;">회원가입</a>
+				class="btn" style="text-decoration: none; padding: 5px; border-radius: 10px;">회원가입</a>
 				<br>
 				<table>
 					<!-- 네이버 로그인 버튼 노출 영역 -->

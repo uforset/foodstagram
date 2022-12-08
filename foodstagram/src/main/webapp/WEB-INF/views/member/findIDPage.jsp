@@ -5,7 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+	rel="stylesheet">
+	<link href="resources/css/reset.css" rel="stylesheet"> 
+	<link href="resources/css/style.css" rel="stylesheet"> 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 
@@ -53,8 +57,7 @@ td{
 }
 
 table{
-	background-color: #f8f9fa;
-	padding: 20px;
+
 	border-spacing: 0 20px;
 }
 
@@ -66,15 +69,15 @@ form {
 }
 
 .from-button{
-	width: 7rem;
-	height: 1.5rem;
-	border: 0px;
-	background-color: #f8f9fa;
-	cursor: pointer;
-}
-
-a {
-  text-decoration: none;
+            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+            color: #333;
+            font-size: 13px;
+            cursor:pointer;
 }
 
 .startPage:link {
@@ -89,11 +92,33 @@ a {
 .startPage:active {
   color : black;
 }
+form {
+		          width: 600px;
+          height: 350px;
+          margin: 50px auto;
+          padding: 15px 10px;
+          border-radius: 20px;
+          box-shadow: 2px 2px 10px grey;
+          box-sizing: border-box;
+}
+input {
+	width: 200px;
+	height: 2rem;
+	border: 3px solid #f8f9fa;
+	border-radius: 20px;
+	margin-bottom: 15px;
+}
+h2{font-size:20px; font-weight:bold; padding:20px;}
+th {font-size:15px;}
 </style>
 </head>
 <body>
-<div height = "150"></div>
-	<h2 align="center">아이디 찾기</h2>
+<form>
+	
+	<ul>
+		<li><img src="resources/images/name.png"></li>
+		<li><h2 align="center">아이디 찾기</h2></li>
+	</ul>
 	<table  style="width: 20%; height: 100px; margin: auto; text-align: center;">
 			<tr>
 				<th width="120">이름 :
@@ -114,9 +139,11 @@ a {
 					<button type="button" class="from-button" id='find_id' onclick="findId_click()">아이디 찾기</button>
 				</th>
 				<td>
-				<a class="startPage" href="loginPage.do">시작페이지로 이동</a>
+				<a class="startPage" href="loginPage.do"><i class="fa-solid fa-house fa-2x" style="color:#F95E25;"></i></a>
 				</td>
 			</tr>
 	</table>
+</form>
+
 </body>
 </html>

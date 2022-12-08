@@ -133,6 +133,10 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public ArrayList<Member> selectSearchUseridUsername(String keyword) {
+		return memberDao.selectSearchUseridUsername(keyword);
+	}
+		
 	public int selectSearchUserCount(String keyword) {
 		return memberDao.selectSearchUserCount(keyword);
 	}
@@ -140,9 +144,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public ArrayList<Member> selectSearchUser(SearchPaging searchpaging) {
 		return memberDao.selectSearchUser(searchpaging);
+
 	}
-
-
-
 
 }
