@@ -31,5 +31,6 @@ public interface MemberService {
 	ArrayList<Member> searchLoginok(SearchPaging searchpaging);
 	ArrayList<Member> searchEmail(SearchPaging searchpaging);
 	int aupdateMember(Member member);
-
+	int selectSearchUserCount(String keyword);
+	ArrayList<Member> selectSearchUser(SearchPaging searchpaging);
 }

@@ -26,6 +26,25 @@ th, td {
    border-bottom:3px solid #f8f9fa;
     padding: 15px 20px;
 }
+
+.allBtn {
+         margin-top:20px;
+               width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+            color: #333;
+            background-color: #E5E5E5;
+            font-size: 13px;
+}
+
+.allBtn:hover {
+   background-color:#F95E25;
+}
+
+/* button:hover {background-color: #F95E25;} */
 </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -84,7 +103,7 @@ function changeLogin(element){
 <h1 align="center">회원 관리 페이지</h1>
 <h2 align="center">현재 회원수 : ${ listCount } 명</h2>
 <div  align="center">
-   <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/mmlist.do';">전체 보기</button>
+   <button class="allBtn"onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/mmlist.do';">전체 보기</button>
    <br><br>
     <div align="center"  >
          <select id="test" onchange="Change()" style="width: 8rem; height:3rem; border:3px solid  white;position:relative; top:48px;text-align:center; right:317px;">
@@ -147,11 +166,9 @@ function changeLogin(element){
 </table>
 <br>
 
-
-
 <c:if test="${ empty action }">
 <!-- 전체목록 페이징 처리 -->
-<div style="text-align:center;"> <!-- 페이지 표시 영역 -->
+<div style="text-align:center; margin:30px;"> <!-- 페이지 표시 영역 -->
    <!-- 1페이지로 이동 처리 -->
    <c:if test="${ currentPage eq 1 }">
       << &nbsp;
@@ -268,7 +285,7 @@ function changeLogin(element){
    <!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
    <c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
       <c:if test="${ p eq currentPage }">
-         <font size="4" color="red"><b>[${ p }]</b></font>
+         <font size="5" color="red"><b>[${ p }]</b></font>
       </c:if>
       <c:if test="${ p ne currentPage }">
          <c:if test="${ action eq 'userid' }">
