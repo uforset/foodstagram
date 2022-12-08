@@ -2,21 +2,19 @@ package com.circle.foodstagram.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,18 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import com.circle.foodstagram.member.model.vo.KakaoLoginApi;
 import com.circle.foodstagram.common.Paging;
 import com.circle.foodstagram.common.SearchPaging;
+import com.circle.foodstagram.member.model.vo.KakaoLoginApi;
 import com.circle.foodstagram.member.model.vo.Member;
 import com.circle.foodstagram.member.service.MailSendService;
 import com.circle.foodstagram.member.service.MemberService;
 import com.circle.foodstagram.notification.model.service.NotificationService;
-import com.circle.foodstagram.notification.model.vo.Notification;
 
-
-import lombok.extern.slf4j.Slf4j;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -90,30 +84,14 @@ public class MemberController {
 		}
 	
 
-	// 회원정보 변경을 위한 본인 인증 페이지로 이동
+	// 회원 정보 수정 페이지로 이동
 	@RequestMapping("moveup.do")
-	public String checkselfPage(
-			@RequestParam("userid") String userid, 
-			Model model) {
-		Member member = memberService.selectMember(userid);
-		if(member != null) {
-			model.addAttribute("member", member);
-			return "member/checkself";
-		}else {
-			model.addAttribute("message", userid + " : 회원 조회 실패!");
-			return "common/error";
-		}
-	}
-
-	// 본인 인증 후 회원 정보 수정 페이지로 이동
-	@RequestMapping("updatePage.do")
 	public String moveUpdatePage(
-			@RequestParam("userid") String userid, 
-			Model model) {
+			@RequestParam("userid") String userid, Model model) {
 		Member member = memberService.selectMember(userid);
 		if(member != null) {
 			model.addAttribute("member", member);
-			return "member/updatePage";
+			return "member/memberupdatePage";
 		}else {
 			model.addAttribute("message", userid + " : 회원 조회 실패!");
 			return "common/error";
@@ -201,6 +179,23 @@ public class MemberController {
 
 		return viewName;
 	}
+	
+	//로그아웃
+	@RequestMapping("logout.do")
+	public String logoutMethod(HttpServletRequest request, Model model) {
+		//로그인 시 생성된 세션객체를 찾아 없앰
+		HttpSession session = request.getSession(false);
+		//request가 가진 세션 id에 대한 세션객체 있으면 리턴
+		//없으면 null 리턴
+		
+		if(session != null) {
+			session.invalidate();
+			return "member/loginPage";		
+		} else {
+			model.addAttribute("message", "로그인 세션이 존재하지 않습니다.");
+			return "common/error";
+		}
+	}
 
 	// 비밀번호 이메일 인증
 	@RequestMapping("PWDmailCheck.do")
@@ -230,7 +225,7 @@ public class MemberController {
 		logger.info("멤버 : " + member);
 		if(member != null) {
 			mv.addObject("member", member);
-			mv.setViewName("member/myinfoPage");
+			mv.setViewName("member/mypage");
 		}else {
 			mv.addObject("message", userid + " : 회원 정보 조회 실패!");
 			mv.setViewName("common/error");
@@ -250,41 +245,37 @@ public class MemberController {
 	//회원 정보 수정용 : 수정 성공시 myinfoPage.jsp 로 이동함
 	@RequestMapping(value="mupdate.do", method=RequestMethod.POST)
 	public String memberUpdateMethod(Member member, Model model, 
-			@RequestParam("origin_userpassword") String originUserpassword, HttpServletRequest request) {
+			@RequestParam("origin_userpwd") String originUserpwd) {
 		logger.info("mupdate.do : " + member);
-		logger.info("origin_userpassword : " + originUserpassword);
-
+		logger.info("origin_userpwd : " + originUserpwd);
+		
 		//새로운 암호가 전송이 왔다면, 패스워드 암호화 처리함
 		String userpwd = member.getUserpwd().trim();
 		if(userpwd != null && userpwd.length() > 0) {
 			//기존 암호와 다른 값이면
-			if(!this.bcryptPasswordEncoder.matches(userpwd, originUserpassword)) {
-        
+			if(!this.bcryptPasswordEncoder.matches(userpwd, originUserpwd)) {
 				//member 에 새로운 패스워드를 암호화해서 기록함
 				member.setUserpwd(this.bcryptPasswordEncoder.encode(userpwd));
 			}
 		}else {
 			//새로운 패스워드 값이 없다면, member 에 원래 패스워드 기록
-			member.setUserpwd(originUserpassword);
+			member.setUserpwd(originUserpwd);
 		}
-
+		
 		logger.info("after : " + member);
-
+		
 		if(memberService.updateMember(member) > 0) {
 			//수정이 성공했다면, 컨트롤러의 메소드를 직접 호출할 수도 있음
 			//즉, 컨트롤러 안에서 다른 컨트롤러를 실행할 수도 있음
 			//내정보보기 페이지에 수정된 회원정보를 다시 조회해서 내보냄
 			//쿼리스트링 : ?이름=값&이름=값
-			HttpSession session = request.getSession(false);
-			session.invalidate(); //세션 객체를 없앰
-			System.out.println("세션 삭제됨");
-			return "redirect:main.do";
+			return "redirect:myinfo.do?userid=" + member.getUserid();
 		}else {
 			model.addAttribute("message", 
 					member.getUserid() + " : 회원 정보 수정 실패!");
 			return "common/error";
 		}
-
+		
 	}
 
 	//회원 탈퇴 처리용 : 회원 정보 삭제함
@@ -331,30 +322,6 @@ public class MemberController {
 
 	}
 
-	// 비밀번호 변경 전 본인 확인
-	@RequestMapping(value="checkself.do", method=RequestMethod.POST)
-	public String checkself(Member member, @RequestParam("userid") String userid, Model model) {
-		System.out.println(member.getUserid());
-		Member loginMember = memberService.selectMember(userid);
-		logger.info("member.pass " + member.getUserpwd());
-		logger.info("loginmember.pass " + loginMember.getUserpwd());
-
-		String viewName = null;
-		if(loginMember != null && 
-				this.bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())) {
-			//로그인 상태 관리 방법 (상태 관리 매커니즘) : 기본 세션 사용
-			//logger.info("sessionID : " + loginSession.getId());
-
-			//로그인 성공시 내보낼 뷰파일명 지정
-			viewName = "redirect:updatePage.do?userid=" + userid;
-		}else {  //로그인 실패
-			model.addAttribute("message", 
-					"본인 인증 실패 : 암호를 확인하세요.");
-			viewName = "common/error";
-		}
-
-		return viewName;
-	}
 	
    //로그인 제한/가능 변경 처리용
    @RequestMapping("loginok.do")
@@ -650,6 +617,62 @@ public class MemberController {
 				}
 				
 			}
+			
+			// 사이트 회원 검색용
+			 @RequestMapping(value="searchUser.do", method=RequestMethod.GET)
+		      public String SearchUserMethod(
+		            @RequestParam("keyword") String keyword, 
+		            @RequestParam(name="page", required=false) String page,
+		            Model model) {
+		         int currentPage = 1;
+		         if(page != null) {
+		            currentPage = Integer.parseInt(page);
+		         }
+		         
+		         //한 페이지에 게시글 10개씩 출력되게 하는 경우
+		         //페이징 계산 처리 -- 별도의 클래스로 작성해도 됨 ---------------
+		         //별도의 클래스의 메소드에서 Paging 을 리턴하면 됨
+		         int limit = 10;  //한 페이지에 출력할 목록 갯수
+		         //전체 페이지 갯수 계산을 위해 총 목록 갯수 조회해 옴
+		         int listCount = memberService.selectSearchUserCount(keyword);
+		         //페이지 수 계산
+		         //주의 : 목록이 11개이면 페이지 수는 2페이지가 됨
+		         // 나머지 목록 1개도 1페이지가 필요함
+		         int maxPage = (int)((double)listCount / limit + 0.9);
+		         //현재 페이지가 포함된 페이지 그룹의 시작값 지정
+		         // => 뷰 아래쪽에 표시할 페이지 수를 10개로 하는 경우
+		         int startPage = (currentPage / 10) * 10 + 1;
+		         //현재 페이지가 포함된 페이지 그룹의 끝값 지정
+		         int endPage = startPage + 10 - 1;
+		         
+		         if(maxPage < endPage) {
+		            endPage = maxPage;
+		         }
+		         
+		         //쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
+		         int startRow = (currentPage - 1) * limit + 1;
+		         int endRow = startRow + limit - 1;
+		         
+		         //페이징 계산 처리 끝 ---------------------------------------
+		         SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
+		         ArrayList<Member> list = memberService.selectSearchUser(searchpaging);
+		         
+		         if(list.size() > 0) {
+		            model.addAttribute("list", list);
+		            model.addAttribute("listCount", listCount);
+		            model.addAttribute("maxPage", maxPage);
+		            model.addAttribute("currentPage", currentPage);
+		            model.addAttribute("startPage", startPage);
+		            model.addAttribute("endPage", endPage);
+		            model.addAttribute("limit", limit);
+		            model.addAttribute("keyword", keyword);
+		            return "member/searchUserListView";
+		         }else {
+		            model.addAttribute("message", 
+		                  keyword + "로 검색된 게시글 정보가 없습니다.");
+		            return "common/error";
+		         }
+		      }
 }
 
 
