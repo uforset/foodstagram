@@ -62,7 +62,12 @@
 	</beans:bean>  -->
 	<!-- 위 작업 필요없이 클래스 위에 annotation(어노테이션)을 사용해서 자동 등록 처리되게 함 -->
 	
-	
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<beans:bean
+		class="com.circle.foodstagram.member.model.vo.NaverLoginBO"
+		id="naverLoginBO" />
+
+
 </beans:beans>
 
 
