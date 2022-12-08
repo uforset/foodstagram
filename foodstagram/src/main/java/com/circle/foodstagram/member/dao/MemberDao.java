@@ -126,6 +126,12 @@ public class MemberDao {
 		return session.update("memberMapper.aupdateMember", member);
 	}
 
+
+	public ArrayList<Member> selectSearchUseridUsername(String keyword) {
+		List<Member> list = session.selectList("memberMapper.selectSearchUseridUsername", keyword);
+		return (ArrayList<Member>)list;
+	}
+
 	public int selectSearchUserCount(String keyword) {
 		return session.selectOne("memberMapper.SearchUserCount", keyword);
 	}
@@ -134,6 +140,7 @@ public class MemberDao {
 		List<Member> list = session.selectList("memberMapper.searchUser", searchpaging);
 		return (ArrayList<Member>)list;
 	}
+
 
 
 	

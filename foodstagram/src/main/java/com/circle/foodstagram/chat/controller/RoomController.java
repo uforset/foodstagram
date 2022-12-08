@@ -1,5 +1,6 @@
 package com.circle.foodstagram.chat.controller;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.circle.foodstagram.chat.model.dao.ChatRoomDao;
@@ -20,9 +22,13 @@ import com.circle.foodstagram.chat.model.vo.ChatRoom;
 import com.circle.foodstagram.chat.model.vo.ChatRoomJoin;
 import com.circle.foodstagram.member.model.vo.Member;
 import com.circle.foodstagram.member.service.MemberService;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequiredArgsConstructor
@@ -79,6 +85,11 @@ public class RoomController {
     }
     */
     
+	@GetMapping("testRooms.do")
+	public String moveTest() {
+		return "chat/testRooms";
+	}
+	
     // new
     //채팅방 개설
     @PostMapping(value = "/room")
@@ -156,5 +167,15 @@ public class RoomController {
         model.addAttribute("list", chatService.findAllMyRooms(loginMember.getUserid()));
 
         return "chat/rooms";
+    }
+    
+    @PostMapping("getMembers.do")
+    @ResponseBody
+    public String getMembersMethod(@RequestParam String keyword) {
+
+    	Gson gson = new Gson();
+    	ArrayList<Member> mlist = memberService.selectSearchUseridUsername(keyword);
+    	log.info(gson.toJson(mlist));
+    	return gson.toJson(mlist);
     }
 }

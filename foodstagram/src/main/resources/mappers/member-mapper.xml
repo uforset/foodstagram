@@ -93,6 +93,16 @@
 		where userid = #{ userid }
 	</update>
 
+	<!-- 채팅 초대용 회원검색 아이디, 이름 -->
+	<select id="selectSearchUseridUsername" parameterType="string" resultMap="resultList">
+	select * from
+		(select * from member
+		where 
+		userid like '%' || #{ keyword } || '%'
+		or username like '%' || #{ keyword } || '%')
+	where	<![CDATA[ROWNUM <= 10]]>
+	</select>
+
 	<!-- 회원 검색 처리용 쿼리문 -->
 	<select id="selectSearchUserid" parameterType="string"
 		resultMap="resultList">
