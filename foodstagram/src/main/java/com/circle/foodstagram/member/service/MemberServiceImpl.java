@@ -132,6 +132,16 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.aupdateMember(member);
 	}
 
+	@Override
+	public int selectSearchUserCount(String keyword) {
+		return memberDao.selectSearchUserCount(keyword);
+	}
+
+	@Override
+	public ArrayList<Member> selectSearchUser(SearchPaging searchpaging) {
+		return memberDao.selectSearchUser(searchpaging);
+	}
+
 
 
 

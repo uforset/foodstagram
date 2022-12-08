@@ -217,10 +217,10 @@ li {list-style: none;}
                         </form>
                     </span>
                     <span id="d5" style="display: none;position:relative; bottom: 40px; left: 190px;">
-                        <form action="searchWriter.do" method="get">
+                        <form action="searchUser.do" method="get">
                             <input type="search" name="keyword" placeholder="'아이디'를 입력해주세요" required
                                 style="width: 260px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
-                            <button onclick="#" class="searchBtn" type="search" name="keyword">검색</button>
+                            <button onclick="searchUser.do" class="searchBtn" type="submit" name="검색">검색</button>
 
                         </form>
                     </span>
@@ -238,9 +238,15 @@ li {list-style: none;}
                 <ol class="navlist">
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
+                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
                     <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
+                    </c:if>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
-                    <li><a href="${ pageContext.servletContext.contextPath }/mpage.do"><img src="resources/images/profile.jpg" id="profile"></a></li>
+                    <c:url var="callMyinfo" value="/myinfo.do">
+                        <c:param name="userid" value="${ loginMember.userid }" />
+                    </c:url>
+                    <li><a href="${ callMyinfo }"><img src="resources/images/profile.jpg" id="profile"></a></li>
+                    <!-- <li><a href="${ pageContext.servletContext.contextPath }/myinfo.do"><img src="resources/images/profile.jpg" id="profile"></a></li> -->
                     <li><a href="${ pageContext.servletContext.contextPath }/nlist.do"><i class="fa-solid fa-bell fa-2x"></i></a></li>
                     <%-- <c:if test="${ read eq 'unread'}" ><li class="noneRead"></li></c:if> --%>
                 </ol>
