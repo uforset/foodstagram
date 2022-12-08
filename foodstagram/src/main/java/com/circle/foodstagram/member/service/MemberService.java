@@ -31,5 +31,5 @@ public interface MemberService {
 	ArrayList<Member> searchLoginok(SearchPaging searchpaging);
 	ArrayList<Member> searchEmail(SearchPaging searchpaging);
 	int aupdateMember(Member member);
-
+	ArrayList<Member> selectSearchUseridUsername(String keyword); // 채팅 유저검색용도
 }

@@ -126,7 +126,10 @@ public class MemberDao {
 		return session.update("memberMapper.aupdateMember", member);
 	}
 
-
+	public ArrayList<Member> selectSearchUseridUsername(String keyword) {
+		List<Member> list = session.selectList("memberMapper.selectSearchUseridUsername", keyword);
+		return (ArrayList<Member>)list;
+	}
 	
 }
 
