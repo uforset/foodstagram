@@ -15,6 +15,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.circle.foodstagram.board.model.vo.BoardAttach;
 import com.circle.foodstagram.common.attach.model.vo.Attach;
 
 import lombok.extern.log4j.Log4j;
@@ -109,6 +110,50 @@ public class AttachUtils {
 			file.delete(); // 파일 삭제	
 		}
 		return attach.getAtch_no();
+	}
+	
+	// 보드어태치 전용 메소드
+	/** 다중 MultipartFile에서 VO 설정 및 업로드 파일 처리 후 List 리턴 */
+	public List<BoardAttach> getBoardAttachListByMultiparts(MultipartFile[] boFiles, String path, HttpServletRequest request)
+			throws IOException {
+		List<BoardAttach> atchList = new ArrayList<BoardAttach>();
+		//String savePath = request.getSession().getServletContext()
+		uploadPath = request.getSession().getServletContext().getRealPath("resources");
+		for (int i = 0; i < boFiles.length; i++) {
+			MultipartFile multipart = boFiles[i];
+			BoardAttach vo = this.getBoardAttachByMultipart(multipart, path);
+			vo.setAtch_seq(i + 1);
+			if (vo != null) {
+				atchList.add(vo);
+			}
+		}
+		return atchList;
+	}
+	
+	/** MultipartFile에서 VO 설정 및 업로드 파일 처리 후 리턴, 없는 경우 null */
+	public BoardAttach getBoardAttachByMultipart(MultipartFile multipart, String path) throws IOException {
+		if (!multipart.isEmpty()) {
+			int pos = multipart.getOriginalFilename().lastIndexOf(".");
+	        String ext = multipart.getOriginalFilename().substring(pos + 1);
+			String fileName = UUID.randomUUID().toString() + "." + ext; // 랜덤uid + 확장자 붙여줌
+			BoardAttach vo = new BoardAttach();
+			vo.setAtch_original_name(multipart.getOriginalFilename());
+			vo.setAtch_file_size((int)multipart.getSize());
+			vo.setAtch_content_type(multipart.getContentType());
+			vo.setAtch_file_name(fileName);
+			vo.setAtch_fancy_size(fancySize(multipart.getSize()));
+			
+			String filePath = uploadPath + File.separatorChar + path;
+			// 저장경로 resources + / + path
+			FileUtils.copyInputStreamToFile(multipart.getInputStream(), new File(filePath, fileName));
+			// multipart.transferTo(new File(filePath, fileName)); // 비슷한 역할
+			// multipart.transferTo(new File(filePath, fileName));
+			// 여기서 실제 파일이 저장(regist에서 실행됐다), inputStream을 file로 변환하는 메소드
+			
+			return vo;
+		} else {
+			return null;
+		}
 	}
 	
 	

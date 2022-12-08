@@ -4,109 +4,101 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardMapper">
 
-   <resultMap type="Board" id="Board">
-      <id column="B_NO" property="B_NO" />
-      <result column="USERID" property="USERID" />
-      <result column="B_CONTENT" property="B_CONTENT" />
-      <result column="B_CREATE_DATE" property="B_CREATE_DATE" />
-      <result column="B_UP_DATE" property="B_UP_DATE" />
-      <result column="B_READCOUNT" property="B_READCOUNT" />
-      <result column="B_OPEN" property="B_OPEN" />
-   </resultMap>
+	<resultMap type="Board" id="resultBoard">
+		<id column="b_no" property="b_no" />
+		<result column="userid" property="userid" />
+		<result column="b_content" property="b_content" />
+		<result column="b_create_date" property="b_create_date" />
+		<result column="b_up_date" property="b_up_date" />
+		<result column="b_readcount" property="b_readcount" />
+		<result column="b_open" property="b_open" />
+		<result column="b_category" property="b_category" />
+		<result column="b_like" property="b_like" />
+	</resultMap>
 
-    <resultMap type="Board" id="BoardAttaches">
-     <collection property="attaches"   column="{atch_parent_no=b_no, atch_category=atch_category}"
-     ofType="Attach" 
-     select="attachMapper.getAttachListByParent"> 
-     </collection>
-    </resultMap>
-   
-   <resultMap type="Board_reply" id="Board_reply">
-      <result column="B_NO" property="B_NO" />
-      <result column="b_reply_no" property="b_reply_no" />
-      <result column="b_reply_content" property="b_reply_content" />
-      <result column="b_reply_date" property="b_reply_date" />
-      <result column="b_reply_up_date" property="b_reply_up_date" />
-   </resultMap>
-   
-   <resultMap type="Board_like" id="Board_like">
-      <result column="B_NO" property="B_NO" />
-      <result column="b_like_no" property="b_like_no" />
-      <result column="b_like" property="b_like" />
-   </resultMap>
-   
-   <resultMap type="Board_tag" id="Board_tag">
-      <result column="B_NO" property="B_NO" />
-      <result column="btag_id" property="btag_id" />
-      <result column="tag_no" property="tag_no" />
-   </resultMap>
-   
-   <resultMap type="Tag" id="Tag">
-      <result column="tag_no" property="tag_no" />
-      <result column="tag_name" property="tag_name" />
-   </resultMap>
-   
+	<resultMap type="BoardAttach" id="resultAttach">
+		<result column="atch_parent_no" property="atch_parent_no" />
+		<result column="atch_file_name" property="atch_file_name" />
+	</resultMap>
 
-   
-   <insert id="insertOrigin" parameterType="Board">
-      insert into board (B_NO, USERID, 
-            B_CONTENT, B_CREATE_DATE, B_UP_DATE, 
-            B_READCOUNT, B_OPEN)
-      values (default, #{userid}, 
-            #{b_content}, default, null, 
-            default, #{b_open})
-      <selectKey keyProperty="b_no" resultType="int" order="AFTER">
-         select max(B_NO) from BOARD
-      </selectKey>
-   </insert>
-   
-   <select id="boardListFive" parameterType="int" resultType="Board" resultMap="BoardAttaches">
-      <![CDATA[
-            SELECT *
-            FROM (
-                select *
-                from BOARD
-                where B_NO > 0
-                        and B_OPEN > 0
-                order by B_READCOUNT DESC
-                )
-            WHERE ROWNUM <= 5;
-      ]]>
-   </select>
-   
-   <select id="getBoard" parameterType="int" resultType="Board" resultMap="BoardAttaches">
-      select b.*, 'Board' atch_category 
-      from board b 
-      where b_no = #{b_no}
-   </select>
-   
-   <select id="infiniteScrollDownPOST" resultType="Board">
-      <![CDATA[
-         select *
-         from BOARD
-         where B_NO <= #{ b_no }
-            and B_NO > #{ b_no }-5
-         order by B_READCOUNT DESC
-      ]]>
-   </select>
-   
-   <select id="getListCount" resultType="_int">
-      select count(*) from BOARD
-   </select>
-   
-   <select id="selectList" parameterType="Paging" resultMap="Board">
-      <![CDATA[
-         SELECT *  
-         FROM (SELECT ROWNUM RNUM, B_NO, USERID, B_CONTENT, 
-                    B_CREATE_DATE, B_UP_DATE,
-                    B_READCOUNT, B_OPEN,
-                    B_ORIGINAL_IMG, B_RENAME_IMG
-                FROM (SELECT * FROM BOARD
-                         where B_OPEN >= 1
-                     ORDER BY b_readcount DESC))  
-         where rnum >= #{startRow} and rnum <= #{endRow}
-      ]]>
-   </select>
-   
+	<insert id="insertBoard" parameterType="Board">
+		insert into board (B_NO, USERID, B_CONTENT, B_CREATE_DATE, B_UP_DATE, B_READCOUNT, B_OPEN, b_category, b_like)
+		values (default, #{userid}, #{b_content}, default, default, default, #{b_open}, #{b_category}, default)
+		<selectKey keyProperty="b_no" resultType="int" order="AFTER">
+			select max(B_NO) from BOARD
+		</selectKey>
+	</insert>
+
+	<update id="updateBoard" parameterType="Board">
+		update board
+		set b_content = #{b_content},
+			b_category = #{b_category},
+			b_up_date = sysdate
+		where b_no = #{b_no}
+	</update>
+
+	<delete id="deleteBoard" parameterType="_int">
+		delete from board
+		where b_no = #{b_no}
+	</delete>
+
+	<select id="selectListAll" resultMap="resultAttach">
+		select a.atch_parent_no, a.atch_file_name
+		from board b
+		join boardattach a on (b.b_no = a.atch_parent_no)
+		where b_open = 2
+		and atch_seq = 1
+		order by a.atch_parent_no desc
+	</select>
+
+	<select id="selectListMy" resultMap="resultAttach"
+		parameterType="string">
+		select a.atch_parent_no, a.atch_file_name
+		from board b
+		join boardattach a on (b.b_no = a.atch_parent_no)
+		where userid = #{userid}
+		and atch_seq = 1
+		order by a.atch_parent_no desc
+	</select>
+
+	<select id="selectListFriend" resultMap="resultAttach"
+		parameterType="string">
+		select a.atch_parent_no, a.atch_file_name
+		from board b
+		join boardattach a on (b.b_no = a.atch_parent_no)
+		where userid = #{userid} and b_open in (1,2)
+		and atch_seq = 1
+		order by a.atch_parent_no desc
+	</select>
+
+	<select id="selectBoard" resultType="Board" parameterType="_int">
+		select *
+		from board
+		where b_no = #{b_no}
+	</select>
+
+	<select id="searchBoard" parameterType="string" resultMap="resultAttach">
+		select a.atch_parent_no, a.atch_file_name
+		from board b
+		join boardattach a on (b.b_no = a.atch_parent_no)
+		where b_open = 2
+		and b_category like '%' || #{tag} || '%'
+		and atch_seq = 1
+		order by a.atch_parent_no desc
+	</select>
+
+	<update id="updateAddReadcount" parameterType="_int">
+		update board
+		set
+		b_readcount = b_readcount + 1
+		where b_no = #{b_no}
+	</update>
+	
+	<update id="addLikeupdateBoard" parameterType="_int">
+		update board
+		set		b_like = b_like + 1
+		where b_no = #{b_no}
+	</update>
+
 </mapper>
 
