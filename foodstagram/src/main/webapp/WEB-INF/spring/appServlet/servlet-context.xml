@@ -67,7 +67,17 @@
 		class="com.circle.foodstagram.member.model.vo.NaverLoginBO"
 		id="naverLoginBO" />
 
-
+	<!-- mvc 탭에서 등록 처리함 -->
+	<interceptors>
+		<!-- 로그인 상태에서 요청하는 서비스 체크용 인터셉터 -->
+		<interceptor>
+			<mapping path="/main.do" />
+			<beans:bean
+				class="com.circle.foodstagram.common.intercepter.LoginCheckIntercepter"
+				id="loginCheckIntercepter" />			
+		</interceptor>
+	</interceptors>
+	
 </beans:beans>
 
 

@@ -183,10 +183,10 @@ li {list-style: none;}
                     </select>
 
                     <span id="d4" style="position:relative; bottom: 40px; left: 190px;">
-                        <form action="searchTitle.do" method="get">
-                            <input type="search" name="keyword"  placeholder="'음식명'을 입력해주세요" required
+                        <form action="bsearch.do" method="get">
+                            <input type="search" name="b_category"  placeholder="'음식명'을 입력해주세요" required
                                 style="width: 260px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
-                            <button onclick="#" class="searchBtn" type="search" name="keyword">검색</button>
+                            <input type="submit" class="searchBtn" value="검색">
                         </form>
                     </span>
                     <span id="d5" style="display: none;position:relative; bottom: 40px; left: 190px;">

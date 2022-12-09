@@ -12,6 +12,7 @@
 		<typeAlias type="com.circle.foodstagram.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.circle.foodstagram.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.circle.foodstagram.notification.model.vo.Notification" alias="Notification" />
+		<typeAlias type="com.circle.foodstagram.food.model.vo.Food" alias="Food" />
 		<typeAlias type="com.circle.foodstagram.common.SearchDate" alias="SearchDate" />
 		<typeAlias type="com.circle.foodstagram.common.Paging" alias="Paging" />
 		<typeAlias type="com.circle.foodstagram.common.SearchPaging" alias="SearchPaging" />
@@ -23,22 +24,23 @@
 		<typeAlias type="com.circle.foodstagram.chat.model.vo.ChatRoom" alias="ChatRoom" />
 		<typeAlias type="com.circle.foodstagram.chat.model.vo.ChatRoomJoin" alias="ChatRoomJoin" />
 		<typeAlias type="com.circle.foodstagram.board.model.vo.Board" alias="Board" />
-		 <typeAlias type="com.circle.foodstagram.board.model.vo.Board_reply" alias="Board_reply" />
-      	<typeAlias type="com.circle.foodstagram.board.model.vo.Board_like" alias="Board_like" />
-      	<typeAlias type="com.circle.foodstagram.board.model.vo.Board_tag" alias="Board_tag" />
-      	<typeAlias type="com.circle.foodstagram.board.model.vo.Tag" alias="Tag" />
+		<typeAlias type="com.circle.foodstagram.board.model.vo.BoardAttach" alias="BoardAttach" />
+		<typeAlias type="com.circle.foodstagram.board.model.vo.BoardReply" alias="BoardReply" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/notification-mapper.xml" />
+		<mapper resource="mappers/food-mapper.xml" />
 		<mapper resource="mappers/question-mapper.xml" />
 		<mapper resource="mappers/answer-mapper.xml" />
 		<mapper resource="mappers/attach-mapper.xml" />
 		<mapper resource="mappers/chatMessage-mapper.xml" />
 		<mapper resource="mappers/chatRoom-mapper.xml" />
 		<mapper resource="mappers/chatRoomJoin-mapper.xml" />
+		<mapper resource="mappers/boardattach-mapper.xml" />
+		<mapper resource="mappers/boardreply-mapper.xml" />
 		<mapper resource="mappers/board-mapper.xml" />
 	</mappers>
 </configuration>

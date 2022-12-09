@@ -30,23 +30,23 @@ table.qa-table {
 	border-collapse: collapse;
 	line-height: 1.5;
 	margin-top:50px;
-}
+} 
 
-.paging {
+ .paging {
 	position: fixed;
 	bottom: 100px;
 	width: 100%;
 	text-align: center;
 }
 
-input {
+ input:not(nav  input){
 	width: 200px;
 	height: 2rem;
 	border: 3px solid #f8f9fa;
 	border-radius: 20px;
 	margin-bottom: 15px;
+	cursor:pointer;
 }
-
 
 .mupdate {
 	          width: 600px;
@@ -57,8 +57,8 @@ input {
           box-shadow: 2px 2px 10px grey;
           box-sizing: border-box;
           position: relative;
-          left: 100px;
 }
+
 form ul:first-child {
     display: flex;
     padding-bottom: 15px;

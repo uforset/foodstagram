@@ -2,10 +2,10 @@ package com.circle.foodstagram.notice.model.service;
 
 import java.util.ArrayList;
 
-import com.circle.foodstagram.notice.model.vo.Notice;
 import com.circle.foodstagram.common.Paging;
-import com.circle.foodstagram.common.SearchPaging;
 import com.circle.foodstagram.common.SearchDate;
+import com.circle.foodstagram.common.SearchPaging;
+import com.circle.foodstagram.notice.model.vo.Notice;
 
 public interface NoticeService {
 	ArrayList<Notice> selectAll();

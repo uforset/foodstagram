@@ -5,9 +5,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+	rel="stylesheet">
+	<link href="resources/css/reset.css" rel="stylesheet"> 
+	<link href="resources/css/style.css" rel="stylesheet"> 
 <style type="text/css">
+form {
+		          width: 600px;
+          height: 630px;
+          margin: 50px auto;
+          padding: 15px 10px;
+          border-radius: 20px;
+          box-shadow: 2px 2px 10px grey;
+          box-sizing: border-box;
 
+}
+input {
+	width: 200px;
+	height: 2rem;
+	border: 3px solid #f8f9fa;
+	border-radius: 20px;
+	margin-bottom: 15px;
+}
+h2{font-size:20px; font-weight:bold; padding:20px;}
+th {font-size:15px;}
+button, #button {
+	            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+            color: #333;
+            font-size: 13px;
+            cursor:pointer;
+}
+button:hover, #button:hover {background-color: #F95E25;}
 </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -66,10 +100,13 @@ function validate(){
 </script>
 </head>
 <body>
-	<br><br>
-	<h2 align="center"  class="h2">회원가입</h2>
-<form action="enroll.do" method="post" onsubmit="return validate();">
 
+	
+<form action="enroll.do" method="post" onsubmit="return validate();">
+<ul>
+		<li><img src="resources/images/name.png"></li>
+		<li><h2 align="center">회원가입</h2></li>
+	</ul>
 <table class="table" align="center" style="position:relative; left:80px;">
 	<tr>
 		<th>이 름 :</th>
@@ -81,7 +118,7 @@ function validate(){
 		<td>
 			<input type="text" name="userid" id="userid" placeholder="아이디" required>
 			&nbsp;
-			<input type="button" class="from-button" value="중복 체크" onclick="return dupCheckId();" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa; cursor:pointer;">
+			<input type="button" class="from-button" value="중복 체크" onclick="return dupCheckId();" style="width: 6rem; cursor:pointer;">
 		</td>
 	</tr>
 	<tr>
