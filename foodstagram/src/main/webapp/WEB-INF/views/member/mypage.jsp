@@ -408,14 +408,17 @@ $(function(){
             <li class="mypageImg"><a href="#"><img src="resources/images/profile.jpg"></a></li>
             <li>
                 <ul>
-                    <li><span id="id">${ loginMember.userid }</span></li> 
-                    <c:url var="moveup" value="/moveup.do">
-                     <c:param name="userid" value="${ member.userid }"/>
-                  </c:url>
+                	<c:url var="callMyinfo" value="/myinfo.do">
+                        <c:param name="userid" value="${ member.userid }" />
+                    </c:url>
+                    <li><a href="${ callMyinfo }"><span id="id">${ member.userid }</span></a></li> 
+                  	<c:url var="moveup" value="/moveup.do">
+                     	<c:param name="userid" value="${ member.userid }"/>
+                  	</c:url>
                     <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                     <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
-                   <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+                   		<li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
                     </c:if>
                 </ul>
                 <ul>
@@ -424,14 +427,14 @@ $(function(){
                 </ul>
                 <ul>이름 : ${ loginMember.username }</ul>
                 <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
-                   <ul><button class="new">최신순 보기</button> <br>
+                   	<ul><button class="new">최신순 보기</button> <br>
                     <button class="old">오래된순 보기</button></ul>
-                 </c:if>
+                </c:if>
             </li>
         </ul>
         <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
         <table class="mainPage" id="blist">
-            <!-- ------------------------------- -->
+			<!-- 게시글 출력 영역 -->
         </table>
       </c:if>
     </section>
