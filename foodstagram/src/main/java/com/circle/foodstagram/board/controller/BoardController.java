@@ -78,7 +78,7 @@ public class BoardController {
 		
 	}
 
-	// 마이 페이지 게시글 목록보기 요청 처리용
+	// 마이 페이지 본인 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "blistmy.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String boardListMyMethod(@RequestParam("userid") String userid) throws UnsupportedEncodingException {
@@ -102,7 +102,7 @@ public class BoardController {
 
 	}
 
-	// 친구의 게시글 목록보기 요청 처리용
+	// 마이페이지 친구 이상 공개 목록보기 요청 처리용
 	@RequestMapping(value = "blistfriend.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String boardListFriendMethod(@RequestParam("userid") String userid) throws UnsupportedEncodingException {

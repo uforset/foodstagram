@@ -223,6 +223,9 @@
     .etc li a:hover {
       border-bottom: 3px solid #F95E25;
     }
+    a {
+     text-decoration:none 
+    }
         
     </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
@@ -251,7 +254,10 @@
                 <!-- 다른 유저의 프로필사진, id, 글쓴내용, 지도  -->
                 <ol>
                     <li>
-                        <span class="id">${board.userid }</span>
+                        <c:url var="callMyinfo" value="/myinfo.do">
+	                        <c:param name="userid" value="${ board.userid }" />
+	                    </c:url>
+	                    <li><a href="${ callMyinfo }"><span id="id" class="id">${ board.userid }</span></a></li> 
                    		<c:if test="${board.userid ne loginMember.userid }">
 	                        <p class="modalContent">${board.b_content }
 	                        <span><a href="bsearch.do?b_category=${board.b_category }"><br>${board.b_category }</a></span>
