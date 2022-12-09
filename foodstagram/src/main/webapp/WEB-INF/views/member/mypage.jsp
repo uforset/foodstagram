@@ -365,17 +365,13 @@ $(function(){
          userid: "${sessionScope.loginMember.userid}"
       },
       success: function(data){
-         console.log("success : " + data); //Object 로 출력됨
-         
-         //받은 object => string 으로 바꿈
+
          var jsonStr = JSON.stringify(data);
-         //string => json 객체로 바꿈
          var json = JSON.parse(jsonStr);
          
-         console.log(json.list);
          var bvalues = "";
          var count = 1;
-         for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+         for(var i in json.list){
             if(count % 3 == 1){
                bvalues += "<tr>";
             }
@@ -384,7 +380,7 @@ $(function(){
             if(count % 3 == 1){
                bvalues += "</tr>";
                }
-         } //for in
+         }
          if(count != 4){
 
             for(var n = count; n <= 3; n++){
@@ -393,6 +389,9 @@ $(function(){
             bvalues += "</tr>";
          }
          $("#blist").html($("#blist").html() + bvalues);
+         
+         $("#lSize").html("게시물 " + json.list.length);
+         
          
       },
       error: function(jqXHR, textStatus, errorThrown){
@@ -420,7 +419,7 @@ $(function(){
                     </c:if>
                 </ul>
                 <ul>
-                    <li>게시물 21</li>
+                    <li id="lSize"></li>
                     <li>친구 10명</li>
                 </ul>
                 <ul>이름 : ${ loginMember.username }</ul>
