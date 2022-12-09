@@ -148,8 +148,8 @@ public class MemberController {
          HttpSession loginSession, SessionStatus status, Model model) {
 	   
       Member loginMember = memberService.selectMember(userid);
-      logger.info("멤버확인!!!!!!!!!!!");
-      logger.info(loginMember.toString());
+//      logger.info("멤버확인!!!!!!!!!!!");
+//      logger.info(loginMember.toString());
       String viewName = null;
       String tempPWD = (String) loginSession.getAttribute("tempPWD");
       if(loginMember != null && tempPWD != null) {
@@ -172,7 +172,7 @@ public class MemberController {
          model.addAttribute("message",
                "로그인 실패 : 아이디나 암호 확인하세요.<br>"
                      + "또는 로그인 제한 회원인지 관리자에게 문의하세요.");
-         viewName = "common/error";
+         viewName = "common/error_login";
       }
 
       return viewName;
@@ -748,8 +748,9 @@ public class MemberController {
 		String checkid = "@N"+id;//네이버 아이디 저장 값
 		member.setUserid(checkid);
 		  
-				
-		return "login";
+		
+			return "common/main";
+		
 	}
 	
 	//카카오
@@ -788,7 +789,7 @@ public class MemberController {
 			
 		}else {
 			model.addAttribute("message", "카카오 로그인 회원 조회 실패");
-			return "common/error";
+			return "common/error_login";
 			
 		}
 	

@@ -30,9 +30,5 @@ public class NaverLoginApi extends DefaultApi20 {
 		return "https://nid.naver.com/oauth2.0/authorize";
 	}
 	
-	@RequestMapping(value="main.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public String moveNcallback() {
-		return "common/main";
-	}
 
 }
