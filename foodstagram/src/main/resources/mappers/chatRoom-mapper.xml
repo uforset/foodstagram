@@ -7,6 +7,10 @@
 	<resultMap type="ChatRoom" id="resultChatRoom">
 		<id column="chat_room_id" property="chat_room_id" />
 		<result column="title" property="title" />
+		<collection property="participants" column="{chat_room_id=chat_room_id}"
+		ofType="ChatRoomJoin"
+		select="chatRoomJoinMapper.getJoinListByRoomId">
+		</collection>
 	</resultMap>
 
 
@@ -25,5 +29,7 @@
 	<insert id="insertChatRoom" parameterType="ChatRoom">
 		insert into chat_room values(#{chat_room_id}, #{title})
 	</insert>
+
+
 
 </mapper>

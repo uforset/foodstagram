@@ -114,7 +114,12 @@ function visibleUsers() {
                                                 	
                                                     <!-- 챗방 추가 -->
                                                     <c:forEach var="room" items="${ list }">
-                                                    <div class=" _ab8s _ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm">
+                                                    	<c:if test="${ room.chat_room_id eq selectedRoom.chat_room_id }">
+                                                    	<div class=" _ab8o _ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm">
+                                                    	</c:if>
+                                                    	<c:if test="${ room.chat_room_id ne selectedRoom.chat_room_id }">
+                                                    	<div class=" _ab8s _ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm">
+                                                    	</c:if>
                                                         <div class="_abm4"><a class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz _a6hd" href="/foodstagram/chat/room?roomId=${room.chat_room_id}" role="link" tabindex="0">
                                                                 <div aria-labelledby="f31ad56cacbb6a4 f3baa4da491f23 f2889a7ac87d5a f3c41205ec58798" class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _ab9_ _aba8 _abcm">
                                                                     <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbj _abcm">
@@ -150,19 +155,57 @@ function visibleUsers() {
                                 </div>
                             </div>
                             <div class=" _ab8s _ab8w  _ab94 _ab99 _ab9f _ab9m _ab9o _abcm" style="height: auto;">
-                                <div class="_ab8w  _ab94 _ab97 _ab9h _ab9m _ab9p  _aba0 _abac _abcm" style="height: 100%; width: 100%;"><svg aria-label="Direct" class="_ab6-" color="#262626" fill="#262626" height="96" role="img" viewBox="0 0 96 96" width="96">
-                                        <circle cx="48" cy="48" fill="none" r="47" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
-                                        <line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="69.286" x2="41.447" y1="33.21" y2="48.804"></line>
-                                        <polygon fill="none" points="47.254 73.123 71.376 31.998 24.546 32.002 41.448 48.805 47.254 73.123" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon>
-                                    </svg>
-                                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abc0 _abcm">
-                                        <h2 class="_aacl _aacr _aact _aacx _aad6 _aadb">내 메시지</h2>
-                                    </div>
-                                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abc0 _abcm">
-                                        <div class="_aacl _aaco _aacu _aacy _aad6 _aadb">친구나 그룹에 비공개 사진과 메시지를 보내보세요.</div>
-                                    </div>
-                                    <!-- Modal HTML embedded directly into document -->
-									<div id="ex1" class="modal" style="max-width: 440px;" >
+                                <!-- 채팅방 info -->
+                                <div class="_ab61">
+								    <div class="_aa4j" style="position: static; z-index: inherit;">
+								        <div class="_aa4k _aa4l">
+								            <div class="_aa4m _aa4n"></div>
+								            <div class="_aa4o">
+								                <div class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p _abcm" style="width: 100%;">
+								                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abb0 _abbz _abcm"><button class="_acan _aiit _acao _aija _acas _aj1-" type="button">
+								                            <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abcj _abcm" style="height: 32px; width: 32px;"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 20px; height: 20px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span>
+								                                <div class="_aa2p _aa2r">
+								                                    <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 20px; height: 20px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span>
+								                                        <div class="_aah4 _aah7"></div>
+								                                    </div>
+								                                </div>
+								                            </div>
+								                        </button></div>
+								                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9q  _abb1 _abcm" style="min-width: 0px;"><button class="_acan _aiit _acao _aija _acaq _acat _aj1-" type="button">
+								                            <div class="_ab8w  _ab94 _ab95 _ab9h _ab9m _ab9p _abcm" style="height: 40px;">
+								                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9k _ab9p _abcm">
+								                                    <div class="_aacl _aacp _aacw _aacx _aada">${ selectedRoom.title }</div>
+								                                </div>
+								                                <div class="_ab8w  _ab94 _ab95 _ab9f _ab9m _ab9p  _abb- _abcm">
+								                                    <div class="_aacl _aacn _aacu _aacy _aad6">활동메시지</div>
+								                                </div>
+								                            </div>
+								                        </button></div>
+								                </div>
+								            </div>
+								            <div class="_aa4m _aa4p">
+								                <button class="_abl-" type="button">
+								                    <div class="_abm0"><svg aria-label="대화 상세 정보 보기" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+								                            <circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+								                            <circle cx="11.819" cy="7.709" r="1.25"></circle>
+								                            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line>
+								                            <polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+								                        </svg></div>
+								                </button></div>
+								        </div>
+								    </div>
+								</div>
+  
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+   <!-- 모달 -->
+<div id="ex1" class="modal" style="max-width: 440px;" >
 										<div 
 											class="x7r02ix xf1ldfh x131esax xdajt7p xxfnqb6 xb88tzc xw2csxc x1odjw0f x5fp0pe x5yr21d"
 											role="dialog" style="overflow: hidden;">
@@ -187,7 +230,7 @@ function visibleUsers() {
 														<div class="_ac7b _ac7d">
 															<div
 																class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _ab9- _abcm">
-																<button class="_acan _acao _acas _acav" id="insertChatRoomButton" disabled=""
+																<button class="_acan _acao _acas _acav" disabled=""
 																	type="button">
 																	<div class="_aagz">다음</div>
 																</button>
@@ -221,20 +264,34 @@ function visibleUsers() {
 											</div>
 										</div>
 									</div>
-									
-                                    <div class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _abc2 _abcm">
-                                    
-                                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _ab9x _aba7 _abcm"><a href="#ex1" rel="modal:open"><button class="_acan _acap _acas" type="button" tabindex="0">메시지 보내기</button></a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
 </body>
+<script type="text/javascript">
+function toggleDialog(sh) {
+    dialog = document.getElementById("ex1");
+    //okbutton = document.getElementById("ok");
+    pagebackground = document.getElementById("bg");
+
+    if (sh == "show") {
+        dialogOpen = true;
+
+        // 다이얼로그 표시
+        dialog.style.display = 'block';
+
+        // 다이얼로그 표시 이후, 그 안의 요소에 포커스하기
+        okbutton.focus();
+
+        // "숨겨질" 콘텐츠로에서 포커스가 나간 *후에* 배경을 숨깁니다.
+        pagebackground.setAttribute("aria-hidden","true");
+
+    } else {
+        dialogOpen = false;
+        dialog.style.display = 'none';
+        pagebackground.setAttribute("aria-hidden","false");
+        lastFocus.focus(); 
+    }
+}
+
+</script>
 
 <script type="text/javascript">
 $(function (){
@@ -328,7 +385,6 @@ $(function (){
 });	
 </script>
 <script type="text/javascript">
-
 function nextCheck(){
 	if(users.length > 0) {
 		$('#insertChatRoomButton').attr('disabled',false);

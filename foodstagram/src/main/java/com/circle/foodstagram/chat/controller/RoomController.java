@@ -1,6 +1,7 @@
 package com.circle.foodstagram.chat.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -93,30 +94,42 @@ public class RoomController {
     // new
     //채팅방 개설
     @PostMapping(value = "/room")
-    public String create(@RequestParam String[] usersid, RedirectAttributes rttr){
+    @ResponseBody
+    public String create(@RequestParam(value = "userList[]") List<String> userList,
+    		HttpSession session, 
+    		RedirectAttributes rttr,
+    		Model model){
+    	Member loginMember = (Member) session.getAttribute("loginMember");
+    	if(loginMember == null) {
+    		model.addAttribute("message", "로그인상태가 아닙니다.");
+    		return "common/error";
+    	}
+    	String myId =loginMember.getUserid();
+    	
     	//DM초대하기(채팅방만들기)
     	//사용자가 유저를 검색해서 선택하고 초대함(한명 또는 여러명)
     	//채팅방을 생성하고, 그채팅방 id를 이용해 채팅방참여자DB에 저장.
     	
     	// 랜덤UUID생성후 DB에 저장함
-    	String uuid = UUID.randomUUID().toString();
-    	ChatRoom chatRoom = new ChatRoom(uuid, "emp");
-    	if (usersid.length == 2 && usersid[0].equals(usersid[1])) {
-    		// 본인채팅방임 나혼자
-    		Member me = memberService.selectMember(usersid[0]);
-    		chatRoom.setTitle(me.getUsername());
-    	} else if(usersid.length == 2) {
-    		// 1:1 채팅방
-    		chatRoom.setTitle("other");
-    	}
     	
+    	String uuid = UUID.randomUUID().toString();
+    	ChatRoom chatRoom = new ChatRoom(uuid, "emp", null);
+    	int size = userList.size();
     	
     	chatService.createChatRoom(chatRoom);
     	//성공시 진행
     	
-    	
     	//초대자들(본인포함) 채팅방참여DB에 저장
-    	for(String userid : usersid) {
+    	if (!userList.contains(myId)) { // 내 아이디도 db에 저장되어야하므로 없으면 추가해줌.
+    		userList.add(myId);
+    	}
+    	
+    	log.info("참여자 목록 uuid : " + uuid);
+    	for(String userid : userList) {
+    		log.info( "userid : "+ userid);
+    	}
+    	
+    	for(String userid : userList) {
     		ChatRoomJoin join = new ChatRoomJoin();
     		join.setChat_room_id(uuid);
     		join.setUserid(userid);
@@ -124,29 +137,85 @@ public class RoomController {
     		chatService.insertChatRoomJoin(join);
     	}
     	
-    	log.info("참여자 목록 uuid : " + uuid);
-    	for(String userid : usersid) {
-    		log.info( "userid : "+ userid);
-    	}
-    	
         log.info("# Create Chat Room , name: " + chatRoom.getChat_room_id());
-        rttr.addFlashAttribute("roomName", chatRoom.getTitle());
-        return "redirect:/chat/rooms";
+        //rttr.addFlashAttribute("roomName", chatRoom.getTitle());
+        JsonObject senjson = new JsonObject();
+        senjson.addProperty("uuid", uuid);
+ 
+        return senjson.toString();
     }
     
     
-    // 채팅방 들어감
+    // 채팅방 들어감 방목록
     @GetMapping("/room")
-    public String getRoom(String roomId, Model model){
+    public String getRoom(String roomId, HttpSession session, Model model){
 
-    	//log.info("# get Chat Room, roomID : " + roomId);
-    	log.info("# get Chat Room, roomID : " + roomId);
-    	//log.info("# get Chat chatRoomService.findRoomById(roomId), id? : " + chatRoomService.findRoomById(roomId));
-    	//그냥 채팅방 정보(ChatRoom vo) 담는거임 어느채팅방 들어갔는지
-    	model.addAttribute("room", chatService.findRoomByUUId(roomId));
-        //model.addAttribute("room", chatRoomService.findRoomById(roomId));
+    	Member loginMember = (Member) session.getAttribute("loginMember");
+    	if(loginMember == null) {
+    		model.addAttribute("message", "로그인상태가 아닙니다.");
+    		return "common/error";
+    	}
+    	String myId =loginMember.getUserid();
+    	
+    	List<ChatRoom> list = chatService.findAllMyRooms(myId);
+    	
+    	for(ChatRoom cr : list) {
+        	List<ChatRoomJoin> crjList = cr.getParticipants();
+        	// crjList => 참여자수, 참여자들 알수있음
+        	int size = crjList.size();
+        	ArrayList<String> userArray = new ArrayList<String>();
+        	for(ChatRoomJoin crj : crjList) {
+        		userArray.add(crj.getUserid());
+        	}
+        	log.info(cr.getChat_room_id()+"번 방 참여자들 : ");
+        	log.info(userArray);
+        	userArray.remove(loginMember.getUserid()); // 쉽게 제목을보여주기위해 자기자신은 제외함
+        	
+        	if(size == 1) { // 인원이 한명이면 혼자있는 채팅방임
+        		cr.setTitle(loginMember.getUsername()); 
+        	} else if (size == 2) { // 1:1채팅방임
+        		cr.setTitle(memberService.selectMember(userArray.get(0)).getUsername());
+        	}else if (size < 5) { // 3명까지
+        		String title="";
+        		for(String id :userArray) {
+        			title += memberService.selectMember(id).getUsername()+" ";
+        		}
+        		title = title.trim().replaceAll(" ", ", ") + "님";
+        		cr.setTitle(title);
+        	} else { // 4명이상
+        		String title="";
+        		for(int i=0; i<3; i++) {
+        			title += memberService.selectMember(userArray.get(i)).getUsername()+" ";
+        		}
+        		title = title.trim().replaceAll(" ", ", ") + "님 외 " + (size-4) + "명";
+        		cr.setTitle(title);
+        	}
+        }
         
-        return "chat/room";
+        
+        
+    	
+    	
+    	
+    	
+    	
+    	
+    	log.info("# get Chat Room, roomID : " + roomId);
+    	//그냥 채팅방 정보(ChatRoom vo) 담는거임 어느채팅방 들어갔는지
+    	ChatRoom selectedRoom = chatService.findRoomByUUId(roomId);
+    	
+    	for(ChatRoom cr : list) { // find안하고 해도되긴함..
+    		if(cr.getChat_room_id().equals(roomId)) {
+    			selectedRoom.setTitle(cr.getTitle());
+    			selectedRoom.setParticipants(cr.getParticipants());
+    			break;
+    		}
+    	}
+    	
+    	model.addAttribute("list", list);
+    	model.addAttribute("selectedRoom", selectedRoom);
+        
+        return "chat/testRoom";
     }
     
     //채팅방 목록 조회
@@ -158,15 +227,54 @@ public class RoomController {
     		model.addAttribute("message", "로그인상태가 아닙니다.");
     		return "common/error";
     	}
+    	String myId =loginMember.getUserid();
         //log.info("# All Chat Rooms");
         //ModelAndView mv = new ModelAndView("chat/rooms");
         //log.info(chatRoomService.findAllRooms().toString());
         //mv.addObject("list", chatRoomService.findAllRooms());
+        List<ChatRoom> list = chatService.findAllMyRooms(myId);
+        //위에 메소드로 각방의 초대자들까지 셋팅됨.
         
-        log.info(chatService.findAllMyRooms(loginMember.getUserid()).toString() );
-        model.addAttribute("list", chatService.findAllMyRooms(loginMember.getUserid()));
+        
+        
+        log.info(list.toString());
+        for(ChatRoom cr : list) {
+        	List<ChatRoomJoin> crjList = cr.getParticipants();
+        	// crjList => 참여자수, 참여자들 알수있음
+        	int size = crjList.size();
+        	ArrayList<String> userArray = new ArrayList<String>();
+        	for(ChatRoomJoin crj : crjList) {
+        		userArray.add(crj.getUserid());
+        	}
+        	log.info(cr.getChat_room_id()+"번 방 참여자들 : ");
+        	log.info(userArray);
+        	userArray.remove(loginMember.getUserid()); // 쉽게 제목을보여주기위해 자기자신은 제외함
+        	
+        	if(size == 1) { // 인원이 한명이면 혼자있는 채팅방임
+        		cr.setTitle(loginMember.getUsername()); 
+        	} else if (size == 2) { // 1:1채팅방임
+        		cr.setTitle(memberService.selectMember(userArray.get(0)).getUsername());
+        	}else if (size < 5) { // 3명까지
+        		String title="";
+        		for(String id :userArray) {
+        			title += memberService.selectMember(id).getUsername()+" ";
+        		}
+        		title = title.trim().replaceAll(" ", ", ") + "님";
+        		cr.setTitle(title);
+        	} else { // 4명이상
+        		String title="";
+        		for(int i=0; i<3; i++) {
+        			title += memberService.selectMember(userArray.get(i)).getUsername()+" ";
+        		}
+        		title = title.trim().replaceAll(" ", ", ") + "님 외 " + (size-4) + "명";
+        		cr.setTitle(title);
+        	}
+        }
+        
+        
+        model.addAttribute("list", list);
 
-        return "chat/rooms";
+        return "chat/testRooms";
     }
     
     @PostMapping("getMembers.do")
