@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +71,20 @@
 		<div class="info" style="line-height:160%">
 		<!-- <script type="text/javascript" src="//openapi.foodsafetykorea.go.kr/api/266fe9be05ba49068142/I2790/xml/1/5"></script> -->
 			<h2>${ food.fname }</h2>
-			1인분 (${ food.fsize }g)<br>
+			<c:choose> 
+				<c:when test="${ food.fname eq '마르게리따피자'}">
+					<c:if test = "${ food.fsize ne null }">1조각 당</c:if>
+					<c:if test = "${ food.fsize eq null }">1조각 (${ food.fsize }g)</c:if><br>
+				</c:when>
+				<c:when test="${ food.fname eq '마카롱'}">
+					<c:if test = "${ food.fsize ne null }">1개 당</c:if>
+					<c:if test = "${ food.fsize eq null }">1개 (${ food.fsize }g)</c:if><br>
+				</c:when>
+				<c:otherwise>
+					<c:if test = "${ food.fsize eq null }">1인분 당</c:if>
+					<c:if test = "${ food.fsize ne null }">1인분 (${ food.fsize }g)</c:if><br>
+				</c:otherwise>
+			</c:choose>	
 			칼로리 : ${ food.kcal }kcal<br>
 			탄수화물 : ${ food.carb }g<br>
 			단백질 : ${ food.protein }g<br>
