@@ -244,7 +244,7 @@
 </head>
 <!-- TWC chatbot Scripts -->
 <script src="https://public-common-sdk.s3.ap-northeast-2.amazonaws.com/sdk/seller/Twc.plugin.js"></script>
-
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script>
 (function() {
  Twc('init', {
@@ -260,31 +260,60 @@ scenarioId: "Njk=",
   })
 })();
 </script>
+
+<script type="text/javascript">
+<!-- 게시글 리스트 출력처리 -->
+
+$(function(){
+	$.ajax({
+		url: "blistAll.do",
+		type: "post",
+		dataType: "json",
+		success: function(data){
+			console.log("success : " + data); //Object 로 출력됨
+			
+			//받은 object => string 으로 바꿈
+			var jsonStr = JSON.stringify(data);
+			//string => json 객체로 바꿈
+			var json = JSON.parse(jsonStr);
+			
+			console.log(json.list);
+			var bvalues = "";
+			var count = 1;
+			for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+				if(count % 3 == 1){
+					bvalues += "<tr>";
+				}
+				bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+				count++;
+				if(count % 3 == 1){
+					bvalues += "</tr>";
+					}
+			} //for in
+			if(count != 4){
+
+				for(var n = count; n <= 3; n++){
+					bvalues += "<td>&nbsp;</td>";
+				}
+				bvalues += "</tr>";
+			}
+			$("#blist").html($("#blist").html() + bvalues);
+			
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("btop3 error : " + jqXHR 
+					+ ", " + textStatus + ", " + errorThrown);
+		}
+	});		
+});
+</script>
 <!--  End TWC chatbot Scripts -->
 
 <body>
  <c:import url="/WEB-INF/views/common/nav.jsp" />
     <section>
-        <table class="mainPage">
-            <tr>
-                <td>
-                    <a href="#"><img src="resources/images/test1.png" class="openBtn"></a>
-                    <!-- 이미지 클릭시 게시물 세부컨텐츠 이동 -->
-                </td>
-
-                <td><a href="#"><img src="resources/images/test2.png" class="image"></a></td>
-                <td><a href="#"><img src="resources/images/test3.png" class="image"></a></td>
-            </tr>
-            <tr>
-                <td><a href="#">4</a></td>
-                <td><a href="#">5</a></td>
-                <td><a href="#">6</a></td>
-            </tr>
-            <tr>
-                <td><a href="#">7</a></td>
-                <td><a href="#">8</a></td>
-                <td><a href="#">9</a></td>
-            </tr>
+        <table class="mainPage" id="blist">
+        
         </table>
     </section>
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>

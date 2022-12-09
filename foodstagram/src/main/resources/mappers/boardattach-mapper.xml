@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardattachMapper">
+
+	<resultMap type="BoardAttach" id="resultBoardAttach">
+		<id column="atch_no" property="atch_no" />
+		<result column="atch_parent_no" property="atch_parent_no" />
+		<result column="atch_file_name" property="atch_file_name" />
+		<result column="atch_original_name" property="atch_original_name" />
+		<result column="atch_file_size" property="atch_file_size" />
+		<result column="atch_fancy_size" property="atch_fancy_size" />
+		<result column="atch_content_type" property="atch_content_type" />
+		<result column="atch_reg_date" property="atch_reg_date" />
+		<result column="atch_seq" property="atch_seq" />
+	</resultMap>
+	
+	<insert id="insertAttach" parameterType="BoardAttach">
+	insert into boardattach (atch_no,
+				atch_parent_no,
+				atch_file_name,
+				atch_original_name,
+				atch_file_size,
+				atch_fancy_size,
+				atch_content_type,
+				atch_reg_date,
+				atch_seq)
+	values (default,
+			#{atch_parent_no},
+			#{atch_file_name},
+			#{atch_original_name},
+			#{atch_file_size},
+			#{atch_fancy_size},
+			#{atch_content_type},
+			default,
+			#{atch_seq})
+	</insert>
+	
+	<select id="selectAttchList" parameterType="_int" resultMap="resultBoardAttach">
+		select *
+		from	boardattach
+		where	atch_parent_no = #{b_no}
+		order by atch_seq
+	</select>
+	
+</mapper>
+

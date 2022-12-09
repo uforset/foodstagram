@@ -41,7 +41,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.log4j.Log4j;
 
-@Log4j
+
 @Controller
 public class MemberController {
    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -146,9 +146,10 @@ public class MemberController {
    @RequestMapping(value="login.do", method=RequestMethod.POST)
    public String loginMethod(@RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd,
          HttpSession loginSession, SessionStatus status, Model model) {
-
+	   
       Member loginMember = memberService.selectMember(userid);
-
+      logger.info("멤버확인!!!!!!!!!!!");
+      logger.info(loginMember.toString());
       String viewName = null;
       String tempPWD = (String) loginSession.getAttribute("tempPWD");
       if(loginMember != null && tempPWD != null) {
@@ -166,6 +167,7 @@ public class MemberController {
 
          viewName = "common/main";
       }else {
+    	 logger.info("로그인 실패 : 아이디나 암호 확인하세요.<br>");
          model.addAttribute("titleMsg", "로그인 실패");
          model.addAttribute("message",
                "로그인 실패 : 아이디나 암호 확인하세요.<br>"
@@ -789,7 +791,7 @@ public class MemberController {
 			return "common/error";
 			
 		}
-
+	
 	}
 
 }

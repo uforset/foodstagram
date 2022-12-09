@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="../common/error.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -60,6 +60,7 @@ function visibleUsers() {
 			}
 		}
 		visibleUsers();
+		nextCheck();
 	});
 }
 
@@ -111,34 +112,10 @@ function visibleUsers() {
                                             <div class="_abyk" style="height: 100%; overflow: hidden auto;">
                                                 <div style="position: relative; display: flex; flex-direction: column; padding-bottom: 0px; padding-top: 0px;">
                                                 	
-                                                    <div class=" _ab8s _ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm">
-                                                        <div class="_abm4"><a class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz _a6hd" href="/direct/t/340282366841710300949128196905805855503" role="link" tabindex="0">
-                                                                <div aria-labelledby="f31ad56cacbb6a4 f3baa4da491f23 f2889a7ac87d5a f3c41205ec58798" class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _ab9_ _aba8 _abcm">
-                                                                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbj _abcm">
-                                                                        <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 56px; height: 56px;"><img alt="tjgyqo2님의 프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span></div>
-                                                                    </div>
-                                                                    <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9o _abcm">
-                                                                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" id="f3baa4da491f23">
-                                                                            <div class="_aacl _aaco _aacu _aacx _aada">
-                                                                                <div class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p _abcm">
-                                                                                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9q _ab9s _abcm">
-                                                                                        <div class="_aacl _aaco _aacu _aacx _aada">서상원</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abb- _abcm" id="f2889a7ac87d5a">
-                                                                            <div class="_aacl _aaco _aacu _aacy _aada">
-                                                                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9k _ab9p _abcm"><span class="_ab6a"><span class="_aacl _aaco _aacu _aacy _aad7">ㅁㄴㅇㄹㄴㅁㅇㄹㄴ</span></span><span class="_ab68 _ac6e _ac6f _ac6h">·</span><time class="_ab69" datetime="2022-10-28T07:58:51.863Z" title="10월 28, 2022">5주</time></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </a></div>
-                                                    </div>
                                                     <!-- 챗방 추가 -->
+                                                    <c:forEach var="room" items="${ list }">
                                                     <div class=" _ab8s _ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm">
-                                                        <div class="_abm4"><a class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz _a6hd" href="/direct/t/340282366841710300949128196905805855503" role="link" tabindex="0">
+                                                        <div class="_abm4"><a class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz _a6hd" href="/foodstagram/chat/room?roomId=${room.chat_room_id}" role="link" tabindex="0">
                                                                 <div aria-labelledby="f31ad56cacbb6a4 f3baa4da491f23 f2889a7ac87d5a f3c41205ec58798" class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _ab9_ _aba8 _abcm">
                                                                     <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbj _abcm">
                                                                         <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 56px; height: 56px;"><img alt="tjgyqo2님의 프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span></div>
@@ -148,7 +125,7 @@ function visibleUsers() {
                                                                             <div class="_aacl _aaco _aacu _aacx _aada">
                                                                                 <div class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p _abcm">
                                                                                     <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9q _ab9s _abcm">
-                                                                                        <div class="_aacl _aaco _aacu _aacx _aada">서상원</div>
+                                                                                        <div class="_aacl _aaco _aacu _aacx _aada">${room.title}</div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -162,32 +139,7 @@ function visibleUsers() {
                                                                 </div>
                                                             </a></div>
                                                     </div>
-                                                    <!-- 챗방 추가 -->
-                                                    <div class=" _ab8s _ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm">
-                                                        <div class="_abm4"><a class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz _a6hd" href="/direct/t/340282366841710300949128196905805855503" role="link" tabindex="0">
-                                                                <div aria-labelledby="f31ad56cacbb6a4 f3baa4da491f23 f2889a7ac87d5a f3c41205ec58798" class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _ab9_ _aba8 _abcm">
-                                                                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbj _abcm">
-                                                                        <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 56px; height: 56px;"><img alt="tjgyqo2님의 프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span></div>
-                                                                    </div>
-                                                                    <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9o _abcm">
-                                                                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" id="f3baa4da491f23">
-                                                                            <div class="_aacl _aaco _aacu _aacx _aada">
-                                                                                <div class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p _abcm">
-                                                                                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9q _ab9s _abcm">
-                                                                                        <div class="_aacl _aaco _aacu _aacx _aada">서상원</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abb- _abcm" id="f2889a7ac87d5a">
-                                                                            <div class="_aacl _aaco _aacu _aacy _aada">
-                                                                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9k _ab9p _abcm"><span class="_ab6a"><span class="_aacl _aaco _aacu _aacy _aad7">ㅁㄴㅇㄹㄴㅁㅇㄹㄴ</span></span><span class="_ab68 _ac6e _ac6f _ac6h">·</span><time class="_ab69" datetime="2022-10-28T07:58:51.863Z" title="10월 28, 2022">5주</time></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </a></div>
-                                                    </div>
+                                                    </c:forEach>
 
                                                     <div class="_ab8w  _ab94 _ab97 _ab9h _ab9m _ab9p  _aba8 _abcm" style="height: 72px;"></div>
 
@@ -235,7 +187,7 @@ function visibleUsers() {
 														<div class="_ac7b _ac7d">
 															<div
 																class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _ab9- _abcm">
-																<button class="_acan _acao _acas _acav" disabled=""
+																<button class="_acan _acao _acas _acav" id="insertChatRoomButton" disabled=""
 																	type="button">
 																	<div class="_aagz">다음</div>
 																</button>
@@ -272,7 +224,7 @@ function visibleUsers() {
 									
                                     <div class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _abc2 _abcm">
                                     
-                                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _ab9x _aba7 _abcm"><a href="#ex1" rel="modal:open"><button class="_acan _acap _acas" onclick="toggleDialog('show')" type="button" tabindex="0">메시지 보내기</button></a></div>
+                                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _ab9x _aba7 _abcm"><a href="#ex1" rel="modal:open"><button class="_acan _acap _acas" type="button" tabindex="0">메시지 보내기</button></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -283,33 +235,6 @@ function visibleUsers() {
         </section>
     </div>
 </body>
-<script type="text/javascript">
-function toggleDialog(sh) {
-    dialog = document.getElementById("ex1");
-    //okbutton = document.getElementById("ok");
-    pagebackground = document.getElementById("bg");
-
-    if (sh == "show") {
-        dialogOpen = true;
-
-        // 다이얼로그 표시
-        dialog.style.display = 'block';
-
-        // 다이얼로그 표시 이후, 그 안의 요소에 포커스하기
-        okbutton.focus();
-
-        // "숨겨질" 콘텐츠로에서 포커스가 나간 *후에* 배경을 숨깁니다.
-        pagebackground.setAttribute("aria-hidden","true");
-
-    } else {
-        dialogOpen = false;
-        dialog.style.display = 'none';
-        pagebackground.setAttribute("aria-hidden","false");
-        lastFocus.focus(); 
-    }
-}
-
-</script>
 
 <script type="text/javascript">
 $(function (){
@@ -390,6 +315,7 @@ $(function (){
 			        	
 			        	//참여자목록 보여주기
 			        	visibleUsers();
+			        	nextCheck();
 			        })
 		        }
 		        else {
@@ -403,13 +329,35 @@ $(function (){
 </script>
 <script type="text/javascript">
 
-
+function nextCheck(){
+	if(users.length > 0) {
+		$('#insertChatRoomButton').attr('disabled',false);
+	} else {
+		$('#insertChatRoomButton').attr('disabled',true);
+	}
+}
 
 $(function (){
 	$('div._abm4[role=button]').click(function() {
 		console.log(this);
-	})
-
+	});
+	
+	$('#insertChatRoomButton').click(function() {
+		$.ajax({
+		    url: "/foodstagram/chat/room", // 호출할 주소
+		    type: "post",
+		    data: { userList: users }, // 넘길 데이터
+		    dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
+		    success: function(data) {
+		    	alert("등록 되었습니다."+data.uuid);
+		    	location.href='/foodstagram/chat/room?roomId='+data.uuid;
+		    },
+		    error: function () {
+	            // handle upload error
+	            // ...
+	        }
+		});
+	});
 });
 </script>
 <form id="form1" action="">

@@ -1,7 +1,7 @@
 package com.circle.foodstagram.chat.model.vo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +21,5 @@ public class ChatRoom implements Serializable {
 	private String chat_room_id;		// 채팅방 No
 	private String title;	// 채팅방 제목
 	
+	private List<ChatRoomJoin> participants;
 }

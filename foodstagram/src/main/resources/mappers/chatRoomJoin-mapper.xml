@@ -19,4 +19,11 @@
 		insert into chat_room_join(userid, chat_room_id)
 							values(#{userid}, #{chat_room_id})
 	</insert>
+	
+	<select id="getJoinListByRoomId" parameterType="ChatRoomJoin" resultType="ChatRoomJoin">
+		select * from chat_room_join
+		where chat_room_id= #{chat_room_id}
+	</select>
+	
+	
 </mapper>

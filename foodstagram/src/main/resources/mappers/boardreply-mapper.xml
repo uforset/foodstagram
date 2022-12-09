@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardreplyMapper">
+
+	<resultMap type="BoardReply" id="resultBoardReply">
+		<result column="B_NO" property="b_no" />
+		<result column="b_reply_no" property="b_reply_no" />
+		<result column="userid" property="userid" />
+		<result column="b_reply_content" property="b_reply_content" />
+		<result column="b_reply_date" property="b_reply_date" />
+		<result column="b_reply_up_date" property="b_reply_up_date" />
+	</resultMap>
+	
+	<insert id="insertBoardReply" parameterType="BoardReply">
+		insert into b_reply(b_no, b_reply_no, userid, b_reply_content, b_reply_date, b_reply_up_date)
+		values (#{b_no}, default, #{userid}, #{b_reply_content}, default, default)
+	</insert>
+	
+	<update id="updataBoardReply" parameterType="BoardReply">
+		update b_reply
+		set b_reply_content = #{b_reply_content},
+			b_reply_up_date = sysdate
+		where b_reply_no = #{b_reply_no}
+	</update>
+	
+	<delete id="deleteBoardReply" parameterType="_int">
+		delete from b_reply
+		where b_reply_no = #{b_reply_no}
+	</delete>
+	
+	<select id="selectReplyList" parameterType="_int" resultMap="resultBoardReply">
+		select *
+		from	b_reply
+		where 	b_no = #{b_no}
+		order by b_reply_no desc
+	</select>
+
+</mapper>
+
