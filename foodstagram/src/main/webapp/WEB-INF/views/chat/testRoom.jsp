@@ -18,20 +18,12 @@
 // 선택한 userid 저장용도임
 var users = [];
 
-function loadNewPage() {
-	  var temp = $('#scroll').height();
-	    console.log('hi');
-	    isLoading = false;
-	}
 
-	$('#scroll').scroll(function() {
-	  if($('#scroll').scrollTop() < 700 ) {
-	    isLoading = true;
-	    loadNewPage();
-	  }
-	  
-	});
-	$('#scroll').scrollTop($('#scroll').height());
+function makeListElement() {
+  console.log('hihihi');
+}
+
+
 
 function visibleUsers() {
 	$('._aa2u > div._ab8m').remove();
@@ -222,7 +214,7 @@ function enterkey() {
     </script>
     <div style="height: 100%; width: 100%;">
         <section class="x78zum5 xdt5ytf x1iyjqo2 x6ikm8r x5yr21d xh8yej3">
-            <div class="xnz67gz x78zum5 xdt5ytf x1iyjqo2 x5yr21d xmz0i5r x1jbp7et">
+            <div class="xnz67gz x78zum5 xdt5ytf x1iyjqo2 x5yr21d xmz0i5r x1jbp7et" style="padding-top: 10px;">
                 <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9o _abcm" style="height: 100%; width: 100%;">
                     <div class="_aa5b">
                         <div class="_ab8j _ab8l _ab8w  _ab94 _ab99 _ab9h _ab9k _ab9o _ab9s _abcm" style="height: 100%; width: 100%; max-height: 800px; max-width: 935px;">
@@ -346,9 +338,45 @@ function enterkey() {
 							        <div class="_ab8w  _ab94 _ab99 _ab9g _ab9m _ab9o _abcm" style="height: 100%; width: 100%;">
 							        <!-- 실제 채팅시작부분 -->
 							            <div class="_ab5z _ab5_" id="scroll">
-							            	<p id="sentinel"></p>
+							            	<p id="observer">상단에 오셨네요. 더가져와볼게요</p>
 							                <div id="msgArea">
-
+											<c:forEach var="m" items="${mlist}" varStatus="status">
+											<c:if test="${ m.userid eq loginMember.userid }"> <!-- 본인인경우 -->
+											<div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
+						                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abak _abbi _abcm">
+						                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" style="height: 24px; width: 24px;"></div>
+						                        </div>
+						                    <div class="_ac72" role="listbox" tabindex="0">
+						                        <div class="x78zum5 xdt5ytf">
+						                            <div class="_acd2 _acd3">
+						                                <div class="_acqt _acqv" role="listbox" tabindex="0">
+						                                    <div class=" _ac1n">
+						                                        <div class=" _ac1q _ac1r _ac1v _ac1w">
+						                                            <div role="button" class="_aa06" tabindex="-1">
+						                                                <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9p  _ab9- _abaa _abcm" style="min-height: 44px;">
+						                                                    <div class="_aacl _aaco _aacu _aacx _aad9 _aadf">
+						                                                        <div class="_aacl _aaco _aacu _aacx _aad6 _aade">${m.message}</div>
+						                                                    </div></div></div></div></div></div></div></div></div></div>
+											</c:if>
+											<c:if test="${ m.userid ne loginMember.userid }">
+											<div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
+					                        <div class="_aacl _aacn _aacu _aacy _aada">${ m.username }</div>
+					                        </div>
+					                        <div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
+					                        <div class="_ac72" role="listbox" tabindex="0">
+					                        <div class="x78zum5 xdt5ytf">
+					                            <div class=" _acd3">
+					                                <div class="_acqt _acqu" role="listbox" tabindex="0">
+					                                    <div class=" _ac1n">
+					                                        <div class=" _ac1r _ac1w">
+					                                            <div role="button" class="_aa06" tabindex="-1">
+					                                                <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9p  _ab9- _abaa _abcm" style="min-height: 44px;">
+					                                                    <div class="_aacl _aaco _aacu _aacx _aad9 _aadf">
+					                                                        <div class="_aacl _aaco _aacu _aacx _aad6 _aade">${m.message}</div>
+					                                                    </div></div></div></div></div></div></div></div></div></div>
+											</c:if>
+											
+											</c:forEach>
 							                </div>
 							            </div>
 							         <!-- 실제 채팅끝부분 -->
@@ -603,6 +631,21 @@ $(function (){
 	});
 	
 	$('.h1').css("margin-top", "7px"); 
+	$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+	
+	let count = 0;
+	let timer;
+
+
+	const observer = document.getElementById('observer');
+	const io = new IntersectionObserver((entries) => {
+	  clearTimeout(timer);
+	  if (entries[0].isIntersecting) {
+	    timer = setTimeout(() => makeListElement(), 1000);
+	  }
+	});
+	io.observe(observer);
+	
 });
 </script>
 <form id="form1" action="">
