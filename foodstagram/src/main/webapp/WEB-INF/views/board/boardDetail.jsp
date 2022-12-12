@@ -1,20 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="../common/error.jsp" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+	pageEncoding="UTF-8" errorPage="../common/error.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./css/reset.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
-    <link href="./css/style.css" rel="stylesheet">
-    <title>게시물</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="./css/reset.css">
+<link href="./css/style.css">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+	rel="stylesheet">
+<title>게시물</title>
 <style>
 section {
 	width: 950px;
+	height: 650px;
 	margin: 40px auto;
 	padding: 20px 10px;
 	border-radius: 20px;
@@ -23,7 +27,7 @@ section {
 }
 
 .content {
-	margin-left: 15px;
+	margin-left: -105px;
 }
 
 #otherProfile img {
@@ -36,7 +40,7 @@ section {
 
 section ul:first-child:not(.replyBox) {
 	display: flex;
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
 	border-bottom: #E5E5E5 2px solid;
 	justify-content: space-between;
 }
@@ -81,24 +85,30 @@ ul li ol {
 .modalContent {
 	padding-bottom: 20px;
 	border-bottom: 1px solid #E5E5E5;
-	width: 435px;
+	width: 430px;
 	height: 100px;
 	margin-bottom: 10px;
 	padding-top: 10px;
 	font-size: 14px;
-	overflow: auto;
+	/* overflow: auto; */
+	position: relative;
+	left: -30px;
 }
 
 .modalContent span a {
 	color: rgb(116, 77, 116);
 }
 
+a {
+	text-decoration: none;
+}
+
 /* 하트, 댓글등 */
 .lr {
 	position: relative;
-	top: 380px;
-	right: 430px;
-	border-bottom: 1px solid #E5E5E5;
+	top: 180px;
+	right: 475px;
+	/* 	border-bottom: 1px solid #E5E5E5; */
 	width: 435px;
 	height: 33px;
 	line-height: 33px;
@@ -118,7 +128,7 @@ ul li ol {
 }
 
 .resetBtn a {
-	padding: 5px;
+	padding: 5px 10px;
 	display: block;
 }
 
@@ -144,8 +154,8 @@ ul li ol {
 
 .replyBox {
 	position: relative;
-	top: 475px;
-	right: 430px;
+	top: 470px;
+	right: 494px;
 }
 
 .replyRig {
@@ -158,16 +168,17 @@ ul li ol {
 }
 
 .replyBtn {
-	width: 80px;
+	/* width: 80px; */
 	border: none;
 	display: block;
 	position: relative;
-	left: 30px;
-	bottom: -6px;
+	left: 28px;
+	bottom: 28px;
 	font-weight: bold;
 	color: #333;
 	cursor: pointer;
 	margin-left: -100px;
+	background-color:white;
 }
 
 .replyBtn:hover {
@@ -177,12 +188,15 @@ ul li ol {
 
 .replyList {
 	position: relative;
-	top: 345px;
-	right: 440px;
-	width: 415px;
-	height: 80px;
+	top: 269px;
+	right: 480px;
+	width: 420px;
+	height: 115px;
 	padding: 10px;
 	overflow: auto;
+	/* background-color:yellow; */
+	border:2px solid #F0F0F0;
+		border-radius:10px ;
 }
 
 .replyList li {
@@ -202,229 +216,298 @@ ul li ol {
 	width: 180px;
 	text-align: center;
 	position: relative;
-	bottom: 185px;
-	border-left: 1px solid #E5E5E5;
+	bottom: 174px;
+	
+	/* border-left: 1px solid #E5E5E5; */
 }
 
-.etc li {
+.etc  li {
 	height: 30px;
 	line-height: 30px;
-	padding: 5px;
+	padding: 5px 5px 5px 5px;
 	padding-bottom: 5px;
-	border-bottom: #E5E5E5 1px solid;
+	color:#333;
+	/* 	border-bottom: #E5E5E5 1px solid; */
 }
 
 .etc li a {
 	display: block;
+	color:#333;
 }
 
 .etc li a:hover {
 	border-bottom: 3px solid #F95E25;
 }
 
-a {
-	text-decoration: none
+li {
+	list-style: none;
 }
 
-i:hover {
-	color: green
-}
-
-.food-wrap {
-	display: flex;
-	justify-content: center;
-	align-items: center
-}
-
-.food {
+.kind_wrap {
+	/* border: 2px solid black; */
+	width: 100%;
+	max-width: 450px;
+	margin: 0 auto;
 	position: relative;
-	width: 300px;
-	height: 300px;
+	left: -35px;
 }
 
-.food .info {
-	padding: 15px 20px;
-	border-radius: 5px;
-	font-weight: 1000;
-	color: #fff;
+.kind_wrap>.kind_slider {
+	overflow: hidden;
+}
+
+.kind_wrap>.kind_slider .slider {
+	position: relative;
+	transition: 0.5s;
+	left: -40px;
+}
+
+.kind_wrap>.kind_slider .slider li {
+	float: left;
+}
+
+.kind_wrap>.kind_slider img {
+	vertical-align: top;
+}
+
+.kind_wrap .arrow>a.prev {
 	position: absolute;
-	top: 50%;
-	left: 10%;
-	background: rgba(0, 0, 0, 0.5);
-	background-color: #38322e;
-	margin: auto;
-	text-align: left;
-	opacity: 0;
+	left: -50px;
+	top: 150px;
 }
 
-.food:hover .info {
-	opacity: 0.7;
+.kind_wrap .arrow>a.next {
+	position: absolute;
+	right: -50px;
+	top: 150px;
+}
+
+/* 삼각형 디자인 */
+.next {
+	width: 0;
+	height: 0;
+	border-bottom: 30px solid transparent;
+	border-top: 30px solid transparent;
+	border-right: 50px solid transparent;
+	border-left: 30px solid #E5E5E5;
+}
+
+.prev {
+	width: 0;
+	height: 0;
+	border-bottom: 30px solid transparent;
+	border-top: 30px solid transparent;
+	border-right: 30px solid #E5E5E5;
+	border-left: 50px solid transparent;
+}
+
+/* 시작 안넣어도됨 */
+.modalImg img {
+	display: inline-block;
+	width: 450px;
+	height: auto;
+	object-fit: cover;
+	border: none;
+}
+
+ul {
+	display: flex;
+}
+
+textarea {
+	/* border: 2px solid red; */
+	border:none;
+	width: 430px;
+	height: 100px;
 }
 </style>
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript"
+	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+<!-- 슬라이드 -->
+<script>
+	window.onload = function() {
+		const kindWrap = document.querySelector('.kind_wrap');
+		const slider = kindWrap.querySelector('.slider');
+		const slideLis = slider.querySelectorAll('li')
+		const moveButton = kindWrap.querySelector('.arrow');
 
+		/* ul 넓이 계산해 주기 */
+		const liWidth = slideLis[0].clientWidth;
+		var sliderWidth = liWidth * slideLis.length;
+		slider.style.width = sliderWidth + "px";
+		/* 리스너 설치하기 */
+		let currentIdx = 0; // 슬라이드 현재 번호
+		let translate = 0; // 슬라이드 위치 값
+		moveButton.addEventListener('click', moveSlide);
+
+		function moveSlide(event) {
+			event.preventDefault();
+			if (event.target.className === 'next') {
+				if (currentIdx !== slideLis.length - 1) {
+					translate -= liWidth;
+					slider.style.transform = 'translateX(' + translate + 'px)';
+					currentIdx += 1;
+				}
+			} else if (event.target.className === 'prev') {
+				if (currentIdx !== 0) {
+					translate += liWidth;
+					slider.style.transform = 'translateX(' + translate + 'px)';
+					currentIdx -= 1;
+				}
+			}
+		}
+
+	}
+</script>
+<!-- 게시물 수정용 -->
+<script type="text/javascript">
+	function bupdate() {
+		var contentValue = document.getElementById("b_content").value;
+		var categoryValue = document.getElementById("b_category").value;
+
+		location.href = 'bupdate.do?b_content=' + contentValue + '&b_category='
+				+ categoryValue + '&b_no=${board.b_no}';
+	}
+</script>
 </head>
 
 <body>
-    <c:import url="/WEB-INF/views/common/nav.jsp" />
-    <section>
-        <ul>
-            <li><a href="javascript:history.go(-1);"><i class="fa-solid fa-arrow-left fa-1x"> </i> </a></li>
-            <li>
-                <h1 align="center" style="font-weight: bold;">게시물</h1>
-            </li>
-            <li><a href="#"><i class="fa-solid fa-ellipsis fa-2x"></i></a></li>
-        </ul>
-
-        <ul>
-            <!-- 컨텐츠 이미지 -->
-      <div class="food-wrap">
-		<div class="food">
-            <c:forEach items="${aList }" var="at">
-	            <a href="#">
-                	<li class="modalImg"><img src="resources/board_upfiles/${at.atch_file_name }"></li>
-	            </a>
-	        </c:forEach>
-					<div class="info" style="line-height: 160%">
-								<h2>${ food.fname }</h2>
-								<c:choose>
-									<c:when test="${ food.fname eq '마르게리따피자'}">
-										<c:if test="${ food.fsize ne null }">1조각 당</c:if>
-										<c:if test="${ food.fsize eq null }">1조각 (${ food.fsize }g)</c:if>
-										<br>
-									</c:when>
-									<c:when test="${ food.fname eq '마카롱'}">
-										<c:if test="${ food.fsize ne null }">1개 당</c:if>
-										<c:if test="${ food.fsize eq null }">1개 (${ food.fsize }g)</c:if>
-										<br>
-									</c:when>
-									<c:otherwise>
-										<c:if test="${ food.fsize eq null }">1인분 당</c:if>
-										<c:if test="${ food.fsize ne null }">1인분 (${ food.fsize }g)</c:if>
-										<br>
-									</c:otherwise>
-								</c:choose>
-							칼로리 : ${ food.kcal }kcal<br> 
-							탄수화물 : ${ food.carb }g<br>
-							단백질 : ${ food.protein }g<br> 
-							지방 :	${ food.fat }g
-						</div>
-					</div>
+	<c:import url="/WEB-INF/views/common/nav.jsp" />
+	<section>
+		<ul>
+			<li><a href="javascript:history.go(-1);"><i
+					class="fa-solid fa-arrow-left fa-1x"> </i> </a></li>
+			<li>
+				<h1 align="center" style="font-weight: bold;">게시물</h1>
+			</li>
+			<li><a href="#"><i class="fa-solid fa-ellipsis fa-2x"></i></a></li>
+		</ul>
+		<!--슬라이드처리  -->
+		<ul>
+			<div class="kind_wrap">
+				<div class="kind_slider">
+					<ul class="slider">
+						<c:forEach items="${aList }" var="at">
+							<a href="#">
+								<li class="modalImg"><img
+									src="resources/board_upfiles/${at.atch_file_name }"></li>
+							</a>
+						</c:forEach>
+					</ul>
 				</div>
-			
-            <li class="content">
-                <!-- 다른 유저의 프로필사진, id, 글쓴내용, 지도  -->
-                <ol>
-                    <li>
-                        <c:url var="callMyinfo" value="/myinfo.do">
-	                        <c:param name="userid" value="${ board.userid }" />
-	                    </c:url>
-	                    <li><a href="${ callMyinfo }"><span id="id" class="id">${ board.userid }</span></a></li> 
-                   		<c:if test="${board.userid ne loginMember.userid }">
-	                        <p class="modalContent">${board.b_content }
-	                        <span><a href="bsearch.do?b_category=${board.b_category }"><br>${board.b_category }</a></span>
-	                        </p>
-                        </c:if>
-                        <c:if test="${board.userid eq loginMember.userid }">
-                            <p class="modalContent"><textarea rows="7" cols="30" name="b_content" id="b_content">${board.b_content }</textarea> 
-	                        <span><br><a href="bsearch.do?b_category=${board.b_category }">${board.b_category }</a></span>
-	                        <span>카테고리를 변경할 경우 선택해주세요.</span>
-	                        <select name="b_category" id="b_category">
-								<option value="갈비탕">갈비탕
-								<option value="과일채소샐러드">과일채소샐러드
-								<option value="닭갈비">닭갈비
-								<option value="마르게리따피자">마르게리따피자
-								<option value="마카롱">마카롱
-								<option value="모듬초밥">모듬초밥
-								<option value="바게트빵">바게트빵
-								<option value="순대국밥">순대국밥
-								<option value="순살찜닭">순살찜닭
-								<option value="스테이크">스테이크
-								<option value="스튜">스튜
-							</select>
-	                        </p>
-	                        <ul class="etc">
+				<div class="arrow">
+					<a href="#" class="prev"></a> <a href="#" class="next"></a>
+				</div>
+			</div>
+			<ul class="content_box">
+				<li class="content">
+					<!-- 다른 유저의 프로필사진, id, 글쓴내용, 지도  -->
+					<ol>
+						<li><c:url var="callMyinfo" value="/myinfo.do">
+								<c:param name="userid" value="${ board.userid }" />
+							</c:url></li>
+						<li><a href="${ callMyinfo }"><span id="id" class="id">${ board.userid }</span></a>
+						</li>
+						<li><c:if test="${board.userid ne loginMember.userid }">
+								<p class="modalContent">${board.b_content }
+									<span><a
+										href="bsearch.do?b_category=${board.b_category }"><br>${board.b_category
+                                                        }</a></span>
+								</p>
+							</c:if></li>
+						<li style="position: relative;"><c:if
+								test="${board.userid eq loginMember.userid }">
+								<p class="modalContent">
+									<textarea name="b_content" id="b_content">${board.b_content }</textarea>
+									<span><br> <a
+										href="bsearch.do?b_category=${board.b_category }">${board.b_category
+                                                        }</a></span>
+									<span>카테고리를 변경할 경우 선택해주세요.</span> <select name="b_category"
+										id="b_category">
+										<option value="갈비탕">갈비탕
+										<option value="과일채소샐러드">과일채소샐러드
+										<option value="닭갈비">닭갈비
+										<option value="마르게리따피자">마르게리따피자
+										<option value="마카롱">마카롱
+										<option value="모듬초밥">모듬초밥
+										<option value="바게트빵">바게트빵
+										<option value="순대국밥">순대국밥
+										<option value="순살찜닭">순살찜닭
+										<option value="스테이크">스테이크
+										<option value="스튜">스튜
+									</select>
+								</p>
+								<ul class="etc">
 									<li><a href="bdel.do?b_no=${board.b_no }">삭제</a></li>
 									<li><a href="javascript:bupdate();">수정</a></li>
-							</ul>
-                        </c:if>
-						<script type="text/javascript">
-							function bupdate(){
-								var contentValue = document.getElementById("b_content").value;
-								var categoryValue = document.getElementById("b_category").value;
-								
-								location.href='bupdate.do?b_content='+ contentValue +'&b_category='+categoryValue +'&b_no=${board.b_no}';
-							}
-						</script>
-                        <!-- 임시 구글지도api
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d25311.64860821957!2d126.86131198716856!3d37.53253268002548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1z7YyM7Iqk7YOA!5e0!3m2!1sko!2skr!4v1667037455409!5m2!1sko!2skr"
-                            width="435" height="200" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>-->
-                        
-
-                    </li>
-                    
-                    <li>
-                        <ol class="lr">
-                            <!-- 좋아요 수 -->
-                            <li><a href="javascript:location.href='addlike.do?b_no=${board.b_no }';">
-                                    <i class="fa-solid fa-heart"></i></a>
-                            	<span class="countingLike">${board.b_like }</span>
-                                
-                            </li>
-                            <li class="reply"><a href="#"><i class="fa-regular fa-message"></i></a>
-                            </li>
-                            <li><i class="fa-solid fa-paper-plane"></i></li>
-                            <li><a href="#"><button id="recipe">레시피</button></a></li>
-                            <li><a href="#"><button id="restaurant">주변맛집</button></a></li>
-
-                        </ol>
-                            <!-- 댓글 -->
-                        <div>
-                            <ul class="replyBox">
-	                            <form action="rinsert.do" method="POST">
-	                            	<input type="hidden" name="b_no" value="${board.b_no }">
-	                            	<input type="hidden" name="userid" value="${loginMember.userid }">
-	                                <li><textarea class="replyRig" name="b_reply_content"></textarea></li>
-                                	<li><input class="replyBtn" type="submit" value="댓글등록"></li>
-                                </form>
-                                <!-- 새로고침 -->
-                                <li class="resetBtn"><a href="#">
-                                        <i class="fa-solid fa-arrows-rotate"></i>
-                                    </a></li>
-                            </ul>
-                            <ul class="replyList">
-                            	<c:forEach items="${rList }" var="r">
-	                            	<c:if test="${r.userid ne loginMember.userid }">
-	                            		<li>${r.b_reply_content }</li>
-									</c:if>
-									<c:if test="${r.userid eq loginMember.userid }">
-	                            		<li><textarea id="b_reply_content">${r.b_reply_content }</textarea>
-	                            		<button onclick="rupdate();">수정</button>
-	                            		<button onclick="javascript:location.href='rdel.do?b_no=${board.b_no }&b_reply_no=${r.b_reply_no}';">삭제</button>
-	                            		</li>
-									</c:if>
-			                        <script type="text/javascript">
-										function rupdate(){
-											var contentValue = document.getElementById("b_reply_content").value;
-											location.href='rupdate.do?b_reply_content='+ contentValue +'&b_reply_no=${r.b_reply_no}&b_no=${board.b_no}';
-										}
-									</script>
-                            	</c:forEach>
-                            </ul>
-
-                        </div>
+								</ul>
+							</c:if></li>
 
 
-					</li>
-                </ol>
-            </li>
-        </ul>
+					</ol>
+
+				</li>
+				<li>
+					<ol class="lr">
+						<!-- 좋아요 수 -->
+						<li><a
+							href="javascript:location.href='addlike.do?b_no=${board.b_no }';">
+								<i class="fa-solid fa-heart"></i>
+						</a> <span class="countingLike">${board.b_like }</span></li>
+						<li class="reply"><a href="#"><i
+								class="fa-regular fa-message"></i></a></li>
+						<li><i class="fa-solid fa-paper-plane"></i></li>
+						<li><a href="#"><button id="recipe">레시피</button></a></li>
+						<li><a href="#"><button id="restaurant">주변맛집</button></a></li>
+
+					</ol> <!-- 댓글 -->
+					<div>
+						<ul class="replyBox">
+							<form action="rinsert.do" method="POST">
+								<input type="hidden" name="b_no" value="${board.b_no }">
+								<input type="hidden" name="userid"
+									value="${loginMember.userid }">
+								<li><textarea class="replyRig" name="b_reply_content"></textarea></li>
+								<li><input class="replyBtn" type="submit" value="댓글등록" style="cusor:pointer;"><a href="#"></a></li>
+							</form>
+							<!-- 새로고침 -->
+							<li class="resetBtn"><a href="#"> <i
+									class="fa-solid fa-arrows-rotate"></i>
+							</a></li>
+						</ul>
+						<ul class="replyList">
+							<c:forEach items="${rList }" var="r">
+								<c:if test="${r.userid ne loginMember.userid }">
+									<li>${r.b_reply_content }</li>
+								</c:if>
+								<c:if test="${r.userid eq loginMember.userid }" >
+									<li><textarea id="b_reply_content">${r.b_reply_content }</textarea>
+										<button onclick="rupdate();">수정</button>
+										<button
+											onclick="javascript:location.href='rdel.do?b_no=${board.b_no }&b_reply_no=${r.b_reply_no}';">삭제</button>
+									</li>
+								</c:if>
+								<script type="text/javascript">
+									function rupdate() {
+										var contentValue = document
+												.getElementById("b_reply_content").value;
+										location.href = 'rupdate.do?b_reply_content='
+												+ contentValue
+												+ '&b_reply_no=${r.b_reply_no}&b_no=${board.b_no}';
+									}
+								</script>
+							</c:forEach>
+						</ul>
+
+					</div>
 
 
-    </section>
+				</li>
+				</ol>
+				</li>
+			</ul>
+	</section>
+	</ul>
 </body>
 
 </html>

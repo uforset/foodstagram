@@ -176,7 +176,7 @@ li {list-style: none;}
             <li style="text-align: center;">
                 <span>
                     <select id="test2" onchange="Change2()"
-                        style="width: 95px;height:2.5rem; border:none; top:48px;text-align:center; right:308px;">
+                        style="width: 100px;height:2.5rem; border:none; top:48px;text-align:center; right:308px;">
                         <option value="1">음식 키워드</option>
                         <option value="2">다른 사용자</option>
                         <option value="3">여행지</option>
