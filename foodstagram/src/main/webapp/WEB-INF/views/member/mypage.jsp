@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="error.jsp" %>
+    pageEncoding="UTF-8" errorPage="../common/error.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
@@ -304,8 +304,42 @@
             font-size: 13px;
         }
 
+        
+        .logout,
+        .updateProfile,
+        .adminMember {
+            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+            color: #333;
+            background-color: #E5E5E5;
+            font-size: 13px;
+        }
+        
+        .delbutton {
+            width: 100px;
+            height: 30px;
+            font-weight: bold;
+            border: none;
+            background-color: #FAFAFA;
+            text-decoration:underline;
+            border-radius: 10px;
+            position:relative;
+            left:710px;
+            bottom:15px;
+            
+        }
+
+        .adminMember:hover,
+        .updateProfile:hover, .logout:hover, {
+
+
         .adminMember:hover,
         .updateProfile:hover {
+
             background-color: #F95E25;
         }
 
@@ -349,9 +383,15 @@ var loginuserid = "${loginMember.userid}";
 var call = "";
 
 if(userid === loginuserid){
+
+   call ="blistmy.do";
+}else{
+   call ="blistfriend.do";
+
 	call ="blistmy.do";
 }else{
 	call ="blistfriend.do";
+
 }
 <!-- 게시글 리스트 출력처리 -->
 $(function(){
@@ -395,7 +435,11 @@ $(function(){
          
       },
       error: function(jqXHR, textStatus, errorThrown){
+
+         console.log("blist error : " + call + "," +jqXHR 
+
          console.log("btop3 error : " + jqXHR 
+
                + ", " + textStatus + ", " + errorThrown);
       }
    });      
@@ -408,6 +452,21 @@ $(function(){
             <li class="mypageImg"><a href="#"><img src="resources/images/profile.jpg"></a></li>
             <li>
                 <ul>
+
+                   <c:url var="callMyinfo" value="/myinfo.do">
+                        <c:param name="userid" value="${ member.userid }" />
+                    </c:url>
+                    <li><a href="${ callMyinfo }"><span id="id">${ member.userid }</span></a></li> 
+                     <c:url var="moveup" value="/moveup.do">
+                        <c:param name="userid" value="${ member.userid }"/>
+                     </c:url>
+                    <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
+                    <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
+                    <c:if test="${ empty sessionScope.sns }">
+	                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
+	                         <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+	                    </c:if>
+
                 	<c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ member.userid }" />
                     </c:url>
@@ -419,24 +478,29 @@ $(function(){
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                     <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
                    		<li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+
                     </c:if>
                 </ul>
                 <ul>
                     <li id="lSize"></li>
                     <li>친구 10명</li>
                 </ul>
-                <ul>이름 : ${ loginMember.username }</ul>
-                <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
-                   	<ul><button class="new">최신순 보기</button> <br>
-                    <button class="old">오래된순 보기</button></ul>
-                </c:if>
+
+                <ul>이름 : ${ member.username }</ul>
+                <c:url var="mdel" value="/mdel.do">
+	                  <c:param name="userid" value="${ member.userid }"/>
+	               </c:url>
+	                     <button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
             </li>
         </ul>
-        <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
-        <table class="mainPage" id="blist">
-			<!-- 게시글 출력 영역 -->
-        </table>
-      </c:if>
+        <c:if test="${ empty sessionScope.sns }">
+	        <c:if test="${ !empty sessionScope.loginMember and (sessionScope.loginMember.admin ne 'Y' or !empty sessionScope.sns)}">
+	         <table class="mainPage" id="blist">
+	         <!-- 게시글 출력 영역 -->
+	         </table>
+	        </c:if>
+        </c:if>
+      
     </section>
     <!-- TWC chatbot Scripts -->
    <script src="https://public-common-sdk.s3.ap-northeast-2.amazonaws.com/sdk/seller/Twc.plugin.js"></script>
