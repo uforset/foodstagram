@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +10,7 @@
 <title>푸드스타그램</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet"> 
 <style>
-	 i {color:red;}
+
 	 i:hover {color:green}
 	 
 	 .food-wrap {
@@ -15,13 +18,12 @@
 		  justify-content: center;
 		  align-items: center
 	   	  }
+
      .food {
 		  position: relative; 
   		  width: 300px; height: 300px;  
 		  }
-	 .food img{
 
-		  }
 	  .food .info {
 	 	  padding: 15px 20px;
 	      border-radius: 5px;
@@ -34,23 +36,11 @@
 	      text-align: left;
 	      opacity: 0;
 		  }
+		  
 	  .food:hover .info {
  		  opacity: 0.5;
 		  }
 		  
-	  .food .info h3 {
-		  font-size: 20px;
-		  padding-bottom: 0.4em;
-		  overflow:hidden;
-		  text-overflow: ellipsis;
-		  white-space: nowrap;
-		  text-transform: uppercase;
-		  }
-	  .food .info p {
-		  font-size: 20px;
-		  text-overflow: ellipsis;
-		  white-space: nowrap;
-		  }  
 </style>
 </head>
 <body>
@@ -67,8 +57,21 @@
 			<img src="resources/food_upfiles/pasta_alio_olio.jpg" alt="Hover Effect"></div> -->
 		<div class="info" style="line-height:160%">
 		<!-- <script type="text/javascript" src="//openapi.foodsafetykorea.go.kr/api/266fe9be05ba49068142/I2790/xml/1/5"></script> -->
-			<h2>${ food.fname }</h2>
-			1인분 (${ food.fsize }g)<br>
+			<h2>${ food.fname}</h2>
+			<c:choose> 
+				<c:when test="${ food.fname eq '마르게리따피자'}">
+					<c:if test = "${ food.fsize ne null }">1조각 당</c:if>
+					<c:if test = "${ food.fsize eq null }">1조각 (${ food.fsize }g)</c:if><br>
+				</c:when>
+				<c:when test="${ food.fname eq '마카롱'}">
+					<c:if test = "${ food.fsize ne null }">1개 당</c:if>
+					<c:if test = "${ food.fsize eq null }">1개 (${ food.fsize }g)</c:if><br>
+				</c:when>
+				<c:otherwise>
+					<c:if test = "${ food.fsize eq null }">1인분 당</c:if>
+					<c:if test = "${ food.fsize ne null }">1인분 (${ food.fsize }g)</c:if><br>
+				</c:otherwise>
+			</c:choose>	
 			칼로리 : ${ food.kcal }kcal<br>
 			탄수화물 : ${ food.carb }g<br>
 			단백질 : ${ food.protein }g<br>

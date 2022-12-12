@@ -230,17 +230,17 @@ li {list-style: none;}
     <script type="text/javascript">
    $(function(){
       $.ajax({
-         url: "readCheck.do",
+         url: "/foodstagram/readCheck.do",
          type: "get",
-         data: {userid: "${loginMember.userid}" },
+         data: { userid: "${loginMember.userid}" },
          dataType: 'json',
          success: function(data, jqXHR, textStatus){
             //alert("readcheck : " + data.read);
             if( data.read == "read" ) {
                //
             } else {
-               console.log("hi")
-               $("ol.navlist").append("<li class='noneRead'></li>")
+               console.log("hi");
+               $("ol.navlist").append("<li class='noneRead'></li>");
                
             }
          },

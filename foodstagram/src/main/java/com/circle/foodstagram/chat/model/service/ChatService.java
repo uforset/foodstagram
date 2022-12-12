@@ -2,6 +2,7 @@ package com.circle.foodstagram.chat.model.service;
 
 import java.util.List;
 
+import com.circle.foodstagram.chat.model.vo.ChatMessage;
 import com.circle.foodstagram.chat.model.vo.ChatRoom;
 import com.circle.foodstagram.chat.model.vo.ChatRoomJoin;
 
@@ -13,4 +14,7 @@ public interface ChatService {
 	
 	List<ChatRoomJoin> getChatRoomJoinByRoomId(String RoomId);
 	int insertChatRoomJoin(ChatRoomJoin chatRoomJoin);
+	
+	int insertChatMessage(ChatMessage message);
+	List<ChatMessage> getChatRoomMessage(String RoomId);
 }

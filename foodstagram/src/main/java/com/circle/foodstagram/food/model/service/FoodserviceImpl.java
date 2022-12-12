@@ -13,15 +13,14 @@ public class FoodserviceImpl implements FoodService{
 
 	@Autowired
 	private FoodDao foodDao;
+
+	@Override
+	public ArrayList<Food> selectFoodList() {
+		return foodDao.selectFoodList();
+	}
 	
 	@Override
-	public Food selectFood(int fno) {
-		return foodDao.selectFood(fno);
+	public Food selectFood(String fname) {
+		return foodDao.selectFood(fname);
 	}
-
-	@Override
-	public ArrayList<Food> selectAll() {
-		return foodDao.selectList();
-	}
-
 }

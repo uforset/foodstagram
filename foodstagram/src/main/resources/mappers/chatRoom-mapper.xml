@@ -7,6 +7,12 @@
 	<resultMap type="ChatRoom" id="resultChatRoom">
 		<id column="chat_room_id" property="chat_room_id" />
 		<result column="title" property="title" />
+		<result column="create_date" property="create_date" />
+		<result column="renewal_date" property="renewal_date" />
+		<collection property="participants" column="{chat_room_id=chat_room_id}"
+		ofType="ChatRoomJoin"
+		select="chatRoomJoinMapper.getJoinListByRoomId">
+		</collection>
 	</resultMap>
 
 
@@ -15,6 +21,7 @@
 		inner join chat_room_join j
 		on r.chat_room_id = j.chat_room_id
 		where userid = #{userid}
+		order by renewal_date
 	</select>
 
 	<select id="findRoomByUUId" parameterType="string" resultType="ChatRoom">
@@ -23,7 +30,9 @@
 	</select>
 
 	<insert id="insertChatRoom" parameterType="ChatRoom">
-		insert into chat_room values(#{chat_room_id}, #{title})
+		insert into chat_room values(#{chat_room_id}, #{title}, default, default)
 	</insert>
+
+
 
 </mapper>

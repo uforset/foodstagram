@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.circle.foodstagram.chat.model.dto.ChatMessageDTO;
+import com.circle.foodstagram.chat.model.service.ChatService;
 import com.circle.foodstagram.chat.model.vo.ChatMessage;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -43,7 +46,9 @@ public class StompWebSocketController {
 	@Autowired
 	private SimpMessagingTemplate template;
 
-
+	@Autowired
+	private ChatService chatService;
+	
 	// 채팅뷰 JSP로 연결시키는 메소드
 	// 일단 채팅방 목록으로 연결함.
 	@GetMapping("chatting.do")
@@ -58,16 +63,21 @@ public class StompWebSocketController {
 	// "/pub/chat/enter"
 
 	@MessageMapping(value = "/chat/enter")
-	public void enter(ChatMessageDTO message) {
-		message.setMessage(message.getWriter() + "님이 채팅방에 참여하였습니다.");
-		template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+	public void enter(ChatMessage message) {
+		message.setMessage(message.getUserid() + "님이 채팅방에 참여하였습니다.");
+		template.convertAndSend("/sub/chat/room/" + message.getChat_room_id(), message);
 	}
 
 	@MessageMapping(value = "/chat/message")
-	public void message(ChatMessageDTO message) {
+	public void message(ChatMessage message) {
 		log.info("send message....");
 		//메세지 DB인풋
-		template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+		message.setCreate_date(new Date());
+		
+		//if(chatService.insertChatMessage(message) > 0)
+		chatService.insertChatMessage(message);
+		
+		template.convertAndSend("/sub/chat/room/" + message.getChat_room_id(), message);
 	}
 
 }
