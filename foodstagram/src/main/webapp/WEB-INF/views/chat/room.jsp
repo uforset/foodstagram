@@ -15,11 +15,11 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		var roomName = "${room.title}";
-		var roomId = "${room.chat_room_id}";
+		var roomName = "${selectedRoom.title}";
+		var roomId = "${selectedRoom.chat_room_id}";
 
 		var username = "${ loginMember.userid }";
-		
+
 		console.log(roomName + ", " + roomId + ", " + username);
 
 		var sockJs = new SockJS("${pageContext.request.contextPath}/stomp");
@@ -82,24 +82,24 @@
 
 
 
-		<div class="container">
-			<div class="col-6">
-				<h1>[[${room.title}]]</h1>
-			</div>
-			<div>
-				<div id="msgArea" class="col"></div>
-				<div class="col-6">
-					<div class="input-group mb-3">
-						<input type="text" id="msg" class="form-control">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-send">전송</button>
-						</div>
-					</div>
+<div class="container">
+	<div class="col-6">
+		<h1>[[${room.title}]]</h1>
+	</div>
+	<div>
+		<div id="msgArea" class="col"></div>
+		<div class="col-6">
+			<div class="input-group mb-3">
+				<input type="text" id="msg" class="form-control">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button"
+						id="button-send">전송</button>
 				</div>
 			</div>
-			<div class="col-6"></div>
 		</div>
+	</div>
+	<div class="col-6"></div>
+</div>
 
 
 

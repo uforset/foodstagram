@@ -1,6 +1,7 @@
 package com.circle.foodstagram.chat.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.circle.foodstagram.chat.model.dao.ChatRoomDao;
 import com.circle.foodstagram.chat.model.service.ChatRoomService;
 import com.circle.foodstagram.chat.model.service.ChatService;
+import com.circle.foodstagram.chat.model.vo.ChatMessage;
 import com.circle.foodstagram.chat.model.vo.ChatRoom;
 import com.circle.foodstagram.chat.model.vo.ChatRoomJoin;
 import com.circle.foodstagram.member.model.vo.Member;
@@ -95,7 +98,7 @@ public class RoomController {
     //채팅방 개설
     @PostMapping(value = "/room")
     @ResponseBody
-    public String create(@RequestParam(value = "userList[]") List<String> userList,
+    public String create(@RequestParam List<String> userList,
     		HttpSession session, 
     		RedirectAttributes rttr,
     		Model model){
@@ -106,6 +109,9 @@ public class RoomController {
     	}
     	String myId =loginMember.getUserid();
     	
+    	log.info(userList);
+    	
+    	//List<String> userList = Arrays.asList(userList2);
     	//DM초대하기(채팅방만들기)
     	//사용자가 유저를 검색해서 선택하고 초대함(한명 또는 여러명)
     	//채팅방을 생성하고, 그채팅방 id를 이용해 채팅방참여자DB에 저장.
@@ -113,7 +119,9 @@ public class RoomController {
     	// 랜덤UUID생성후 DB에 저장함
     	
     	String uuid = UUID.randomUUID().toString();
-    	ChatRoom chatRoom = new ChatRoom(uuid, "emp", null);
+    	ChatRoom chatRoom = new ChatRoom();
+    	chatRoom.setChat_room_id(uuid);
+    	chatRoom.setTitle("emp");
     	int size = userList.size();
     	
     	chatService.createChatRoom(chatRoom);
@@ -192,14 +200,7 @@ public class RoomController {
         	}
         }
         
-        
-        
-    	
-    	
-    	
-    	
-    	
-    	
+
     	log.info("# get Chat Room, roomID : " + roomId);
     	//그냥 채팅방 정보(ChatRoom vo) 담는거임 어느채팅방 들어갔는지
     	ChatRoom selectedRoom = chatService.findRoomByUUId(roomId);
@@ -207,14 +208,23 @@ public class RoomController {
     	for(ChatRoom cr : list) { // find안하고 해도되긴함..
     		if(cr.getChat_room_id().equals(roomId)) {
     			selectedRoom.setTitle(cr.getTitle());
-    			selectedRoom.setParticipants(cr.getParticipants());
+    			List<ChatRoomJoin> participants = cr.getParticipants();
+    			selectedRoom.setParticipants(participants);
+
     			break;
     		}
     	}
+    
+    	List<ChatMessage> mlist = chatService.getChatRoomMessage(selectedRoom.getChat_room_id());
+    	//스크롤 페이징 하려면 수정필요.
+    	//시간순으로 정렬해줘서 가져옴.
+    	log.info("방에서 가져온 메세지 확ㅇ니!!!!");
+    	log.info(mlist);
     	
     	model.addAttribute("list", list);
     	model.addAttribute("selectedRoom", selectedRoom);
-        
+        model.addAttribute("mlist", mlist);
+    	
         return "chat/testRoom";
     }
     
