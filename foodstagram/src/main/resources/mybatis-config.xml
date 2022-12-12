@@ -26,6 +26,9 @@
 		<typeAlias type="com.circle.foodstagram.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.circle.foodstagram.board.model.vo.BoardAttach" alias="BoardAttach" />
 		<typeAlias type="com.circle.foodstagram.board.model.vo.BoardReply" alias="BoardReply" />
+		<typeAlias type="com.circle.foodstagram.member.model.vo.GoogleVO" alias="GoogleVO"/>
+		<typeAlias type="com.circle.foodstagram.member.model.vo.NaverVO" alias="NaverVO"/>
+		<typeAlias type="com.circle.foodstagram.member.model.vo.KakaoVO" alias="KakaoVO"/>
 	</typeAliases>
 	
 	<mappers>
@@ -42,5 +45,6 @@
 		<mapper resource="mappers/boardattach-mapper.xml" />
 		<mapper resource="mappers/boardreply-mapper.xml" />
 		<mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/sns-mapper.xml" />
 	</mappers>
 </configuration>

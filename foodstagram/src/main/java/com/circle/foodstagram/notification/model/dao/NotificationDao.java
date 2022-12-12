@@ -27,4 +27,7 @@ public class NotificationDao {
 	public Notification selectNotification(String userid) {
 		return session.selectOne("notificationMapper.selectNotification", userid);
 	}
+	public int insertNotification(String userid) {
+		return session.insert("notificationMapper.insertNotification", userid);
+	}
 }

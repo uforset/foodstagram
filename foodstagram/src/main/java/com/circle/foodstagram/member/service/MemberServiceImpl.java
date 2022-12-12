@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.circle.foodstagram.common.Paging;
 import com.circle.foodstagram.common.SearchPaging;
 import com.circle.foodstagram.member.dao.MemberDao;
+import com.circle.foodstagram.member.model.vo.GoogleVO;
+import com.circle.foodstagram.member.model.vo.KakaoVO;
 import com.circle.foodstagram.member.model.vo.Member;
+import com.circle.foodstagram.member.model.vo.NaverVO;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService{

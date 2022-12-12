@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import com.circle.foodstagram.common.Paging;
 import com.circle.foodstagram.common.SearchPaging;
+import com.circle.foodstagram.member.model.vo.GoogleVO;
+import com.circle.foodstagram.member.model.vo.KakaoVO;
 import com.circle.foodstagram.member.model.vo.Member;
+import com.circle.foodstagram.member.model.vo.NaverVO;
 
 
 public interface MemberService {

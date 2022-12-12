@@ -14,7 +14,7 @@ body {
 }
 
 img {
-	margin: 30px 0;
+	margin: 15px 0;
 }
 
 #wrap {
@@ -125,6 +125,73 @@ td a:hover {
             Kakao.Auth.setAccessToken(undefined)
           }
         }
+        
+        
+        /*아이디 쿠키에 적용하기*/
+        $(document).ready(function(){
+        	//저장된 쿠기값 가져오기
+            var userInputId = getCookie("userInputId");
+            
+        	//저장된 아이디 쿠키값이 있고
+            if((userInputId != null || userInputId != "") && userInputId.length > 0){
+                // 아이디 저장하기가 체크되어있다면
+                if($("#idSaveCheck").attr("checked") == true){ 
+                	// ID 값을 input 에 출력하기함
+                	$("input[name='userid']").val(userInputId); 
+                }
+            }    
+             
+         	// 아이디 기억하기 체크박스의 체크상태의 변화가 발생했다면
+            $("#idSaveCheck").change(function(){ 
+            	// 아이디 기억하기 체크박스가 체크된 상태이면
+                if($("#idSaveCheck").is(":checked")){ 
+                    var userInputId = $("input[name='userid']").val();
+                    if(userInputId != "" && userInputId.length > 0){
+        	         	// 쿠키에 입력된 userid 를 7일 동안 기록 저장함
+        	            setCookie("userInputId", userInputId, 7); 
+                    }
+                }else{ // 아이디 기억하기 체크 해제 시,
+                    deleteCookie("userInputId"); //쿠키에 저장된 아이디 삭제함
+                }
+            });
+             
+            // 아이디 기억하기를 체크한 상태에서 userid를 입력하는 경우에도 쿠키에 저장되게 함.
+            $("input[name='userid']").keyup(function(){ // userid 입력 칸에 아이디를 입력할 때,
+                if($("#idSaveCheck").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+                    var userInputId = $("input[name='userid']").val();
+                    setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
+                }
+            });
+        });  //jQuery.document.ready
+         
+        function setCookie(cookieName, value, exdays){
+            var expireDate = new Date();
+            expireDate.setDate(expireDate.getDate() + exdays);
+            var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + expireDate.toGMTString());
+            document.cookie = cookieName + "=" + cookieValue;
+        }
+         
+        function deleteCookie(cookieName){
+            var expireDate = new Date();
+            expireDate.setDate(expireDate.getDate() - 1);
+            document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+        }
+         
+        function getCookie(cookieName) {
+            cookieName = cookieName + '=';
+            var cookieData = document.cookie;
+            var start = cookieData.indexOf(cookieName);
+            var cookieValue = '';
+            if(start != -1){
+                start += cookieName.length;
+                var end = cookieData.indexOf(';', start);
+                if(end == -1)end = cookieData.length;
+                cookieValue = cookieData.substring(start, end);
+            }
+            return unescape(cookieValue);
+        }
+        
+        
       </script>
 <script>
         var index = 0; //이미지에 접근하는 인덱스
@@ -200,44 +267,38 @@ td a:hover {
 				class="btn" style="text-decoration: none; padding: 5px; border-radius: 10px;">비밀번호찾기
 			</a>|<a href="enrollPage.do"
 				class="btn" style="text-decoration: none; padding: 5px; border-radius: 10px;">회원가입</a>
-				<br>
+				<div class="id_remember" style="padding: 20px 0; ">
+					<input type="checkbox" id="idSaveCheck" > 아이디 기억하기
+				</div>
 				<table>
-					<!-- 네이버 로그인 버튼 노출 영역 -->
-					<div id="naver_id_login"></div>
-					<!-- //네이버 로그인 버튼 노출 영역 -->
-					<script type="text/javascript">
-                var naver_id_login = new naver_id_login(
-                  "Vj4dFHCEvSx5oz95b7Ws",
-                  "http://localhost:8080/foodstagram/main.do");
-                var state = naver_id_login.getUniqState();
-                naver_id_login.setButton("white", 2, 40);
-                naver_id_login
-                  .setDomain("http://localhost:8080/foodstagram/");
-                naver_id_login.setState(state);
-                naver_id_login.init_naver_id_login();
-              </script>
+					<center>		
+	<!-- 카카오 로그인 창으로 이동 -->
+	<div id="kakao_id_login" class="kakao_id_login" style="text-align: center">
+	<a href="<c:url value='${kakaoUrl}'/>" class="cp"> 
+		<img width="230" height="60" src="${ pageContext.servletContext.contextPath }/resources/images/kakao_login.png" alt="카카오로그인">
+	</a>
+	</div>
 
-					<!-- 구글 로그인 -->
-					<script src="https://accounts.google.com/gsi/client" async defer></script>
-					<div id="g_id_onload"
-						data-client_id="134558823520-frjf75vdh2eia14jqkkrfaqlcme9cvkm.apps.googleusercontent.com"
-						data-login_uri="http://localhost:8080/foodstagram/main.do"
-						data-auto_prompt="false"></div>
-					<div class="g_id_signin" align="center" data-type="standard"
-						data-size="large" data-theme="outline" data-text="sign_in_with"
-						data-shape="rectangular" data-logo_alignment="left"></div>
+</center>
+<center>
+<!-- 네이버 로그인 화면으로 이동 시키는 URL -->
+<!-- 네이버 로그인 화면에서 ID, PW를 올바르게 입력하면 callback 메소드 실행 요청 -->
+<div id="ndfin" style="text-align:center">
+	<a href="${naverUrl}" id='.cp_naver'>
+		<img width="230" height="60" src="${ pageContext.servletContext.contextPath }/resources/images/naver.png" alt="네이버로그인">
+	</a>
+</div>
 
-
-					<!-- 카카오 로그인 -->
-					<center>
-						<div id="kakao_id_login" class="kakao_id_login"
-							style="text-align: center">
-							<a href="<c:url value='${kurl}'/>" class="cp"> <img
-								onclick="kakaoLogin();"
-								src="${ pageContext.servletContext.contextPath }/resources/images/kakao_login.png"
-								alt="카카오로고">
-							</a> <br>
-					</center>
+</center>
+<center>
+<!-- 구글 로그인 화면으로 이동 시키는 URL -->
+<!-- 구글 로그인 화면에서 ID, PW를 올바르게 입력하면 oauth2callback 메소드 실행 요청-->
+<div id="google_id_login" style="text-align:center">
+	<a href="${googleUrl}">
+		<img width="230" height="60" src="${pageContext.request.contextPath}/resources/images/google.png" alt="구글로그인">
+	</a>
+</div>
+</center>
 				</table> <br>
 		</form>
 	</div>
