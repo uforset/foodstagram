@@ -1,12 +1,18 @@
 package com.circle.foodstagram.food.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.circle.foodstagram.food.model.service.FoodService;
 import com.circle.foodstagram.food.model.vo.Food;
@@ -22,12 +28,21 @@ public class FoodController {
 	private FoodService foodService;
 
 
-	// 푸드 영양정보 이동 용도
-	@RequestMapping("foodDetail.do")
-	public String foodDetailMethod(@RequestParam("fno") int fno, Model model) { 
+	// 푸드 영양정보 요청 처리용
+	@RequestMapping(value="foodDetail.do", method=RequestMethod.GET)
+	public String foodDetailMethod(Model model,
+			@RequestParam("fname") String fname, 
+			@RequestParam(name = "page", required = false) String page,
+			HttpSession session) { 
 		
-		Food food = foodService.selectFood(fno);
-		model.addAttribute("food", food);		
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = Integer.parseInt(page);
+		}
+		
+		Food food = foodService.selectFood(fname);
+				
+		model.addAttribute("fname", fname);
 		return "food/foodDetailView";
 		
 	}

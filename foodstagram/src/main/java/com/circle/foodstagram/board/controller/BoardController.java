@@ -1,12 +1,12 @@
 package com.circle.foodstagram.board.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.maven.doxia.logging.Log;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,6 +29,8 @@ import com.circle.foodstagram.board.model.vo.Board;
 import com.circle.foodstagram.board.model.vo.BoardAttach;
 import com.circle.foodstagram.board.model.vo.BoardReply;
 import com.circle.foodstagram.common.AttachUtils;
+import com.circle.foodstagram.food.model.service.FoodService;
+import com.circle.foodstagram.food.model.vo.Food;
 
 @Controller
 public class BoardController {
@@ -46,6 +48,9 @@ public class BoardController {
 
 	@Autowired
 	private AttachUtils attachUtils;
+	
+	@Autowired
+	private FoodService foodService;
 
 	// 페이지 이동처리용 ----------------
 	// 게시 원글 쓰기 페이지로 이동 처리용
@@ -78,7 +83,7 @@ public class BoardController {
 		
 	}
 
-	// 마이 페이지 게시글 목록보기 요청 처리용
+	// 마이 페이지 본인 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "blistmy.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String boardListMyMethod(@RequestParam("userid") String userid) throws UnsupportedEncodingException {
@@ -102,7 +107,7 @@ public class BoardController {
 
 	}
 
-	// 친구의 게시글 목록보기 요청 처리용
+	// 마이페이지 친구 이상 공개 목록보기 요청 처리용
 	@RequestMapping(value = "blistfriend.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String boardListFriendMethod(@RequestParam("userid") String userid) throws UnsupportedEncodingException {
@@ -127,19 +132,27 @@ public class BoardController {
 	}
 
 	// 게시글 상세보기 처리용
+	// 영양정보 DB보기 있음 
 	@RequestMapping("bdetail.do")
-	public ModelAndView boardDetailMethod(ModelAndView mv, @RequestParam("b_no") int b_no) {
+	public ModelAndView boardDetailMethod(ModelAndView mv, 
+					@RequestParam("b_no") int b_no) {
 		
 		boardService.updateAddReadcount(b_no);
 		Board board = boardService.selectBoard(b_no);
+		Food food = foodService.selectFood(board.getB_category());
 		ArrayList<BoardAttach> aList = boardAttachService.selectAttchList(b_no);
 		ArrayList<BoardReply> rList = boardReplyService.selectReplyList(b_no);
-
+		ArrayList<Food> fList = foodService.selectFoodList();
+		
 		if (board != null) {
-			mv.addObject("board", board);
-			mv.addObject("aList", aList);
-			mv.addObject("rList", rList);
-			mv.setViewName("board/boardDetail");
+
+				mv.addObject("board", board);
+				mv.addObject("food", food);
+				mv.addObject("aList", aList);
+				mv.addObject("rList", rList);
+				mv.addObject("fList", fList);
+				mv.setViewName("board/boardDetail");
+		
 		} else {
 			mv.addObject("message", b_no + "번 게시글 조회 실패");
 			mv.setViewName("common/error");
@@ -198,15 +211,15 @@ public class BoardController {
 
 	// 검색한 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "bsearch.do", method = RequestMethod.GET)
-	public String boardsearchMethod(@RequestParam("b_category") String b_category, Model model) {
+	public String boardsearchMethod(@RequestParam("fname") String fname, Model model) {
 
-		ArrayList<BoardAttach> list = boardService.searchBoard(b_category);
+		ArrayList<BoardAttach> list = boardService.searchBoard(fname);
 
 		if (list.size() > 0) {
 			model.addAttribute("list", list);
 			return "board/searchResult";
 		} else {
-			model.addAttribute("message", b_category + " 관련 검색 실패");
+			model.addAttribute("message", fname + " 관련 검색 실패");
 			return "common/error";
 		}
 

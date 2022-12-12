@@ -4,4 +4,33 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatMessageMapper">
 
+	<resultMap type="ChatMessage" id="resultChatMessage">
+		<id column="cm_no" property="cm_no" />
+		<result column="userid" property="userid" />
+		<result column="username" property="username" />
+		<result column="chat_room_id" property="chat_room_id" />
+		<result column="message" property="message" />
+		<result column="create_date" property="create_date" />
+	</resultMap>
+
+	<insert id="insertChatMessage" parameterType="ChatMessage">
+		insert into chat_message(cm_no,
+								userid,
+								username,
+								chat_room_id,
+								message,
+								create_date)
+				values(default,
+						#{userid},
+						#{username},
+						#{chat_room_id},
+						#{message},
+						#{create_date})
+	</insert>
+	
+	<select id="getChatRoomMessage" parameterType="string" resultMap="resultChatMessage">
+		select * from chat_message
+		where chat_room_id = #{chat_room_id}
+		order by create_date
+	</select>
 </mapper>
