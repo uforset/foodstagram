@@ -13,222 +13,255 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
     <title>게시물</title>
-    <style>
-        section {
-            width: 950px;
-            margin: 40px auto;
-            padding: 20px 10px;
-            border-radius: 20px;
-            box-shadow: 2px 2px 10px grey;
-            box-sizing: border-box;
-        }
+<style>
+section {
+	width: 950px;
+	margin: 40px auto;
+	padding: 20px 10px;
+	border-radius: 20px;
+	box-shadow: 2px 2px 10px grey;
+	box-sizing: border-box;
+}
 
-        .content {
-            margin-left: 15px;
-        }
+.content {
+	margin-left: 15px;
+}
 
-        #otherProfile img {
-            width: 33px;
-            height: 33px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: none;
-        }
+#otherProfile img {
+	width: 33px;
+	height: 33px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: none;
+}
 
-        section ul:first-child:not(.replyBox) {
-            display: flex;
-            margin-bottom: 10px;
-            border-bottom: #E5E5E5 2px solid;
-            justify-content: space-between;
-        }
+section ul:first-child:not(.replyBox) {
+	display: flex;
+	margin-bottom: 10px;
+	border-bottom: #E5E5E5 2px solid;
+	justify-content: space-between;
+}
 
-        .modalImg img {
-            display: inline-block;
-            width: 450px;
-            height: auto;
-            object-fit: cover;
-            border: none;
-        }
+.modalImg img {
+	display: inline-block;
+	width: 450px;
+	height: auto;
+	object-fit: cover;
+	border: none;
+}
 
-        ul:not(.replyList) {
-            display: flex;
-        }
+ul:not(.replyList) {
+	display: flex;
+}
 
-        ul li:not(.modalImg) {
+ul li:not(.modalImg) {
+	left: -10px;
+}
 
-            left: -10px;
-        }
+ul li ol {
+	display: flex;
+}
 
-        ul li ol {
-            display: flex;
-        }
+.id {
+	position: relative;
+	bottom: 10px;
+	font-weight: bold;
+}
 
-        .id {
-            position: relative;
-            bottom: 10px;
-            font-weight: bold;
-        }
+.addFriend {
+	padding: 5px;
+	margin-left: 20px;
+	bottom: 20px;
+	font-weight: bold;
+	border: 1px solid #E5E5E5;
+	color: #F95E25;
+	border-radius: 10px;
+	font-size: 14px;
+}
 
-        .addFriend {
-            padding: 5px;
-            margin-left: 20px;
-            bottom: 20px;
-            font-weight: bold;
-            border: 1px solid #E5E5E5;
-            color: #F95E25;
-            border-radius: 10px;
-            font-size: 14px;
-        }
+.modalContent {
+	padding-bottom: 20px;
+	border-bottom: 1px solid #E5E5E5;
+	width: 435px;
+	height: 100px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	font-size: 14px;
+	overflow: auto;
+}
 
-        .modalContent {
-            padding-bottom: 20px;
-            border-bottom: 1px solid #E5E5E5;
-            width: 435px;
-            height: 100px;
-            margin-bottom: 10px;
-            padding-top: 10px;
-            font-size: 14px;
-            overflow: auto;
-        }
+.modalContent span a {
+	color: rgb(116, 77, 116);
+}
 
-        .modalContent span a {
-            color: rgb(116, 77, 116);
-        }
+/* 하트, 댓글등 */
+.lr {
+	position: relative;
+	top: 380px;
+	right: 430px;
+	border-bottom: 1px solid #E5E5E5;
+	width: 435px;
+	height: 33px;
+	line-height: 33px;
+	padding: 5px 0 10px 0;
+}
 
-        /* 하트, 댓글등 */
-        .lr {
-            position: relative;
-            top: 380px;
-            right: 430px;
-            border-bottom: 1px solid #E5E5E5;
-            width: 435px;
-            height: 33px;
-            line-height: 33px;
-            padding: 5px 0 10px 0;
-        }
+.lr li {
+	margin-left: 18px;
+}
 
-        .lr li {
-            margin-left: 18px;
-        }
+.fa-heart:hover {
+	color: red;
+}
 
-        .fa-heart:hover {
-            color: red;
-        }
+.countingLike {
+	font-weight: bold;
+}
 
-        .countingLike {
-            font-weight: bold;
-        }
+.resetBtn a {
+	padding: 5px;
+	display: block;
+}
 
-        .resetBtn a {
-            padding: 5px;
-            display: block;
-        }
+#recipe, #restaurant {
+	width: 80px;
+	height: 30px;
+	font-weight: bold;
+	border: none;
+	border-radius: 10px;
+	transition: 0.5s ease-in-out;
+	color: #333;
+	background-color: #E5E5E5;
+	font-size: 13px;
+}
 
-        #recipe,
-        #restaurant {
-            width: 80px;
-            height: 30px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            transition: 0.5s ease-in-out;
-            color: #333;
-            background-color: #E5E5E5;
-            font-size: 13px;
-        }
+#restaurant:hover {
+	background-color: #F95E25;
+}
 
-        #restaurant:hover {
-            background-color: #F95E25;
-        }
+#recipe:hover {
+	background-color: #F95E25;
+}
 
-        #recipe:hover {
-            background-color: #F95E25;
-        }
+.replyBox {
+	position: relative;
+	top: 475px;
+	right: 430px;
+}
 
-        .replyBox {
-            position: relative;
-            top: 475px;
-            right: 430px;
-        }
+.replyRig {
+	width: 400px;
+	height: 25px;
+	border-radius: 30px;
+	background-color: #F0F0F0;
+	border: #F0F0F0;
+	transition: 0.5s ease-out;
+}
 
-        .replyRig {
-            width: 400px;
-            height: 25px;
-            border-radius: 30px;
-            background-color: #F0F0F0;
-            border: #F0F0F0;
-            transition: 0.5s ease-out;
-        }
+.replyBtn {
+	width: 80px;
+	border: none;
+	display: block;
+	position: relative;
+	left: 30px;
+	bottom: -6px;
+	font-weight: bold;
+	color: #333;
+	cursor: pointer;
+	margin-left: -100px;
+}
 
+.replyBtn:hover {
+	display: block;
+	color: #F95E25;
+}
 
-        .replyBtn {
-            width: 80px;
-            border: none;
-            display: block;
-            position: relative;
-            left: 30px;
-            bottom: -6px;
-            font-weight: bold;
-            color: #333;
-            cursor: pointer;
-            margin-left: -100px;
-        }
+.replyList {
+	position: relative;
+	top: 345px;
+	right: 440px;
+	width: 415px;
+	height: 80px;
+	padding: 10px;
+	overflow: auto;
+}
 
-        .replyBtn:hover {
-            display: block;
-            color: #F95E25;
-        }
+.replyList li {
+	margin-bottom: 5px;
+}
 
-        .replyList {
-            position: relative;
-            top: 345px;
-            right: 440px;
-            width: 415px;
-            height: 80px;
-            padding: 10px;
-            overflow: auto;
-        }
+.chatBot {
+	position: fixed;
+	bottom: 3%;
+	right: 10%;
+	width: 150px;
+	height: 150px;
+	background-color: pink;
+}
 
-        .replyList li {
-            margin-bottom: 5px;
-        }
+.etc {
+	width: 180px;
+	text-align: center;
+	position: relative;
+	bottom: 185px;
+	border-left: 1px solid #E5E5E5;
+}
 
-        .chatBot {
-            position: fixed;
-            bottom: 3%;
-            right: 10%;
-            width: 150px;
-            height: 150px;
-            background-color: pink;
-        }
-     .etc {
-      width: 180px;
-      text-align: center;
-      position: relative;
-      bottom: 185px;
-      border-left: 1px solid #E5E5E5;
-    }
+.etc li {
+	height: 30px;
+	line-height: 30px;
+	padding: 5px;
+	padding-bottom: 5px;
+	border-bottom: #E5E5E5 1px solid;
+}
 
-    .etc li {
-      height: 30px;
-      line-height: 30px;
-      padding: 5px;
-      padding-bottom: 5px;
-      border-bottom: #E5E5E5 1px solid;
-    }
+.etc li a {
+	display: block;
+}
 
-    .etc li a {
-      display: block;
-    }
+.etc li a:hover {
+	border-bottom: 3px solid #F95E25;
+}
 
-    .etc li a:hover {
-      border-bottom: 3px solid #F95E25;
-    }
-    a {
-     text-decoration:none 
-    }
-        
-    </style>
+a {
+	text-decoration: none
+}
+
+i:hover {
+	color: green
+}
+
+.food-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center
+}
+
+.food {
+	position: relative;
+	width: 300px;
+	height: 300px;
+}
+
+.food .info {
+	padding: 15px 20px;
+	border-radius: 5px;
+	font-weight: 1000;
+	color: #fff;
+	position: absolute;
+	top: 50%;
+	left: 10%;
+	background: rgba(0, 0, 0, 0.5);
+	background-color: #38322e;
+	margin: auto;
+	text-align: left;
+	opacity: 0;
+}
+
+.food:hover .info {
+	opacity: 0.7;
+}
+</style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 
 </head>
@@ -246,11 +279,40 @@
 
         <ul>
             <!-- 컨텐츠 이미지 -->
-           	<!--<c:forEach items="${aList }" var="at">
+      <div class="food-wrap">
+		<div class="food">
+            <c:forEach items="${aList }" var="at">
 	            <a href="#">
                 	<li class="modalImg"><img src="resources/board_upfiles/${at.atch_file_name }"></li>
 	            </a>
-            </c:forEach>-->
+	        </c:forEach>
+					<div class="info" style="line-height: 160%">
+								<h2>${ food.fname }</h2>
+								<c:choose>
+									<c:when test="${ food.fname eq '마르게리따피자'}">
+										<c:if test="${ food.fsize ne null }">1조각 당</c:if>
+										<c:if test="${ food.fsize eq null }">1조각 (${ food.fsize }g)</c:if>
+										<br>
+									</c:when>
+									<c:when test="${ food.fname eq '마카롱'}">
+										<c:if test="${ food.fsize ne null }">1개 당</c:if>
+										<c:if test="${ food.fsize eq null }">1개 (${ food.fsize }g)</c:if>
+										<br>
+									</c:when>
+									<c:otherwise>
+										<c:if test="${ food.fsize eq null }">1인분 당</c:if>
+										<c:if test="${ food.fsize ne null }">1인분 (${ food.fsize }g)</c:if>
+										<br>
+									</c:otherwise>
+								</c:choose>
+							칼로리 : ${ food.kcal }kcal<br> 
+							탄수화물 : ${ food.carb }g<br>
+							단백질 : ${ food.protein }g<br> 
+							지방 :	${ food.fat }g
+						</div>
+					</div>
+				</div>
+			
             <li class="content">
                 <!-- 다른 유저의 프로필사진, id, 글쓴내용, 지도  -->
                 <ol>
@@ -267,7 +329,7 @@
                         <c:if test="${board.userid eq loginMember.userid }">
                             <p class="modalContent"><textarea rows="7" cols="30" name="b_content" id="b_content">${board.b_content }</textarea> 
 	                        <span><br><a href="bsearch.do?b_category=${board.b_category }">${board.b_category }</a></span>
-	                        <spen>카테고리를 변경할 경우 선택해주세요.</spen>
+	                        <span>카테고리를 변경할 경우 선택해주세요.</span>
 	                        <select name="b_category" id="b_category">
 								<option value="갈비탕">갈비탕
 								<option value="과일채소샐러드">과일채소샐러드

@@ -15,13 +15,13 @@ public class FoodDao {
 	@Autowired
 	private SqlSessionTemplate session;
 
-	public Food selectFood(int fno) {
-		return session.selectOne("foodMapper.selectFood", fno);
+	public ArrayList<Food> selectFoodList() {
+		List<Food> list = session.selectList("foodMapper.selectFoodList");
+		return (ArrayList<Food>)list;
 	}
 
-	public ArrayList<Food> selectList() {
-		List<Food> list = session.selectList("foodMapper.selectFoodAll");
-		return (ArrayList<Food>)list;
+	public Food selectFood(String fname) {
+		return session.selectOne("foodMapper.selectFood", fname);
 	}
 
 }
