@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.circle.foodstagram.chat.model.dao.ChatRoomDao;
 import com.circle.foodstagram.chat.model.service.ChatRoomService;
 import com.circle.foodstagram.chat.model.service.ChatService;
+import com.circle.foodstagram.chat.model.vo.ChatMessage;
 import com.circle.foodstagram.chat.model.vo.ChatRoom;
 import com.circle.foodstagram.chat.model.vo.ChatRoomJoin;
 import com.circle.foodstagram.member.model.vo.Member;
@@ -214,10 +215,16 @@ public class RoomController {
     		}
     	}
     
+    	List<ChatMessage> mlist = chatService.getChatRoomMessage(selectedRoom.getChat_room_id());
+    	//스크롤 페이징 하려면 수정필요.
+    	//시간순으로 정렬해줘서 가져옴.
+    	log.info("방에서 가져온 메세지 확ㅇ니!!!!");
+    	log.info(mlist);
     	
     	model.addAttribute("list", list);
     	model.addAttribute("selectedRoom", selectedRoom);
-        
+        model.addAttribute("mlist", mlist);
+    	
         return "chat/testRoom";
     }
     

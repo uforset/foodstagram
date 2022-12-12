@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.circle.foodstagram.chat.model.dto.ChatMessageDTO;
+import com.circle.foodstagram.chat.model.service.ChatService;
 import com.circle.foodstagram.chat.model.vo.ChatMessage;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -45,7 +46,8 @@ public class StompWebSocketController {
 	@Autowired
 	private SimpMessagingTemplate template;
 
-	
+	@Autowired
+	private ChatService chatService;
 	
 	// 채팅뷰 JSP로 연결시키는 메소드
 	// 일단 채팅방 목록으로 연결함.
@@ -72,6 +74,8 @@ public class StompWebSocketController {
 		//메세지 DB인풋
 		message.setCreate_date(new Date());
 		
+		//if(chatService.insertChatMessage(message) > 0)
+		chatService.insertChatMessage(message);
 		
 		template.convertAndSend("/sub/chat/room/" + message.getChat_room_id(), message);
 	}
