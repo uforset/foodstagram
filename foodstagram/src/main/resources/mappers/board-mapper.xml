@@ -81,7 +81,13 @@
 		from board
 		where b_no = #{b_no}
 	</select>
-
+	
+	<select id="countBoard" resultType="int" parameterType="string">
+		select count(*)
+		from board
+		where userid = #{userid}
+	</select>
+	
 	<select id="searchBoard" parameterType="string" resultMap="resultAttach">
 		select a.atch_parent_no, a.atch_file_name
 		from board b
