@@ -376,56 +376,125 @@ var userid = "${member.userid}";
 var loginuserid = "${loginMember.userid}";
 var call = "";
 
+var page = 1;
+
 if(userid === loginuserid){
-   call ="blistmy.do";
+	call ="blistmy.do?page=" + page;
 }else{
-   call ="blistfriend.do";
+	call ="blistfriend.do?page=" + page;
 }
 <!-- 게시글 리스트 출력처리 -->
+
+
 $(function(){
-   
-   
-   $.ajax({
-      url: call,
-      type: "post",
-      dataType: "json",
-      data: {
-         userid: "${sessionScope.loginMember.userid}"
-      },
-      success: function(data){
-
-         var jsonStr = JSON.stringify(data);
-         var json = JSON.parse(jsonStr);
-         
-         var bvalues = "";
-         var count = 1;
-         for(var i in json.list){
-            if(count % 3 == 1){
-               bvalues += "<tr>";
-            }
-            bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
-            count++;
-            if(count % 3 == 1){
-               bvalues += "</tr>";
-               }
-         }
-         if(count != 4){
-
-            for(var n = count; n <= 3; n++){
-               bvalues += "<td>&nbsp;</td>";
-            }
-            bvalues += "</tr>";
-         }
-         $("#blist").html($("#blist").html() + bvalues);
-         
-         $("#lSize").html("게시물 " + json.list.length);
-         
-         
-      },
-      error: function(jqXHR, textStatus, errorThrown){
-      }
-   });      
+	startEvent.firstData();
+	startEvent.eventData();
 });
+
+var startEvent = {
+		
+	firstData: function(){
+		$.ajax({
+			url: call,
+			type: "post",
+			dataType: "json",
+			data: {
+				userid: "${member.userid}"
+			},
+			success: function(data){
+					         
+				var jsonStr = JSON.stringify(data);
+				var json = JSON.parse(jsonStr);
+					         
+				var bvalues = "";
+				
+				var count = 1;
+				
+				for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+					if(count % 3 == 1){
+						bvalues += "<tr>";
+					}
+				
+					bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+					count++;
+					
+					if(count % 3 == 1){
+						bvalues += "</tr>";
+					}
+				} //for in
+				if(count != 4){
+				
+					for(var n = count; n <= 3; n++){
+						bvalues += "<td>&nbsp;</td>";
+					}
+					bvalues += "</tr>";
+				}
+				$("#blist").html($("#blist").html() + bvalues);
+				
+				$("#lSize").html("게시물 " + json.list.length);
+				
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log("btop3 error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+			}
+		});      
+	},
+	
+	eventData: function(){
+		$(window).scroll(function() {
+		    if(Math.round($(window).scrollTop()) == $(document).height() - $(window).height()) {
+		    	
+		    	page++;
+		    	
+				$.ajax({
+					url: call,
+					type: "post",
+					dataType: "json",
+					data: {
+						userid: "${member.userid}"
+					},
+					success: function(data){
+						console.log("success : " + data); //Object 로 출력됨
+							         
+						var jsonStr = JSON.stringify(data);
+						var json = JSON.parse(jsonStr);
+							         
+						var bvalues = "";
+						
+						var count = 1;
+						if(json.list.length <= 0) return;
+						
+						for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+							if(count % 3 == 1){
+								bvalues += "<tr>";
+							}
+						
+							bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+							count++;
+							
+							if(count % 3 == 1){
+								bvalues += "</tr>";
+							}
+						} //for in
+						if(count != 4){
+						
+							for(var n = count; n <= 3; n++){
+								bvalues += "<td>&nbsp;</td>";
+							}
+							bvalues += "</tr>";
+						}
+						
+						$("#blist").html($("#blist").html() + bvalues);
+						
+					},
+					error: function(jqXHR, textStatus, errorThrown){
+						console.log("btop3 error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+		    		}
+		    	});
+		    }; 
+		});
+	}
+};
 </script>
 <c:import url="/WEB-INF/views/common/nav.jsp" />
 <body>

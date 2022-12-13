@@ -247,65 +247,128 @@
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script>
 (function() {
- Twc('init', {
-   brandKey: "m0qEkQGszGQPOJycVHShoA",
-   channelType: "scenario",
-scenarioId: "Njk=",
-   buttonOption: {
-     showLauncher: true,
-     zIndex: 10,
-     bottom: 25,
-     right: 25
-    }
-  })
+	Twc('init', {
+		brandKey: "m0qEkQGszGQPOJycVHShoA",
+		channelType: "scenario",
+		scenarioId: "Njk=",
+		buttonOption: {
+			showLauncher: true,
+			zIndex: 10,
+			bottom: 25,
+			right: 25
+		}
+	})
 })();
 </script>
 
 <script type="text/javascript">
 <!-- 게시글 리스트 출력처리 -->
+var page = 1;
 
 $(function(){
-	$.ajax({
-		url: "blistAll.do",
-		type: "post",
-		dataType: "json",
-		success: function(data){
-			console.log("success : " + data); //Object 로 출력됨
-			
-			//받은 object => string 으로 바꿈
-			var jsonStr = JSON.stringify(data);
-			//string => json 객체로 바꿈
-			var json = JSON.parse(jsonStr);
-			
-			console.log(json.list);
-			var bvalues = "";
-			var count = 1;
-			for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
-				if(count % 3 == 1){
-					bvalues += "<tr>";
-				}
-				bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
-				count++;
-				if(count % 3 == 1){
-					bvalues += "</tr>";
-					}
-			} //for in
-			if(count != 4){
-
-				for(var n = count; n <= 3; n++){
-					bvalues += "<td>&nbsp;</td>";
-				}
-				bvalues += "</tr>";
-			}
-			$("#blist").html($("#blist").html() + bvalues);
-			
-		},
-		error: function(jqXHR, textStatus, errorThrown){
-			console.log("btop3 error : " + jqXHR 
-					+ ", " + textStatus + ", " + errorThrown);
-		}
-	});		
+	startEvent.firstData();
+	startEvent.eventData();
 });
+	
+var startEvent = {
+	
+	firstData: function(){
+		$.ajax({
+			url: "blistAll.do?page=" + page,
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				console.log("success : " + data); //Object 로 출력됨
+				
+				var jsonStr = JSON.stringify(data);
+				var json = JSON.parse(jsonStr);
+				
+				var bvalues = "";
+	
+				var count = 1;
+				
+				for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+					if(count % 3 == 1){
+						bvalues += "<tr>";
+					}
+				
+					bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+					count++;
+					
+					if(count % 3 == 1){
+						bvalues += "</tr>";
+					}
+				} //for in
+				if(count != 4){
+	
+					for(var n = count; n <= 3; n++){
+						bvalues += "<td>&nbsp;</td>";
+					}
+					bvalues += "</tr>";
+				}
+				$("#blist").html($("#blist").html() + bvalues);
+				
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log("btop3 error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+			}
+		});
+
+	},
+	
+	
+	eventData: function(){
+		$(window).scroll(function() {
+		    if(Math.round($(window).scrollTop()) == $(document).height() - $(window).height()) {
+		    	
+		    	page++;
+		        
+		    	$.ajax({
+		    		url: "blistAll.do?page=" + page,
+		    		type: "post",
+		    		dataType: "json",
+		    		success: function(data){
+		    			console.log("success : " + data); //Object 로 출력됨
+		    			
+		    			var jsonStr = JSON.stringify(data);
+		    			var json = JSON.parse(jsonStr);
+		    			
+		    			var bvalues = "";
+	
+		    			var count = 1;
+		    			if(json.list.length <= 0) return;
+		    			
+		    			for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+		    				if(count % 3 == 1){
+		    					bvalues += "<tr>";
+		    				}
+		    				bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+		    				count++;
+		    				
+		    				if(count % 3 == 1){
+		    					bvalues += "</tr>";
+		    					}
+		    			} //for in
+		    			
+		    			if(count != 4){
+	
+		    				for(var n = count; n <= 3; n++){
+		    					bvalues += "<td>&nbsp;</td>";
+		    				}
+		    				bvalues += "</tr>";
+		    			}
+		    			
+		    			$("#blist").html($("#blist").html() + bvalues);
+		    			
+		    		},
+		    		error: function(jqXHR, textStatus, errorThrown){
+		    			console.log("btop3 error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+		    		}
+		    	});
+		    }; 
+		});
+	}
+};
 </script>
 <!--  End TWC chatbot Scripts -->
 

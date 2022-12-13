@@ -66,33 +66,36 @@ public class BoardController {
 	// 모든 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "blistAll.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String boardListMethod() throws UnsupportedEncodingException {
-
-		ArrayList<BoardAttach> list = boardService.selectListAll();
-
-		JSONObject sendJson = new JSONObject();
-		JSONArray jarr = new JSONArray();
-
-		for (BoardAttach boardAttach : list) {
+	public String boardListMethod(@RequestParam("page")int page) throws UnsupportedEncodingException {
 			
-			JSONObject jobj = new JSONObject();
-			jobj.put("atch_parent_no", boardAttach.getAtch_parent_no());
-			jobj.put("atch_file_name", boardAttach.getAtch_file_name());
-			jarr.add(jobj);
-			
-		}
-		
+			ArrayList<BoardAttach> list = boardService.selectListAll(page, 9);
+	
+			JSONObject sendJson = new JSONObject();
+			JSONArray jarr = new JSONArray();
+	
+			for (BoardAttach boardAttach : list) {
+				
+				JSONObject jobj = new JSONObject();
+				jobj.put("atch_parent_no", boardAttach.getAtch_parent_no());
+				jobj.put("atch_file_name", boardAttach.getAtch_file_name());
+				jarr.add(jobj);
+				
+			}
+
+		// 전송용 객체에 jarr 을 담음
 		sendJson.put("list", jarr);
-		return sendJson.toJSONString();
-		
+
+		// json 을 json string 타입으로 바꿔서 전송함
+		return sendJson.toJSONString(); // 뷰리졸버로 리턴함
+
 	}
 
 	// 마이 페이지 본인 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "blistmy.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String boardListMyMethod(@RequestParam("userid") String userid) throws UnsupportedEncodingException {
+	public String boardListMyMethod(@RequestParam("userid") String userid, @RequestParam("page")int page) throws UnsupportedEncodingException {
 
-		ArrayList<BoardAttach> list = boardService.selectListMy(userid);
+		ArrayList<BoardAttach> list = boardService.selectListMy(userid, page, 6);
 
 		JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
@@ -100,13 +103,16 @@ public class BoardController {
 		for (BoardAttach boardAttach : list) {
 			
 			JSONObject jobj = new JSONObject();
+
 			jobj.put("atch_parent_no", boardAttach.getAtch_parent_no());
 			jobj.put("atch_file_name", boardAttach.getAtch_file_name());
+
 			jarr.add(jobj);
-			
+
 		}
 
 		sendJson.put("list", jarr);
+
 		return sendJson.toJSONString();
 
 	}
@@ -114,22 +120,23 @@ public class BoardController {
 	// 마이페이지 친구 이상 공개 목록보기 요청 처리용
 	@RequestMapping(value = "blistfriend.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String boardListFriendMethod(@RequestParam("userid") String userid) throws UnsupportedEncodingException {
+	public String boardListFriendMethod(@RequestParam("userid") String userid, @RequestParam("page")int page) throws UnsupportedEncodingException {
 
-		ArrayList<BoardAttach> list = boardService.selectListFriend(userid);
+		ArrayList<BoardAttach> list = boardService.selectListFriend(userid, page, 6);
 
 		JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
 
 		for (BoardAttach boardAttach : list) {
+			
 			JSONObject jobj = new JSONObject();
-
 			jobj.put("atch_parent_no", boardAttach.getAtch_parent_no());
 			jobj.put("atch_file_name", boardAttach.getAtch_file_name());
+
 			jarr.add(jobj);
 
 		}
-		
+
 		sendJson.put("list", jarr);
 		return sendJson.toJSONString();
 
