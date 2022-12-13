@@ -43,7 +43,7 @@
 	from (select ROWNUM RNUM, q.*
 		  from (select * 
 		  		from question 
-		  		order by answercheck ,q_no) q)
+		  		order by answercheck ,q_date,q_no) q)
 	where rnum between #{startRow} and #{endRow}
 	</select>
 

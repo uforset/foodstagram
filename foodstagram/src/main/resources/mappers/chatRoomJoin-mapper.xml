@@ -25,5 +25,9 @@
 		where chat_room_id= #{chat_room_id}
 	</select>
 	
-	
+	<delete id="deleteChatRoomJoin" parameterType="Map">
+		delete from chat_room_join
+		where userid = #{userid} 
+		and chat_room_id= #{chat_room_id}
+	</delete>
 </mapper>

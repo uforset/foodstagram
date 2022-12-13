@@ -48,6 +48,8 @@
 		<constructor-arg index="0" ref="sqlSession"></constructor-arg>
 	</bean>
 
+
+
 	<!-- 트랜잭션 관리 설정 -->
 	<bean
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
