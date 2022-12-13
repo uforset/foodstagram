@@ -204,7 +204,7 @@ li {list-style: none;}
                     </li>
                     <li class="share">
                         <i class="fas fa-regular fa-chevron-down fa-1x" id="shareBtn">
-                            <div class="shareContent"><a href="#">로그아웃</a></div>
+                            <div class="shareContent"><a href="${ pageContext.servletContext.contextPath }/loginPage.do">로그아웃</a></div>
                         </i></a>
                     </li>
                 </ol>

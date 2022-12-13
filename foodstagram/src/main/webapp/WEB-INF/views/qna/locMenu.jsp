@@ -67,7 +67,7 @@
 					<div class="sub">
 						<ul>
 							<!-- <li data-dpt="4-4"><a href="/customer/serviceinfo">서비스 조회·변경</a></li> -->
-							<li data-dpt="4-2"><a href="/customer/inquiry">1:1 문의</a></li>
+							<li data-dpt="4-2"><a href="/foodstagram/question.do">1:1 문의</a></li>
 							<!-- <li data-dpt="4-3"><a href="/customer/faq">자주하는 질문</a></li>	 -->						
 							<!-- <li data-dpt="4-5"><a href="/customer/form">서식지다운</a></li> -->
 							<li data-dpt="4-1"><a href="/foodstagram/nlist.do">공지사항</a></li>

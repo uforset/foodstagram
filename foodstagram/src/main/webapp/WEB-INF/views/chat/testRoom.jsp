@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -14,15 +15,205 @@
 <link type="text/css" rel="stylesheet" href="data:text/css; charset=utf-8,body._a3wf&#123;background:rgb(var(--ig-primary-background));color:rgb(var(--ig-primary-text));font-family:var(--font-family-system);font-size:var(--system-14-font-size);line-height:var(--system-14-line-height);margin:0;overflow-y:visible&#125;%23bootloader_Fm4crfp&#123;height:42px;&#125;.bootloader_Fm4crfp&#123;display:block!important;&#125;" data-bootloader-hash="Fm4crfp" data-p=":0" data-c="1" onload="" onerror="" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">    
 
-<script type="text/javascript">
-// 선택한 userid 저장용도임
-var users = [];
+<style type="text/css">
+.sk-circle {
+  margin: 20px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.sk-circle .sk-child {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.sk-circle .sk-child:before {
+  content: '';
+  display: block;
+  margin: 0 auto;
+  width: 15%;
+  height: 15%;
+  background-color: black;
+  border-radius: 100%;
+  -webkit-animation: sk-circleBounceDelay 0.5s infinite ease-in-out both;
+          animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
+}
+.sk-circle .sk-circle2 {
+  -webkit-transform: rotate(30deg);
+      -ms-transform: rotate(30deg);
+          transform: rotate(30deg); }
+.sk-circle .sk-circle3 {
+  -webkit-transform: rotate(60deg);
+      -ms-transform: rotate(60deg);
+          transform: rotate(60deg); }
+.sk-circle .sk-circle4 {
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg); }
+.sk-circle .sk-circle5 {
+  -webkit-transform: rotate(120deg);
+      -ms-transform: rotate(120deg);
+          transform: rotate(120deg); }
+.sk-circle .sk-circle6 {
+  -webkit-transform: rotate(150deg);
+      -ms-transform: rotate(150deg);
+          transform: rotate(150deg); }
+.sk-circle .sk-circle7 {
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg); }
+.sk-circle .sk-circle8 {
+  -webkit-transform: rotate(210deg);
+      -ms-transform: rotate(210deg);
+          transform: rotate(210deg); }
+.sk-circle .sk-circle9 {
+  -webkit-transform: rotate(240deg);
+      -ms-transform: rotate(240deg);
+          transform: rotate(240deg); }
+.sk-circle .sk-circle10 {
+  -webkit-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+          transform: rotate(270deg); }
+.sk-circle .sk-circle11 {
+  -webkit-transform: rotate(300deg);
+      -ms-transform: rotate(300deg);
+          transform: rotate(300deg); }
+.sk-circle .sk-circle12 {
+  -webkit-transform: rotate(330deg);
+      -ms-transform: rotate(330deg);
+          transform: rotate(330deg); }
+.sk-circle .sk-circle2:before {
+  -webkit-animation-delay: -1.1s;
+          animation-delay: -1.1s; }
+.sk-circle .sk-circle3:before {
+  -webkit-animation-delay: -1s;
+          animation-delay: -1s; }
+.sk-circle .sk-circle4:before {
+  -webkit-animation-delay: -0.9s;
+          animation-delay: -0.9s; }
+.sk-circle .sk-circle5:before {
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s; }
+.sk-circle .sk-circle6:before {
+  -webkit-animation-delay: -0.7s;
+          animation-delay: -0.7s; }
+.sk-circle .sk-circle7:before {
+  -webkit-animation-delay: -0.6s;
+          animation-delay: -0.6s; }
+.sk-circle .sk-circle8:before {
+  -webkit-animation-delay: -0.5s;
+          animation-delay: -0.5s; }
+.sk-circle .sk-circle9:before {
+  -webkit-animation-delay: -0.4s;
+          animation-delay: -0.4s; }
+.sk-circle .sk-circle10:before {
+  -webkit-animation-delay: -0.3s;
+          animation-delay: -0.3s; }
+.sk-circle .sk-circle11:before {
+  -webkit-animation-delay: -0.2s;
+          animation-delay: -0.2s; }
+.sk-circle .sk-circle12:before {
+  -webkit-animation-delay: -0.1s;
+          animation-delay: -0.1s; }
 
-
-function makeListElement() {
-  console.log('hihihi');
+@-webkit-keyframes sk-circleBounceDelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  } 40% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 
+@keyframes sk-circleBounceDelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  } 40% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+.modify {
+	 display: none;
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js" integrity="sha512-NOqkPURPEeHGvb+6NAzb8hfxqUh9XvuaCDP+FevWSPM5a9yD8eLTVCwDzHh0G+mDRXH044rGtMKxyaDncAW4cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+// 선택한 userid 저장용도임
+moment.locale('ko');
+var users = [];
+var page = 2;
+var endflag = false;
+
+var isLoading = false;
+
+function leaveChatRoom() {
+	
+	var leave = confirm('채팅 나가기.\n 채팅을 나갈경우 다시들어올 수 없습니다.')
+	
+	if(leave){
+		$.ajax({
+		    url: "/foodstagram/chat/leaveChatRoom.do", // 호출할 주소
+		    type: "post",
+		    data: { userid: '${loginMember.userid}',
+		    		chat_room_id: '${selectedRoom.chat_room_id}'}, // 넘길 데이터
+		    dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
+		    success: function(data) {
+		    	alert('채팅방 나가기 성공, 방목록으로 이동');
+		    	location.href='/foodstagram/chat/rooms';
+		    },
+		    error: function () {
+	        }
+		});
+		
+
+	}
+}
+
+function titleEdit() {
+	var ttle= prompt('채팅방 이름 변경');
+	console.log(ttle);
+	$.ajax({
+	    url: "/foodstagram/chat/roomTitleEdit.do", // 호출할 주소
+	    type: "post",
+	    data: { title: ttle,
+	    		chat_room_id: '${selectedRoom.chat_room_id}'}, // 넘길 데이터
+	    dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
+	    success: function(data) {
+	    	$('#title').html(ttle);
+	    	$('#title2').html(ttle);
+	    },
+	    error: function () {
+        }
+	});
+}
+
+function deleteMessage() {
+	
+	let dgo = confirm('메시지 전송을 취소하시겠어요?\n메시지 전송을 취소하면 모든 사람에게 보낸 메시지가 삭제됩니다.\n상대방이 이미 메시지를 확인했을 수 있습니다.');
+	console.log($(this).parent().parent().parent().parent().parent().parent());
+	var dmg = $(this).closest('.mButton').parent();
+	console.log(dmg);
+	if(dgo){
+		$.ajax({
+		    url: "/foodstagram/chat/deleteMessage.do", // 호출할 주소
+		    type: "post",
+		    data: { cm_no: $(this).val() }, // 넘길 데이터
+		    dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
+		    success: function(data) {
+				dmg.remove();
+		    },
+		    error: function () {
+	        }
+		});
+	}
+}
 
 
 function visibleUsers() {
@@ -108,16 +299,43 @@ function enterkey() {
 				var str = '';
 				console.log(content.create_date);
 				console.log(Date(content.create_date));
+				
 				if (writer === userid) { //보낸사람이 나임
 					str = `<div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
 					    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abak _abbi _abcm">
 				        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" style="height: 24px; width: 24px;"></div>
 				    </div>
-				    <div class="_ac72" role="listbox" tabindex="0">
+				    <div class="mButton _ac72" role="listbox" tabindex="0">
 				        <div class="x78zum5 xdt5ytf">
 				            <div class="_acd2 _acd3">
 				                <div class="_acqt _acqv" role="listbox" tabindex="0">
-				                    <div class=" _ac1n">
+				                <button class="modify _abl-" type="button">
+		                        <div class="_abm0 _abm1"><svg aria-label="전송 취소" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+		                                <circle cx="12" cy="12" r="1.5"></circle>
+		                                <circle cx="6" cy="12" r="1.5"></circle>
+		                                <circle cx="18" cy="12" r="1.5"></circle>
+		                            </svg></div>
+		                        <div class="_abm0 _abl_"><svg aria-label="전송 취소" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
+		                        		<circle cx="12" cy="12" r="1.5"></circle>
+		                                <circle cx="6" cy="12" r="1.5"></circle>
+		                                <circle cx="18" cy="12" r="1.5"></circle>
+		                            </svg></div>
+		                    </button>
+		                    <div class="modify _acqw _acqx">
+		                        <div aria-hidden="true" class="_abw6 _abw7 _abwc _abwa">
+		                            <div class="_abwe _ae-l" style="left: calc(50% - 20px);">
+		                                <div class="_ad8p _abwa"></div>
+		                            </div>
+		                            <div class="_abwm">
+		                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm"><button id="deleteButton" value="`+content.cm_no+`" class="_acan _aiit _acao _aija _acas _aj1-" type="button">
+		                                        <div class="_aacl _aaco _aacw _aad3 _aad6 _aadc _aade">전송 취소</div>
+		                                    </button></div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="modify" style="color: #8e8e8e; padding-right: 3px;">`+moment(new Date(content.create_date)).format('YYYY-MM-DD HH:mm:ss')+`</div>    
+				                
+				                <div class=" _ac1n">
 				                        <div class=" _ac1q _ac1r _ac1v _ac1w">
 				                            <div role="button" class="_aa06" tabindex="-1">
 				                                <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9p  _ab9- _abaa _abcm" style="min-height: 44px;">
@@ -140,11 +358,20 @@ function enterkey() {
 						<div class="_aacl _aacn _aacu _aacy _aada">`+content.username+`</div>
 						</div>`;
 					str += `<div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
-						<div class="_ac72" role="listbox" tabindex="0">
+						<div class="mButton _ac72" role="listbox" tabindex="0">
 					    <div class="x78zum5 xdt5ytf">
 					        <div class=" _acd3">
 					            <div class="_acqt _acqu" role="listbox" tabindex="0">
-					                <div class=" _ac1n">
+					            <div class="modify"><svg aria-label="전송 취소" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="20" role="img"  width="180">
+			                    <text x="10" y="20">`+moment(new Date(content.create_date)).format('YYYY-MM-DD HH:mm:ss')+`</text>
+			                </svg></div>
+			        
+			        <div class="_acqw _acqy">
+			            <div aria-hidden="true" class="_abw6 _abw7 _abwc _abwa">
+			                <div class="_abwe _ae-l" style="left: calc(-50% + 20px);">
+			                    <div class="_ad8p _abwa"></div>
+			                </div></div></div>
+					            	<div class=" _ac1n">
 					                    <div class=" _ac1r _ac1w">
 					                        <div role="button" class="_aa06" tabindex="-1">
 					                            <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9p  _ab9- _abaa _abcm" style="min-height: 44px;">
@@ -226,10 +453,10 @@ function enterkey() {
                                             <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" style="width: 100%;"><button aria-label="계정 전환 - tjgyqo2" class="_acan _acao _acas" type="button" tabindex="0">
                                                     <div class="_ab8w  _ab94 _ab97 _ab9h _ab9k _ab9p _abcm" style="width: 100%;">
                                                         <div class="_abyj">
-                                                            <div class="_aacl _aacp _aacw _aacx _aada _aade">tjgyqo2</div>
+                                                            <div class="_aacl _aacp _aacw _aacx _aada _aade">${ loginMember.userid }</div>
                                                         </div>
                                                         <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _ab9y _aba8 _abcm"><span style="display: inline-block; transform: rotate(180deg);"><svg aria-label="아래쪽 V자형 아이콘" class="_ab6-" color="#262626" fill="#262626" height="20" role="img" viewBox="0 0 24 24" width="20">
-                                                                    <path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path>
+                                                                    
                                                                 </svg></span></div>
                                                     </div>
                                                 </button></div>
@@ -259,22 +486,36 @@ function enterkey() {
                                                     	</c:if>
                                                         <div class="_abm4"><a class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz _a6hd" href="/foodstagram/chat/room?roomId=${room.chat_room_id}" role="link" tabindex="0">
                                                                 <div aria-labelledby="f31ad56cacbb6a4 f3baa4da491f23 f2889a7ac87d5a f3c41205ec58798" class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _ab9_ _aba8 _abcm">
+                                                                    <c:if test="${room.participants.size() <= 2}">
                                                                     <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbj _abcm">
                                                                         <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 56px; height: 56px;"><img alt="tjgyqo2님의 프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span></div>
                                                                     </div>
+                                                                    </c:if>
+                                                                    
+                                                                    <c:if test="${room.participants.size() > 2}">
+                                                                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbj _abcm">
+																	    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abcj _abcm" style="height: 56px; width: 56px;"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 40px; height: 40px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span>
+																	        <div class="_aa2p _aa2q">
+																	            <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 40px; height: 40px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span></div>
+																	        </div>
+																	    </div>
+																	</div>
+                                                                    </c:if>
+                                                                    
+                                                                    
                                                                     <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9o _abcm">
                                                                         <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" id="f3baa4da491f23">
                                                                             <div class="_aacl _aaco _aacu _aacx _aada">
                                                                                 <div class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p _abcm">
                                                                                     <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9q _ab9s _abcm">
-                                                                                        <div class="_aacl _aaco _aacu _aacx _aada">${room.title}</div>
+                                                                                        <div id="title2" class="_aacl _aaco _aacu _aacx _aada">${room.title}</div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abb- _abcm" id="f2889a7ac87d5a">
                                                                             <div class="_aacl _aaco _aacu _aacy _aada">
-                                                                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9k _ab9p _abcm"><span class="_ab6a"><span class="_aacl _aaco _aacu _aacy _aad7">ㅁㄴㅇㄹㄴㅁㅇㄹㄴ</span></span><span class="_ab68 _ac6e _ac6f _ac6h">·</span><time class="_ab69" datetime="2022-10-28T07:58:51.863Z" title="10월 28, 2022">5주</time></div>
+                                                                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9k _ab9p _abcm"><span class="_ab6a"><span class="_aacl _aaco _aacu _aacy _aad7"></span></span><span class="_ab68 _ac6e _ac6f _ac6h"></span><time class="_ab69" datetime="2022-10-28T07:58:51.863Z" title="10월 28, 2022"></time></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -299,35 +540,40 @@ function enterkey() {
 								            <div class="_aa4m _aa4n"></div>
 								            <div class="_aa4o">
 								                <div class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p _abcm" style="width: 100%;">
+								                
+								                	<c:if test="${ selectedRoom.participants.size() > 2 }">
 								                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abb0 _abbz _abcm"><button class="_acan _aiit _acao _aija _acas _aj1-" type="button">
-								                            <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abcj _abcm" style="height: 32px; width: 32px;"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 20px; height: 20px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span>
+								                            <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abcj _abcm" style="height: 32px; width: 32px;">
+								                            <span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 20px; height: 20px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span>
 								                                <div class="_aa2p _aa2r">
 								                                    <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 20px; height: 20px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span>
-								                                        <div class="_aah4 _aah7"></div>
+								                                        
 								                                    </div>
 								                                </div>
 								                            </div>
 								                        </button></div>
-								                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9q  _abb1 _abcm" style="min-width: 0px;"><button class="_acan _aiit _acao _aija _acaq _acat _aj1-" type="button">
+								                     </c:if>  
+								                     <c:if test="${ selectedRoom.participants.size() <= 2 }"> 
+								                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abb0 _abcm"><button class="_acan _aiit _acao _aija _acas _aj1-" type="button">
+												            <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 24px; height: 24px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span></div>
+												        </button></div>
+								                       </c:if> 
+								                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9q  _abb1 _abcm" style="min-width: 0px;">
+								                    <button class="_acan _aiit _acao _aija _acaq _acat _aj1-" type="button" onclick="titleEdit();">
 								                            <div class="_ab8w  _ab94 _ab95 _ab9h _ab9m _ab9p _abcm" style="height: 40px;">
 								                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9k _ab9p _abcm">
-								                                    <div class="_aacl _aacp _aacw _aacx _aada">${ selectedRoom.title }</div>
+								                                    <div id="title" class="_aacl _aacp _aacw _aacx _aada">${ selectedRoom.title }</div>
 								                                </div>
 								                                <div class="_ab8w  _ab94 _ab95 _ab9f _ab9m _ab9p  _abb- _abcm">
-								                                    <div class="_aacl _aacn _aacu _aacy _aad6">활동메시지</div>
+								                                    <div class="_aacl _aacn _aacu _aacy _aad6"></div>
 								                                </div>
 								                            </div>
 								                        </button></div>
 								                </div>
 								            </div>
 								            <div class="_aa4m _aa4p">
-								                <button class="_abl-" type="button">
-								                    <div class="_abm0"><svg aria-label="대화 상세 정보 보기" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-								                            <circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
-								                            <circle cx="11.819" cy="7.709" r="1.25"></circle>
-								                            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line>
-								                            <polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
-								                        </svg></div>
+								                <button class="_abl-" type="button" onclick="leaveChatRoom();">
+								                    <div class="_abm0"><img src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/24/null/external-exit-essentials-tanah-basah-basic-outline-tanah-basah-2.png"/>나가기</div>
 								                </button></div>
 								        </div>
 								    </div>
@@ -338,7 +584,20 @@ function enterkey() {
 							        <div class="_ab8w  _ab94 _ab99 _ab9g _ab9m _ab9o _abcm" style="height: 100%; width: 100%;">
 							        <!-- 실제 채팅시작부분 -->
 							            <div class="_ab5z _ab5_" id="scroll">
-							            	<p id="observer">상단에 오셨네요. 더가져와볼게요</p>
+								            <div id="observer" class="sk-circle">
+											  <div class="sk-circle1 sk-child"></div>
+											  <div class="sk-circle2 sk-child"></div>
+											  <div class="sk-circle3 sk-child"></div>
+											  <div class="sk-circle4 sk-child"></div>
+											  <div class="sk-circle5 sk-child"></div>
+											  <div class="sk-circle6 sk-child"></div>
+											  <div class="sk-circle7 sk-child"></div>
+											  <div class="sk-circle8 sk-child"></div>
+											  <div class="sk-circle9 sk-child"></div>
+											  <div class="sk-circle10 sk-child"></div>
+											  <div class="sk-circle11 sk-child"></div>
+											  <div class="sk-circle12 sk-child"></div>
+											</div>
 							                <div id="msgArea">
 											<c:forEach var="m" items="${mlist}" varStatus="status">
 											<c:if test="${ m.userid eq loginMember.userid }"> <!-- 본인인경우 -->
@@ -346,10 +605,35 @@ function enterkey() {
 						                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abak _abbi _abcm">
 						                        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" style="height: 24px; width: 24px;"></div>
 						                        </div>
-						                    <div class="_ac72" role="listbox" tabindex="0">
+						                    <div class="mButton _ac72" role="listbox" tabindex="0">
 						                        <div class="x78zum5 xdt5ytf">
 						                            <div class="_acd2 _acd3">
 						                                <div class="_acqt _acqv" role="listbox" tabindex="0">
+						                                <button class="modify _abl-" type="button">
+		                        <div class="_abm0 _abm1"><svg aria-label="전송 취소" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+		                                <circle cx="12" cy="12" r="1.5"></circle>
+		                                <circle cx="6" cy="12" r="1.5"></circle>
+		                                <circle cx="18" cy="12" r="1.5"></circle>
+		                            </svg></div>
+		                        <div class="_abm0 _abl_"><svg aria-label="전송 취소" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
+		                        		<circle cx="12" cy="12" r="1.5"></circle>
+		                                <circle cx="6" cy="12" r="1.5"></circle>
+		                                <circle cx="18" cy="12" r="1.5"></circle>
+		                            </svg></div>
+		                    </button>
+		                    <div class="modify _acqw _acqx">
+		                        <div aria-hidden="true" class="_abw6 _abw7 _abwc _abwa">
+		                            <div class="_abwe _ae-l" style="left: calc(50% - 20px);">
+		                                <div class="_ad8p _abwa"></div>
+		                            </div>
+		                            <div class="_abwm">
+		                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm"><button id="deleteButton" value="${ m.cm_no }" class="_acan _aiit _acao _aija _acas _aj1-" type="button">
+		                                        <div class="_aacl _aaco _aacw _aad3 _aad6 _aadc _aade">전송 취소</div>
+		                                    </button></div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="modify" style="color: #8e8e8e; padding-right: 3px;"><fmt:formatDate value="${m.create_date }" pattern="YYYY-MM-dd HH:mm:ss"/></div> 
 						                                    <div class=" _ac1n">
 						                                        <div class=" _ac1q _ac1r _ac1v _ac1w">
 						                                            <div role="button" class="_aa06" tabindex="-1">
@@ -363,10 +647,19 @@ function enterkey() {
 					                        <div class="_aacl _aacn _aacu _aacy _aada">${ m.username }</div>
 					                        </div>
 					                        <div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
-					                        <div class="_ac72" role="listbox" tabindex="0">
+					                        <div class="mButton _ac72" role="listbox" tabindex="0">
 					                        <div class="x78zum5 xdt5ytf">
 					                            <div class=" _acd3">
 					                                <div class="_acqt _acqu" role="listbox" tabindex="0">
+					                                <div class="modify"><svg aria-label="전송 취소" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="20" role="img"  width="180">
+			                    <text x="10" y="20"><fmt:formatDate value="${m.create_date }" pattern="YYYY-MM-dd HH:mm:ss"/></text>
+			                </svg></div>
+			        
+			        <div class="_acqw _acqy">
+			            <div aria-hidden="true" class="_abw6 _abw7 _abwc _abwa">
+			                <div class="_abwe _ae-l" style="left: calc(-50% + 20px);">
+			                    <div class="_ad8p _abwa"></div>
+			                </div></div></div>
 					                                    <div class=" _ac1n">
 					                                        <div class=" _ac1r _ac1w">
 					                                            <div role="button" class="_aa06" tabindex="-1">
@@ -386,11 +679,7 @@ function enterkey() {
 							        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm">
 							            <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _ab9_ _abab _abcm">
 							                <div class="_acrb">
-							                    <div><button class="_abl-" type="button">
-							                            <div class="_abm0"><svg aria-label="이모티콘" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-							                                    <path d="M15.83 10.997a1.167 1.167 0 1 0 1.167 1.167 1.167 1.167 0 0 0-1.167-1.167Zm-6.5 1.167a1.167 1.167 0 1 0-1.166 1.167 1.167 1.167 0 0 0 1.166-1.167Zm5.163 3.24a3.406 3.406 0 0 1-4.982.007 1 1 0 1 0-1.557 1.256 5.397 5.397 0 0 0 8.09 0 1 1 0 0 0-1.55-1.263ZM12 .503a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12 .503Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Z"></path>
-							                                </svg></div>
-							                        </button></div>
+							                    
 							                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9o  _abbh _abcm"><textarea id="msg" placeholder="메시지 입력..." class="" style="height: 18px !important;"></textarea></div>
 							                    <!-- <button class="_abl-" type="button">
 							                        <div class="_abm0"><svg aria-label="사진 또는 동영상 추가" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
@@ -620,7 +909,7 @@ $(function (){
 		    data: { userList: users.toString() }, // 넘길 데이터
 		    dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
 		    success: function(data) {
-		    	alert("DM방 생성완료.");
+		    	//alert("DM방 생성완료.");
 		    	location.href='/foodstagram/chat/room?roomId='+data.uuid;
 		    },
 		    error: function () {
@@ -635,16 +924,204 @@ $(function (){
 	
 	let count = 0;
 	let timer;
+	
+	// IntersectionObserver의 options를 설정합니다.
+	const options = {
+	  root: null,
+	  // 타겟 이미지 접근 전 이미지를 불러오기 위해 rootMargin을 설정했습니다.
+	  rootMargin: '0px 0px 30px 0px',
+	  threshold: 0
+	}
+	function makeListElement() {
+		  
+		 
+		  var before = $('#msgArea').height();
+		  console.log('hihihi' + before);
+		  
+		  $.ajax({
+			    url: "/foodstagram/chat/getNextChat.do/"+page, // 호출할 주소
+			    type: "get",
+			    data: { id: '${selectedRoom.chat_room_id}' }, // 넘길 데이터
+			    dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
+			    success: function(data) {
+			    	//alert("봐라" + data);
+			    	console.log('page : '+page++);
+			    	//location.href='/foodstagram/chat/room?roomId='+data.uuid;
+			    	console.log(data.length); // 20개가 아니면 마지막인것
+			    	if(data.length != 20){
+			    		endflag=true;
+			    		$('.sk-circle').toggleClass();
+			    	}
+			    	
+					for(i=0; i<data.length; i++){
+						if (data[i].userid === '${loginMember.userid}') { //보낸사람이 나임
+							str = `<div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
+							    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abak _abbi _abcm">
+						        <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" style="height: 24px; width: 24px;"></div>
+						    </div>
+						    <div class="mButton _ac72" role="listbox" tabindex="0">
+						        <div class="x78zum5 xdt5ytf">
+						            <div class="_acd2 _acd3">
+						                <div class="_acqt _acqv" role="listbox" tabindex="0">
+				                <button class="modify _abl-" type="button">
+		                        <div class="_abm0 _abm1"><svg aria-label="전송 취소" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
+		                                <circle cx="12" cy="12" r="1.5"></circle>
+		                                <circle cx="6" cy="12" r="1.5"></circle>
+		                                <circle cx="18" cy="12" r="1.5"></circle>
+		                            </svg></div>
+		                        <div class="_abm0 _abl_"><svg aria-label="전송 취소" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24">
+		                        		<circle cx="12" cy="12" r="1.5"></circle>
+		                                <circle cx="6" cy="12" r="1.5"></circle>
+		                                <circle cx="18" cy="12" r="1.5"></circle>
+		                            </svg></div>
+		                    </button>
+		                    <div class="modify _acqw _acqx">
+		                        <div aria-hidden="true" class="_abw6 _abw7 _abwc _abwa">
+		                            <div class="_abwe _ae-l" style="left: calc(50% - 20px);">
+		                                <div class="_ad8p _abwa"></div>
+		                            </div>
+		                            <div class="_abwm">
+		                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm"><button id="deleteButton" value="`+data[i].cm_no+`" class="_acan _aiit _acao _aija _acas _aj1-" type="button">
+		                                    <div class="_aacl _aaco _aacw _aad3 _aad6 _aadc _aade">전송 취소</div>
+		                                    </button></div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="modify" style="color: #8e8e8e; padding-right: 3px;">`+moment(new Date(data[i].create_date)).format('YYYY-MM-DD HH:mm:ss')+`</div>
+						               <div class=" _ac1n">
+						                        <div class=" _ac1q _ac1r _ac1v _ac1w">
+						                            <div role="button" class="_aa06" tabindex="-1">
+						                                <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9p  _ab9- _abaa _abcm" style="min-height: 44px;">
+						                                    <div class="_aacl _aaco _aacu _aacx _aad9 _aadf">
+						                                        <div class="_aacl _aaco _aacu _aacx _aad6 _aade">`+data[i].message+`</div>
+						                                    </div>
+						                                </div>
+						                            </div>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>`;
+							$('#msgArea').prepend(str);
+							//$("#msgArea").html($("#msgArea").html() + str);
 
-
+						} else { // 보낸사람이 내가아님
+							str = `<div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
+								<div class="_aacl _aacn _aacu _aacy _aada">`+data[i].username+`</div>
+								</div>`;
+							str += `<div class="_ab8w  _ab94 _ab96 _ab9f _ab9k _ab9p _abcm">
+								<div class="mButton _ac72" role="listbox" tabindex="0">
+							    <div class="x78zum5 xdt5ytf">
+							        <div class=" _acd3">
+							            <div class="_acqt _acqu" role="listbox" tabindex="0">
+						            
+					            	
+						            <div class="modify"><svg aria-label="전송 취소" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="20" role="img"  width="180">
+							                    <text x="10" y="20">`+moment(new Date(data[i].create_date)).format('YYYY-MM-DD HH:mm:ss')+`</text>
+							                </svg></div>
+							        
+							        <div class="_acqw _acqy">
+							            <div aria-hidden="true" class="_abw6 _abw7 _abwc _abwa">
+							                <div class="_abwe _ae-l" style="left: calc(-50% + 20px);">
+							                    <div class="_ad8p _abwa"></div>
+							                </div>
+							                <div class="_abwm">
+							                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbi _abcm"><button class="_acan _aiit _acao _aija _acau _aj1-" type="button">좋아요</button></div>
+							                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbi _abcm"><button class="_acan _aiit _acao _aija _acau _aj1-" type="button">복사</button></div><button class="_acan _aiit _acao _aija _acau _aj1-" type="button">신고</button>
+							                </div>
+							            </div>
+							        </div>
+							                <div class=" _ac1n">
+							                    <div class=" _ac1r _ac1w">
+							                        <div role="button" class="_aa06" tabindex="-1">
+							                            <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9p  _ab9- _abaa _abcm" style="min-height: 44px;">
+							                                <div class="_aacl _aaco _aacu _aacx _aad9 _aadf">
+							                                    <div class="_aacl _aaco _aacu _aacx _aad6 _aade">`+data[i].message+`</div>
+							                                </div>
+							                            </div>
+							                        </div>
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+							</div>`;
+							$('#msgArea').prepend(str);
+							//$("#msgArea").html($("#msgArea").html() + str);
+						}
+						
+						
+					}
+					var after = $('#msgArea').height();
+					console.log(after);
+					$('#scroll').scrollTop(after-before+45);
+			    },
+			    error: function () {
+		           /// handle upload error
+		           /// ...
+		        }
+			});
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  }
+		  //var temp2 = $('#scroll')[0].scrollTop();
+		  
+		
+	
+	
 	const observer = document.getElementById('observer');
-	const io = new IntersectionObserver((entries) => {
+	const io = new IntersectionObserver(function (entries, observer) {
 	  clearTimeout(timer);
 	  if (entries[0].isIntersecting) {
-	    timer = setTimeout(() => makeListElement(), 1000);
-	  }
-	});
+		if(endflag){
+			observer.unobserve(entries[0].target);
+		} else {
+	    	timer = setTimeout(() => makeListElement(), 1200);
+		}
+	}
+
+	}, options);
+	
 	io.observe(observer);
+	
+	
+	$(document).on('mouseenter','.mButton',function(){
+		$(this).find('.modify').show();
+	});
+	$(document).on('mouseleave','.mButton',function(){
+		$(this).find('.modify').hide();
+	});
+	
+	//메세지 클릭
+	$(document).on('click','.modify._abl-',function(){
+		console.log('cl')
+		const a = $(this).next().children('div._abw6._abw7._abwc._abwa')[0];
+		
+		console.log(a)
+		$(a).attr('aria-hidden', 'false');
+		console.log(a)
+		$(a).toggleClass();
+		$(a).toggleClass('_abw6 _abwc _abwa');
+		//a.attr('aria-hidden', 'false');_abw6 _abwc _abwa
+		//a.toggleClass('_abw6 _abwc _abwa');
+	});
+	$(document).on('blur','.modify._abl-',function(){
+		const a = $(this).next().children('div._abw6._abwc._abwa')[0];
+		$(a).attr('aria-hidden', 'true');
+		$(a).toggleClass();
+		$(a).toggleClass('_abw6 _abw7 _abwc _abwa');
+		//a.attr('aria-hidden', 'true');
+		//a.toggleClass('_abw6 _abw7 _abwc _abwa');	
+	});
+	$(document).on('click', '#deleteButton', deleteMessage);
 	
 });
 </script>

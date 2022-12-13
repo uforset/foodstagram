@@ -1,6 +1,7 @@
 package com.circle.foodstagram.chat.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,26 @@ public class ChatServiceImpl implements ChatService {
 	public List<ChatMessage> getChatRoomMessage(String RoomId) {
 		// TODO Auto-generated method stub
 		return chatMessageDao.getChatRoomMessage(RoomId);
+	}
+
+	@Override
+	public List<ChatMessage> getChatMessageRowLimitingClausePaging(Map<String, Object> map) {
+		return chatMessageDao.getChatMessageRowLimitingClausePaging(map);
+	}
+
+	@Override
+	public int deleteMessage(int cm_no) {
+		return chatMessageDao.deleteMessage(cm_no);
+	}
+
+	@Override
+	public int updateRoomTitle(ChatRoom room) {
+		return chatRoomDao.updateRoomTitle(room);
+	}
+
+	@Override
+	public int deleteChatRoomJoin(Map<String, Object> map) {
+		return chatRoomJoinDao.deleteChatRoomJoin(map);
 	}
 
 }

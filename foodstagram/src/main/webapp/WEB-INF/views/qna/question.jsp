@@ -46,7 +46,7 @@ $(function(){
 					FOODSTAGRAM 이용 중 궁금하시거나<br class="m-br"> 불편하신 내용을 남겨주시면,<br>
 					전문상담원이 친절하게 안내해드립니다.
 				</strong>
-				<p>(평일 운영시간 : 09:00 ~ 18:00 /<br class="m-br"> 주말, 공휴일 휴무)</p>
+				<!-- <p>(평일 운영시간 : 09:00 ~ 18:00 /<br class="m-br"> 주말, 공휴일 휴무)</p> -->
 				<div class="btn-wrap">
 										<button type="button" class="btn-type1 min-w primary m-w100p" onclick="location.href='questionReg.do'">1:1 문의</button>
 															
