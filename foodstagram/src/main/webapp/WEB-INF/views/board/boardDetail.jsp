@@ -419,7 +419,7 @@ $('#aibutton').click(function () {
         var sliderWidth = liWidth * slideLis.length;
         slider.style.width = sliderWidth + "px";
         /* 리스너 설치하기 */
-        let currentIdx = 0; // 슬라이드 현재 번호
+        // let currentIdx = 0; // 슬라이드 현재 번호
         let translate = 0; // 슬라이드 위치 값
         moveButton.addEventListener('click', moveSlide);
 
