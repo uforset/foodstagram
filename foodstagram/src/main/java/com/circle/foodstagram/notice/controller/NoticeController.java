@@ -1,7 +1,5 @@
 package com.circle.foodstagram.notice.controller;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,13 +21,12 @@ import com.circle.foodstagram.common.AttachUtils;
 import com.circle.foodstagram.common.Paging;
 import com.circle.foodstagram.common.SearchDate;
 import com.circle.foodstagram.common.SearchPaging;
-import com.circle.foodstagram.common.attach.model.service.AttachService;
-import com.circle.foodstagram.common.attach.model.vo.Attach;
 import com.circle.foodstagram.member.model.vo.Member;
+import com.circle.foodstagram.notice.model.service.NoticeAttachService;
 import com.circle.foodstagram.notice.model.service.NoticeService;
 import com.circle.foodstagram.notice.model.vo.Notice;
+import com.circle.foodstagram.notice.model.vo.NoticeAttach;
 import com.circle.foodstagram.notification.model.service.NotificationService;
-import com.circle.foodstagram.qna.model.vo.Question;
 
 import lombok.extern.log4j.Log4j;
 
@@ -47,7 +42,7 @@ public class NoticeController {
 	private AttachUtils attachUtils;
 
 	@Autowired
-	private AttachService attachService;
+	private NoticeAttachService noticeAttachService;
 
 	@Autowired
 	private NotificationService notificationService;
@@ -304,14 +299,14 @@ public class NoticeController {
 			// 삭제를위해 첨부파일들 가져오는 작업
 			notice = noticeService.selectNotice(notice.getNoticeno()); 
 			// 가져옴.
-			List<Attach> attaches = notice.getAttaches();
+			List<NoticeAttach> attaches = notice.getAttaches();
 			log.info(attaches);
 			//첨부파일이 있을경우 삭제
 			if (attaches !=null && attaches.size() > 0) {
 				// 저장된 파일 삭제처리	getDeletAtchNoList() 첨부파일들을 삭제하고 삭제한 기본키를 리스트로 리턴함(서버에서 파일삭제)
-				List<Integer> atchNoList = attachUtils.getDeletAtchNoList(attaches, "notice_upfiles", request);
+				List<Integer> atchNoList = attachUtils.getNoticedeletAtchNoList(attaches, "notice_upfiles", request);
 				for( int atch_no : atchNoList) {
-					attachService.deleteAttach(atch_no);	// DB에서 파일삭제
+					noticeAttachService.deleteAttach(atch_no);	// DB에서 파일삭제
 					log.info(atch_no + "번 첨부파일 DB제거완료.");
 				} 
 			}// 첨부파일 제거끝
@@ -344,9 +339,8 @@ public class NoticeController {
 			if (boFiles != null && boFiles.length > 0) {
 				// String savePath =
 				// request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
-				List<Attach> attaches = attachUtils.getAttachListByMultiparts(boFiles, "Notice", "notice_upfiles",
-						request);
-				// 실제로 파일경로에 선택된 파일 올리고 List<Attach> return (파일업로드)
+				List<NoticeAttach> attaches = attachUtils.getNoticeAttachListByMultiparts(boFiles, "notice_upfiles", request);
+				// 실제로 파일경로에 선택된 파일 올리고 List<NoticeAttach> return (파일업로드)
 				// (boFiles, 게시판, 폴더이름)
 				log.info(attaches);
 				notice.setAttaches(attaches);
@@ -367,13 +361,13 @@ public class NoticeController {
 			log.info("공지등록실패");
 			return "common/error";
 		}
-		List<Attach> attaches = notice.getAttaches();
+		List<NoticeAttach> attaches = notice.getAttaches();
 		int noticeno = notice.getNoticeno();
 		if (attaches != null && attaches.size() > 0) {
-			for (Attach a : attaches) { // 하나씩 db에 저장
+			for (NoticeAttach a : attaches) { // 하나씩 db에 저장
 				a.setAtch_parent_no(noticeno); // 저장한 게시글 번호 첨부파일vo에 세팅
 				log.info("db에 저장할 첨부파일 vo" + a);
-				if (attachService.insertAttach(a) > 0) {// 하나씩 db에 저장
+				if (noticeAttachService.insertAttach(a) > 0) {// 하나씩 db에 저장
 					log.info("성공!" + a);					
 				} else {
 
@@ -413,7 +407,7 @@ public class NoticeController {
 			Notice notice, Model model, HttpServletRequest request) {
 
 		// 공지사항 첨부파일 저장 폴더 경로 지정
-		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");
+		String savePath = request.getSession().getServletContext().getRealPath("resources");
 
 		// 잘가져옴. 이것을 이용해서 db에서 데이터 삭제시킨후 로컬서버에서도 첨부파일 삭제시키면됨
 		// for( int a_no : question.getDelAtchNos())
@@ -423,16 +417,16 @@ public class NoticeController {
 		// notice.getDelAtchNos() 수정중 삭제할파일이 있을경우 진행함.
 		if (notice.getDelAtchNos() != null && notice.getDelAtchNos().length > 0) { // 파일 삭제한경우
 			log.info("질문 수정중 첨부파일수정확인. 파일제거 시작");
-			List<Attach> attaches = new ArrayList<Attach>();
+			List<NoticeAttach> attaches = new ArrayList<NoticeAttach>();
 
 			for (int atch_no : notice.getDelAtchNos()) {
-				attaches.add(attachService.getAttach(atch_no)); // 하나씩 가져와서 List에 저장
+				attaches.add(noticeAttachService.getAttach(atch_no)); // 하나씩 가져와서 List에 저장
 			}
 
 			// 저장된 파일 삭제처리 getDeletAtchNoList() 첨부파일들을 삭제하고 삭제한 기본키를 리스트로 리턴함(서버에서 파일삭제)
-			List<Integer> atchNoList = attachUtils.getDeletAtchNoList(attaches, "notice_upfiles", request);
+			List<Integer> atchNoList = attachUtils.getNoticedeletAtchNoList(attaches, "notice_upfiles", request);
 			for (int atch_no : atchNoList) {
-				attachService.deleteAttach(atch_no); // DB에서 파일삭제
+				noticeAttachService.deleteAttach(atch_no); // DB에서 파일삭제
 				log.info(atch_no + "번 첨부파일 DB제거완료.");
 			}
 		}
@@ -441,21 +435,20 @@ public class NoticeController {
 			// 첨부파일이 있다면 등록함.
 			// 파일 로컬에 업로드
 			if (boFiles != null && boFiles.length > 0) {
-				List<Attach> attaches = attachUtils.getAttachListByMultiparts(boFiles, "Notice", "notice_upfiles",
-						request);
-				// 실제로 파일경로에 선택된 파일 올리고 List<Attach> return (파일업로드)
+				List<NoticeAttach> attaches = attachUtils.getNoticeAttachListByMultiparts(boFiles, "notice_upfiles", request);
+				// 실제로 파일경로에 선택된 파일 올리고 List<NoticeAttach> return (파일업로드)
 				// (boFiles, 게시판, 폴더이름)
 				log.info(attaches);
 				notice.setAttaches(attaches);
 
 				// DB에 저장
-				// List<Attach> attaches= notice.getAttaches();
+				// List<NoticeAttach> attaches= notice.getAttaches();
 				int noticeno = notice.getNoticeno();
 				if (attaches != null && attaches.size() > 0) {
-					for (Attach a : attaches) { // 하나씩 db에 저장
+					for (NoticeAttach a : attaches) { // 하나씩 db에 저장
 						a.setAtch_parent_no(noticeno); // 저장한 게시글번호 첨부파일vo에 세팅
 						log.info("db에저장할 첨부파일vo" + a);
-						if (attachService.insertAttach(a) > 0) {// 하나씩 db에 저장
+						if (noticeAttachService.insertAttach(a) > 0) {// 하나씩 db에 저장
 							log.info("성공! " + a);
 						} else {
 							log.info("실패..." + a);

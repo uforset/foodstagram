@@ -1,10 +1,8 @@
 package com.circle.foodstagram.notice.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
-
-import com.circle.foodstagram.common.attach.model.vo.Attach;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +28,6 @@ public class Notice implements Serializable {
 	private int readcount;
 	private int importance;
 	
-	private List<Attach> attaches ;      /*첨부파일 리스트    */ 
+	private List<NoticeAttach> attaches ;      /*첨부파일 리스트    */ 
 	private int[] delAtchNos;  			/*삭제를 위한 글 번호  */
 }

@@ -2,17 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<link href="/foodstagram/resources/css/reset.css">
+<link href="/foodstagram/resources/css/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/reset.css?v=1669255025">
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/swiper.min.css">
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/site.css?v=1669255025">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
 <style>
 /*Layout*/
 #wrap {
@@ -167,7 +169,7 @@ input.board_bt_style03 {
 .free_board th {
 	border-bottom: 1px solid #ddd;
 	padding: 15px 10px;
-	background: url("../notice_img/line_bg.gif") no-repeat center right;
+/* 	background: url("../notice_img/line_bg.gif") no-repeat center right; */
 }
 
 .free_board td, .free_board_view td {
@@ -239,7 +241,7 @@ input.board_bt_style03 {
 .free_board_view th {
 	border-bottom: 1px solid #ddd;
 	padding: 15px 8px;
-	background: url("../notice_img/line_bg.gif") no-repeat center right;
+	/* background: url("../notice_img/line_bg.gif") no-repeat center right; */
 	text-align: center;
 }
 
@@ -400,7 +402,7 @@ th.last_bg {
 							<th><img
 								src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_04.png"
 								border="0" alt="등록일 "></th>
-							<td class="board_data">${ notice.noticedate }</td>
+							<td><fmt:formatDate value="${ notice.noticedate }" pattern="yyyy-MM-dd" /></td>
 							<th><img
 								src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_06.png"
 								border="0" alt="조회수"></th>
@@ -425,24 +427,26 @@ th.last_bg {
 			</div>
 			<!-- END View -->
 			<table cellpadding="20px" cellspacing="0" class="pre_next" summary="">
-				<br>
+			<br>
 				<tbody>
 					<tr class="board_data">
-						<th><img src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_05.png"
+						<th style="width: 20"><img
+							src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_05.png"
 							width="41" height="14" border="0" alt="첨부파일"></th>
 						<td>
 							<c:forEach var="f" items="${ notice.attaches }" varStatus="st">
-								<div> 파일 ${st.count} <a href="<c:url value='/attachDownload.do/${f.atch_no}' />" target="_blank"> 
-						        <span class="glyphicon glyphicon-save" aria-hidden="true"></span> ${f.atch_original_name}
-						        </a> Size : ${f.atch_fancy_size} Down : ${f.atch_down_hit}
+								<div> &nbsp;&nbsp;&nbsp;&nbsp;파일 ${st.count} <a href="<c:url value='/noticeAttachDownload.do/${f.atch_no}' />" target="_blank"> 
+						        &nbsp;${f.atch_original_name}
+						      	 </a> (Size : ${f.atch_fancy_size} Down : ${f.atch_down_hit})
 						        </div>
 								</c:forEach>
 						</td>
-						</tr>
-						</tbody>
-						</table>
-						</div>
-						</div>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			</div>
+			
 	<!--END Board-->
 
 	<!-- Footer Start -->

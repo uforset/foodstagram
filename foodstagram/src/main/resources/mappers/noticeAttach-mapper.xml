@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="noticeAttachMapper">
+
+	<resultMap type="NoticeAttach" id="resultNoticeAttach">
+		<id column="atch_no" property="atch_no" />
+		<result column="atch_parent_no" property="atch_parent_no" />
+		<result column="atch_file_name" property="atch_file_name" />
+		<result column="atch_original_name" property="atch_original_name" />
+		<result column="atch_file_size" property="atch_file_size" />
+		<result column="atch_fancy_size" property="atch_fancy_size" />
+		<result column="atch_content_type" property="atch_content_type" />
+		<result column="atch_path" property="atch_path" />
+		<result column="atch_down_hit" property="atch_down_hit" />
+		<result column="atch_reg_date" property="atch_reg_date" />
+	</resultMap>
+	
+	<insert id="insertAttach" parameterType="NoticeAttach">
+	insert into noticeAttach (atch_no,
+				atch_parent_no,
+				atch_file_name,
+				atch_original_name,
+				atch_file_size,
+				atch_fancy_size,
+				atch_content_type,
+				atch_path,
+				atch_down_hit,
+				atch_reg_date)
+	values (default,
+			#{atch_parent_no},
+			#{atch_file_name},
+			#{atch_original_name},
+			#{atch_file_size},
+			#{atch_fancy_size},
+			#{atch_content_type},
+			#{atch_path},
+			0,
+			default)
+	</insert>
+	
+	<select id="selectAttachList" parameterType="_int" resultMap="resultNoticeAttach">
+		select *
+		from	noticeattach
+		where	atch_parent_no = #{noticeno}
+	</select>
+	
+	<select id="getAttachListByParent" parameterType="NoticeAttach" resultType="NoticeAttach">
+		select atch_no
+			, atch_file_name
+	        , atch_original_name
+	        , atch_fancy_size
+	        , atch_down_hit
+	        , TO_CHAR(atch_reg_date, 'YYYY.MM.DD') AS atch_reg_date
+	    FROM  noticeattach
+	   WHERE  atch_parent_no = #{atch_parent_no}
+	</select>
+	
+	<select id="getAttach" parameterType="int" resultType="NoticeAttach">
+		select * from noticeattach where atch_no = #{atch_no}
+	</select>
+	
+	<delete id="deleteAttach" parameterType="int">
+		delete from noticeattach where atch_no = #{atch_no}
+	</delete>
+	
+	<update id="increaseDownHit" parameterType="int">
+		update noticeattach 
+		set atch_down_hit = atch_down_hit +1 
+		where atch_no = #{atch_no}
+	</update>
+	
+</mapper>
+

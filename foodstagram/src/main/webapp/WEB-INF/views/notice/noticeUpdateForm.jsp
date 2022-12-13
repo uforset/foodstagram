@@ -159,7 +159,7 @@ input::tbox {
 	</tr>	
 	<tr>
 	<th>첨부파일</th>
-		<td>
+		<td class="file_area">
 		<!-- 원래 첨부파일이 있는 경우 -->
 			<%-- <c:if test="${ !empty notice.attaches }">
 				${ notice.attaches } &nbsp; 
@@ -194,6 +194,20 @@ input::tbox {
 	</tr>
 </table>
 </form>
+		<script>
+				// 상위객체를 통해 이벤트 위임  
+				$('.file_area').on('click','.btn_delete', function(){
+					$(this).closest('div').remove();
+				});
+				 
+				// 기존 첨부파일 삭제 클릭 
+				$('.btn_file_delete').click(function(){
+					$btn = $(this);
+					$btn.closest('div').html(
+							 '<input type="hidden" name="delAtchNos" value="' + $btn.data("atch-no")  + '" />'
+							); 
+				});   //
+				</script>
 </div>
 <br>
 </body>
