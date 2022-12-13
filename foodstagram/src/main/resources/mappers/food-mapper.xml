@@ -14,14 +14,14 @@
 		<result column="fat" property="fat" />
 	</resultMap>
 	
-	<select id="selectFoodAll" resultMap="resultFood">
+	<select id="selectFoodList" resultMap="resultFood">
 		select * from food
 		order by fno asc
 	</select>
 	
-	<select id="selectFood" parameterType="_int" resultType="Food">
+	<select id="selectFood" parameterType="String" resultType="Food">
 		select * from food
-		where fno = #{ fno }
+		where fname = #{ fname }
 	</select>
 	
 </mapper>

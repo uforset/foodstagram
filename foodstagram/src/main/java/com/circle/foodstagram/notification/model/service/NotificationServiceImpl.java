@@ -27,6 +27,11 @@ public class NotificationServiceImpl implements NotificationService{
 	@Override
 	public Notification selectNotification(String userid) {
 		return notificationDao.selectNotification(userid);
+	}
+
+	@Override
+	public int insertNotification(String userid) {
+		return notificationDao.insertNotification(userid);
 	}	
 	
 

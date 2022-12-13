@@ -132,6 +132,43 @@ i:hover {
 }
 li {list-style: none;}
 </style>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript">
+   $(function(){
+	   var memberid = "${member.userid}";
+	   var loginuserid = "${loginMember.userid}";
+	   var call = "";
+	   var userid;
+	   if(memberid === loginuserid){
+	      userid ="${loginMember.userid}";
+	   }else{
+	      userid ="${member.userid}";
+	   } 
+	   
+      $.ajax({
+         url: "/foodstagram/readCheck.do",
+         type: "get",
+         data: { userid: userid },
+         dataType: 'json',
+         success: function(data, jqXHR, textStatus){
+            //alert("readcheck : " + data.read);
+            if( data.read == "read" ) {
+               //
+            } else {
+               console.log("hi");
+               $("ol.navlist").append("<li class='noneRead'></li>");
+               
+            }
+         },
+         error: function(jqXHR, textStatus, errorThrown){
+            console.log("xxxxxxxxxxxxxxxxxxxx");
+            console.log(jqXHR + ", " + textStatus + ", " + errorThrown);
+         }
+      });
+   });
+   </script>
+    <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
+
     <script>
         function Change2() {
             var key = test2.value;
@@ -167,7 +204,7 @@ li {list-style: none;}
                     </li>
                     <li class="share">
                         <i class="fas fa-regular fa-chevron-down fa-1x" id="shareBtn">
-                            <div class="shareContent"><a href="#">로그아웃</a></div>
+                            <div class="shareContent"><a href="${ pageContext.servletContext.contextPath }/loginPage.do">로그아웃</a></div>
                         </i></a>
                     </li>
                 </ol>
@@ -176,7 +213,7 @@ li {list-style: none;}
             <li style="text-align: center;">
                 <span>
                     <select id="test2" onchange="Change2()"
-                        style="width: 95px;height:2.5rem; border:none; top:48px;text-align:center; right:308px;">
+                        style="width: 100px;height:2.5rem; border:none; top:48px;text-align:center; right:308px;">
                         <option value="1">음식 키워드</option>
                         <option value="2">다른 사용자</option>
                         <option value="3">여행지</option>
@@ -211,8 +248,10 @@ li {list-style: none;}
                 <ol class="navlist">
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
-                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
-                    <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
+                    <c:if test="${ empty sessionScope.sns }">
+	                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
+	                    <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
+	                    </c:if>
                     </c:if>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
                     <c:url var="callMyinfo" value="/myinfo.do">
@@ -226,32 +265,7 @@ li {list-style: none;}
             </li>
         </ul>
     </nav>
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
-    <script type="text/javascript">
-   $(function(){
-      $.ajax({
-         url: "/foodstagram/readCheck.do",
-         type: "get",
-         data: { userid: "${loginMember.userid}" },
-         dataType: 'json',
-         success: function(data, jqXHR, textStatus){
-            //alert("readcheck : " + data.read);
-            if( data.read == "read" ) {
-               //
-            } else {
-               console.log("hi");
-               $("ol.navlist").append("<li class='noneRead'></li>");
-               
-            }
-         },
-         error: function(jqXHR, textStatus, errorThrown){
-            console.log("xxxxxxxxxxxxxxxxxxxx");
-            console.log(jqXHR + ", " + textStatus + ", " + errorThrown);
-         }
-      });
-   });
-   </script>
-    <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

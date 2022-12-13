@@ -32,18 +32,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ArrayList<BoardAttach> selectListAll() {
-		return boardDao.selectListAll();
+	public ArrayList<BoardAttach> selectListAll(int page, int pageUnit) {
+		return boardDao.selectListAll(page, pageUnit);
 	}
 	
 	@Override
-	public ArrayList<BoardAttach> selectListMy(String userid) {
-		return boardDao.selectListMy(userid);
+	public ArrayList<BoardAttach> selectListMy(String userid, int page, int pageUnit) {
+		return boardDao.selectListMy(userid, page, pageUnit);
 	}
 	
 	@Override
-	public ArrayList<BoardAttach> selectListFriend(String userid) {
-		return boardDao.selectListFriend(userid);
+	public ArrayList<BoardAttach> selectListFriend(String userid, int page, int pageUnit) {
+		return boardDao.selectListFriend(userid, page, pageUnit);
 	}
 
 	@Override

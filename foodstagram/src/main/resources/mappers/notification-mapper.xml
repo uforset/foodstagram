@@ -30,4 +30,9 @@
 		select * from notification
 		where userid = #{ userid }
 	</select>
+	
+	<insert id="insertNotification" parameterType="string">
+		insert into notification (userid, n_readcheck)
+		values (#{ userid }, default )
+	</insert>
 </mapper>

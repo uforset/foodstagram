@@ -578,85 +578,76 @@ th.last_bg {
 									</a>
 								</c:if>
 							</ul>
-							<c:if test="${ empty action }">
-								<!-- 전체 목록 페이징 처리 -->
-
-									<!-- 페이지 표시 영역 -->
-									<!-- 1페이지로 이동 처리 -->
-									<div class="page">
-									<span>
-									<c:if test="${ currentPage eq 1 }">
-										<img
-											src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_l_end.gif">
-									</c:if>
-									<c:if test="${ currentPage > 1 }">
-										<c:url var="bl" value="/nlist.do">
-											<c:param name="page" value="1" />
-										</c:url>
-										<a href="${ bl }"><img
-											src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_l_end.gif"></a>
-									</c:if>
-									<!-- 이전 페이지그룹으로 이동 처리 -->
-									<c:if
-										test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
-										<c:url var="bl2" value="/nlist.do">
-											<c:param name="page" value="${ startPage - 10 }" />
-										</c:url>
-										<a href="${ bl2 }"><img src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_l.gif"></a> &nbsp;</c:if>
-									<c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
-										<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_l.gif">&nbsp;</c:if>
-										</span>
+					<!-- 전체 목록 페이징 처리 -->
+						<!-- 페이지 표시 영역 -->
+							<!-- 1페이지로 이동 처리 -->
+					<c:if test="${ empty action }">
+						<div class="page">
+						<span>
+						<c:if test="${ currentPage eq 1 }">
+							<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_l_end.gif">
+						</c:if>
+						<c:if test="${ currentPage > 1 }">
+							<c:url var="bl" value="/nlist.do">
+							<c:param name="page" value="1" />
+							</c:url>
+								<a href="${ bl }"><img
+									src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_l_end.gif"></a>
+						</c:if>
+						<!-- 이전 페이지그룹으로 이동 처리 -->
+							<c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
+								<c:url var="bl2" value="/nlist.do">
+								<c:param name="page" value="${ startPage - 10 }" />
+								</c:url>
+								<a href="${ bl2 }"><img src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_l.gif"></a> &nbsp;</c:if>
+							<c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
+								<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_l.gif">&nbsp;</c:if>
+							</span>
 									<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
-									<span style="text-align: center; padding: 10px 0px 10px 0px; margin-top: 10px; vertical-align: top;">
-									<c:forEach var="p" begin="${ startPage }" end="${ endPage }"
-										step="1">
-										<c:if test="${ p eq currentPage }">
-											<font size="5" style="font-weight: bold"><b>[${ p }]</b>&nbsp;</font>
-										</c:if>
-										<c:if test="${ p ne currentPage }">
-											<c:url var="bl3" value="/nlist.do">
-												<c:param name="page" value="${ p }" />
-											</c:url>
-											<a href="${ bl3 }"><b>${ p }</b>&nbsp;</a>
-										</c:if>
-									</c:forEach>
-									</span>
-									<!-- 다음 페이지그룹으로 이동 처리 -->
-									<span>
-									<c:if
-										test="${ (currentPage + 10) > endPage and (currentPage + 10) < maxPage }">
+							<span style="text-align: center; padding: 10px 0px 10px 0px; margin-top: 10px; vertical-align: top;">
+								<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+								<c:if test="${ p eq currentPage }">
+									<font size="5" style="font-weight: bold"><b>[${ p }]</b>&nbsp;</font>
+								</c:if>
+								<c:if test="${ p ne currentPage }">
+									<c:url var="bl3" value="/nlist.do">
+									<c:param name="page" value="${ p }" />
+									</c:url>
+									<a href="${ bl3 }"><b>${ p }</b>&nbsp;</a>
+								</c:if>
+								</c:forEach>
+								</span>
+							<!-- 다음 페이지그룹으로 이동 처리 -->
+								<span>
+									<c:if test="${ (currentPage + 10) > endPage and (currentPage + 10) < maxPage }">
 										<c:url var="bl4" value="/nlist.do">
-											<c:param name="page" value="${ endPage + 10 }" />
+										<c:param name="page" value="${ endPage + 10 }" />
 										</c:url>
 										<a href="${ bl4 }"><img
 											src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_r.gif"></a>
 									</c:if>
-									<c:if
-										test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
+									<c:if test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
 										<img
 											src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_r.gif">
 									</c:if>
-									<!-- 끝페이지로 이동 처리 -->
+								<!-- 끝페이지로 이동 처리 -->
 									<c:if test="${ currentPage eq maxPage }">
-										<img
-											src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_r_end.gif"> &nbsp; 
+										<img src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_r_end.gif"> &nbsp; 
 									</c:if>
 									<c:if test="${ currentPage < maxPage }">
 										<c:url var="bl5" value="/nlist.do">
-											<c:param name="page" value="${ maxPage }" />
+										<c:param name="page" value="${ maxPage }" />
 										</c:url>
 										<a href="${ bl5 }"><img
 											src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_r_end.gif"></a> &nbsp;
-											</c:if>
+									</c:if>
 								</span>
-							</c:if>
-						</div>
+							</div>
+						</c:if>
 							<!-- ----------------------------------------- -->
 							<div class ="page">
 							<c:if test="${ !empty action }">
 								<!-- 검색 목록 페이징 처리 -->
-
-								
 									<!-- 페이지 표시 영역 -->
 									<!-- 1페이지로 이동 처리 -->
 									<c:if test="${ currentPage eq 1 }">
@@ -761,7 +752,7 @@ th.last_bg {
 									<c:if test="${ currentPage eq maxPage }">
 										<img
 											src="${ pageContext.servletContext.contextPath }/resources/notice_img/arrow_r_end.gif"> &nbsp; 
-	</c:if>
+									</c:if>
 									<c:if test="${ currentPage < maxPage }">
 										<c:if test="${ action eq 'title' }">
 											<c:url var="nsl" value="nsearchTitle.do">
@@ -782,7 +773,7 @@ th.last_bg {
 									</c:if>
 								</div>
 							</c:if>
-							</div>
+							</div>						
 							<br> <br>
 </body>
 </html>
