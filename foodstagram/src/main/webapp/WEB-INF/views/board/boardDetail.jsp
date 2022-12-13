@@ -475,7 +475,7 @@ $('#aibutton').click(function () {
             align="center"><button id="aibutton">AI 인식 Start</button></a><br>
          <br>
             <div align="center" id="extractedTxt" name="extractedTxt" readonly>
-               <input id="extractedtxt">
+               <input id="extractedtxt" placeholder="AI 인식 Start 버튼 클릭 !" readonly="readonly">
             </div>
          </li>
          <li><a href="#"></a></li>
@@ -546,8 +546,8 @@ $('#aibutton').click(function () {
                         test="${board.userid eq loginMember.userid }">
                         <p class="modalContent">
                            <textarea name="b_content" id="b_content">${board.b_content }</textarea>
-                           <span><br> <a
-                              href="bsearch.do?b_category=${board.b_category }">${board.b_category
+                           <span><br><br><br> 
+                           <a href="bsearch.do?b_category=${board.b_category }">${board.b_category
                                                         }</a></span>
                            <span>카테고리를 변경할 경우 선택해주세요.</span>
                            <br>
