@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" errorPage="../common/error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<title>게시물을 등록하세요.</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Select Write Form(Take a pictures or upload images)</title>
 <link href="resources/css/reset.css" rel="stylesheet">
 <link href="resources/css/style.css" rel="stylesheet">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 	rel="stylesheet">
+
 
 <style>
 section {
@@ -88,7 +90,6 @@ section {
 	bottom: -415px;
 	left: 5px;
 }
-
 .admit:hover {
 	cursor: pointer;
 	background-color: #F95E25;
@@ -109,23 +110,21 @@ li>#preview {
 	height: auto;
 	object-fit: cover;
 }
-
 .postBox {
 	position: relative;
 	bottom: 100px;
 	left: 100px;
 }
-
 .post {
 	display: flex;
 	width: 900px;
 }
-
 .idid {
 	position: relative;
 	bottom: -10px;
 	left: 357px;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -138,6 +137,7 @@ li>#preview {
 		return true;
 	};
 </script>
+
 <script>
 function readURL(input) {
 	  if (input.files && input.files[0]) {
@@ -164,10 +164,8 @@ function readURL(input) {
 					class="fa-solid fa-x"></i></a></li>
 		</ul>
 
-
 		<form id="regForm" action="binsert.do" method="post"
-			enctype="multipart/form-data" onsubmit="return validation();"
-			style="position: absolute;" class="post">
+			enctype="multipart/form-data" onsubmit="return validation();" style="position: absolute;" class="post">
 			<div type="content">
 				<div class="title-wrap" >
 					<!-- 아이디 보임 -->
@@ -224,15 +222,11 @@ function readURL(input) {
 					</div>
 				</div>
 			</div>
+			<p>
+				<input class="admit" type="submit" value="등록하기">&nbsp; <input class="admit" type="reset"
+					value="작성취소"> &nbsp;
+				<button class="admit" onclick="javascript:history.go(-1); return false;">목록</button>
 		</form>
-
-
-		<div class="btn">
-			<input type="submit" value="등록하기" class="admit">&nbsp; <input
-				type="reset" class="admit" value="작성취소"> &nbsp;
-			<button class="admit"
-				onclick="javascript:history.go(-1); return false;">목록</button>
-		</div>
 	</section>
 
 	<script src="https://kit.fontawesome.com/6478f529f2.js"
