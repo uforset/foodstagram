@@ -290,7 +290,7 @@ td a:hover {
 </div>
 
 </center>
-<center>
+<%-- <center>
 <!-- 구글 로그인 화면으로 이동 시키는 URL -->
 <!-- 구글 로그인 화면에서 ID, PW를 올바르게 입력하면 oauth2callback 메소드 실행 요청-->
 <div id="google_id_login" style="text-align:center">
@@ -298,7 +298,7 @@ td a:hover {
 		<img width="230" height="60" src="${pageContext.request.contextPath}/resources/images/google.png" alt="구글로그인">
 	</a>
 </div>
-</center>
+</center> --%>
 				</table> <br>
 		</form>
 	</div>
