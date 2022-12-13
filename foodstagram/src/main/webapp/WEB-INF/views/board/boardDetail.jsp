@@ -13,16 +13,18 @@ let currentIdx = 0;
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="resources/css/reset.css">
-<link href="resources/css/style.css">
+<!-- <link href="resources/css/style.css"> -->
 <link
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
    rel="stylesheet">
 <title>게시물</title>
+<link href="resources/css/reset.css" rel="stylesheet">
+<link href="resources/css/style.css" rel="stylesheet">
 <style>
 section {
    width: 950px;
-/* height: 660px; */
-height:722px; 
+   /* height: 660px; */
+   height: 722px;
    margin: 40px auto;
    padding: 20px 10px;
    border-radius: 20px;
@@ -31,20 +33,12 @@ height:722px;
 }
 
 .content {
-   margin-left: -105px;
-}
-
-#otherProfile img {
-   width: 33px;
-   height: 33px;
-   border-radius: 50%;
-   object-fit: cover;
-   border: none;
+   margin-left: 18px;
+    position: relative;
+    top: 20px;
 }
 
 section ul:first-child:not(.replyBox) {
-   /* display: flex; */
-   /* margin-bottom: 10px; */
    border-bottom: #E5E5E5 2px solid;
    justify-content: space-between;
 }
@@ -52,7 +46,8 @@ section ul:first-child:not(.replyBox) {
 .modalImg img {
    display: inline-block;
    width: 450px;
-   height: auto;
+   /* height:auto; */
+   max-height: 500px;
    object-fit: cover;
    border: none;
 }
@@ -60,21 +55,22 @@ section ul:first-child:not(.replyBox) {
 /* 레시피목록 */
 ul:not(.replyBox) {
    /* display: flex;    */
+   
 }
 
 ul li:not(.modalImg) {
-   left: -10px;
+   left: 7px;
 }
 
- ul li ol {
-   display: flex; 
-} 
+ul li ol {
+   display: flex;
+}
 
 .id {
    position: relative;
    bottom: 10px;
    font-weight: bold;
-   color:#333;
+   color: #333;
 }
 
 .addFriend {
@@ -90,7 +86,7 @@ ul li:not(.modalImg) {
 
 .modalContent {
    padding-bottom: 20px;
-   border-bottom: 1px solid #E5E5E5;
+   /* border-bottom: 1px solid #E5E5E5; */
    width: 430px;
    height: 100px;
    margin-bottom: 10px;
@@ -112,7 +108,7 @@ a {
 /* 하트, 댓글등 */
 .lr {
    position: relative;
-   top: 190px;
+   top: 212px;
    right: 475px;
    /*    border-bottom: 1px solid #E5E5E5; */
    width: 435px;
@@ -158,7 +154,7 @@ a {
    background-color: #F95E25;
 }
 
-#aibutton{
+#aibutton {
    width: 120px;
    height: 30px;
    font-weight: bold;
@@ -168,17 +164,17 @@ a {
    color: #333;
    background-color: #E5E5E5;
    font-size: 13px;
+       margin: 10px 50px 0;
 }
 
-#aibutton:hover{
-   background-color: #FAFA96;
+#aibutton:hover {
+   background-color: #F95E25;
 }
-
 
 .replyBox {
    position: relative;
    top: 470px;
-   right: 448px;
+   right: 417px;
 }
 
 .replyRig {
@@ -186,7 +182,7 @@ a {
    height: 25px;
    border-radius: 30px;
    background-color: #F0F0F0;
-   border:none;
+   border: none;
 }
 
 .replyBtn {
@@ -194,7 +190,7 @@ a {
    border: none;
    display: block;
    position: relative;
-   left: 28px;
+   left: 29px;
    bottom: 28px;
    font-weight: bold;
    color: #333;
@@ -238,8 +234,8 @@ a {
    width: 180px;
    text-align: center;
    position: relative;
-   bottom: 174px;
-
+   bottom: 163px;
+left:34px;
    /* border-left: 1px solid #E5E5E5; */
 }
 
@@ -258,7 +254,7 @@ a {
 }
 
 .etc li a:hover {
-   border-bottom: 3px solid #F95E25;
+   color:#F95E25;
 }
 
 li {
@@ -268,10 +264,10 @@ li {
 .kind_wrap {
    /* border: 2px solid black; */
    width: 100%;
-   max-width: 450px;
+   max-width: 410px;
    margin: 0 auto;
    position: relative;
-   left: -35px;
+   /* left: -35px; */
 }
 
 .kind_wrap>.kind_slider {
@@ -334,114 +330,116 @@ li {
 
 ul {
    /* display: ; */
+   
 }
 
 #b_content:not(#b_reply_content) {
    /* border: 2px solid red; */
    border: none;
    width: 430px;
-   height: 100px; 
+   height: 100px;
 }
 
 /* hover시 영양정보 */
-                    i:hover {
-                        color: green
-                    }
+i:hover {
+   color: green
+}
 
-                    .food-wrap {
-                        display: flex; 
-                        justify-content: center;
-                        align-items: center
-                    }
+.food-wrap {
+   display: flex;
+   justify-content: center;
+   align-items: center
+}
 
-                    .food {
-                        position: relative;
-                        width: 300px;
-                        height: 300px;
-                    }
+.food {
+   position: relative;
+   width: 300px;
+   height: 300px;
+}
 
-                    div.info {
-                        padding: 15px 20px;
-                        border-radius: 5px;
-                        font-weight: 1000;
-                        color: #fff;
-                        position: absolute;
-                        background: rgba(0, 0, 0, 0.3);
-                        top: 30%;
-                        left: 10%;
-                        margin: auto;
-                        text-align: left;
-                        display: none;
-                        z-index: 10;
-                    }
-                    
-                    /* 전체 */
-                  ul:not(.replyList) {display:flex;}
+div.info {
+   padding: 15px 20px;
+   border-radius: 5px;
+   font-weight: 1000;
+   color: #fff;
+   position: absolute;
+   background: rgba(0, 0, 0, 0.3);
+   top: 30%;
+   left: 10%;
+   margin: auto;
+   text-align: left;
+   display: none;
+   z-index: 10;
+}
+
+/* 전체 */
+ul:not(.replyList) {
+   display: flex;
+}
 </style>
 <script type="text/javascript"
    src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <!-- 슬라이드 -->
-
 <script>
 $(function () { 
-	console.log('${aList.toString()}')
-	var ary = JSON.stringify('${aList.toString()}');
-	
+   console.log('${aList.toString()}')
+   var ary = JSON.stringify('${aList.toString()}');
+   
 $('#aibutton').click(function () {
-	$.ajax({
-	    url: "/foodstagram/extractImgtoResult.do",
-	    type: "post",
-	    data: { b_no: ${board.b_no} ,
-	    		   index: currentIdx	
-	    },
-	    success: function(data){
-	        console.log(data);
-	        
-	      $("#extractedtxt").val(data);
-	    },
-	    error: function () {
-	        // handle upload error
-	        // ...
-	    }
-	});		
+   $.ajax({
+       url: "/foodstagram/extractImgtoResult.do",
+       type: "post",
+       data: { b_no: ${board.b_no} ,
+                index: currentIdx   
+       },
+       success: function(data){
+           console.log(data);
+           
+         $("#extractedtxt").val(data);
+       },
+       error: function () {
+           // handle upload error
+           // ...
+       }
+   });      
 });
 });
 </script>
 <script>
-    window.onload = function () {
-        const kindWrap = document.querySelector('.kind_wrap');
-        const slider = kindWrap.querySelector('.slider');
-        const slideLis = slider.querySelectorAll('li')
-        const moveButton = kindWrap.querySelector('.arrow');
+                    window.onload = function () {
+                        const kindWrap = document.querySelector('.kind_wrap');
+                        const slider = kindWrap.querySelector('.slider');
+                        const slideLis = slider.querySelectorAll('li')
+                        const moveButton = kindWrap.querySelector('.arrow');
 
-        /* ul 넓이 계산해 주기 */
-        const liWidth = slideLis[0].clientWidth;
-        var sliderWidth = liWidth * slideLis.length;
-        slider.style.width = sliderWidth + "px";
-        /* 리스너 설치하기 */
-        // let currentIdx = 0; // 슬라이드 현재 번호
-        let translate = 0; // 슬라이드 위치 값
-        moveButton.addEventListener('click', moveSlide);
+                        /* ul 넓이 계산해 주기 */
+                        const liWidth = slideLis[0].clientWidth;
+                        var sliderWidth = liWidth * slideLis.length;
+                        slider.style.width = sliderWidth + "px";
+                        /* 리스너 설치하기 */
+                        //let currentIdx = 0; // 슬라이드 현재 번호
+                        let translate = 0; // 슬라이드 위치 값
+                        moveButton.addEventListener('click', moveSlide);
 
-        function moveSlide(event) {
-            event.preventDefault();
-            if (event.target.className === 'next') {
-                if (currentIdx !== slideLis.length - 1) {
-                    translate -= liWidth;
-                    slider.style.transform = 'translateX(' + translate + 'px)';
-                    currentIdx += 1;
-                }
-            } else if (event.target.className === 'prev') {
-                if (currentIdx !== 0) {
-                    translate += liWidth;
-                    slider.style.transform = 'translateX(' + translate + 'px)';
-                    currentIdx -= 1;
-                }
-            }
-        }
+                        function moveSlide(event) {
+                            event.preventDefault();
+                            if (event.target.className === 'next') {
+                                if (currentIdx !== slideLis.length - 1) {
+                                    translate -= liWidth;
+                                    slider.style.transform = 'translateX(' + translate + 'px)';
+                                    currentIdx += 1;
+                                }
+                            } else if (event.target.className === 'prev') {
+                                if (currentIdx !== 0) {
+                                    translate += liWidth;
+                                    slider.style.transform = 'translateX(' + translate + 'px)';
+                                    currentIdx -= 1;
+                                }
+                            }
+                        }
 
-    }
-</script>
+                    }
+                </script>
 <!-- 게시물 수정용 -->
 <script type="text/javascript">
                     function bupdate() {
@@ -452,7 +450,7 @@ $('#aibutton').click(function () {
                             + categoryValue + '&b_no=${board.b_no}';
                     }
                 </script>
-                 <script type="text/javascript">
+<script type="text/javascript">
                     $(function () {
                         $("ul.slider").on("mouseover", function () {
                             $("div.info").css("display", "block");
@@ -469,11 +467,14 @@ $('#aibutton').click(function () {
    <section>
       <ul>
          <li><a href="javascript:history.go(-1);"><i
-               class="fa-solid fa-arrow-left fa-1x"> </i> </a></li>
+               class="fa-solid fa-arrow-left fa-2x"> </i> </a></li>
          <li>
-            <h1 align="center" style="font-weight: bold;">게시물</h1>
-            <a href="#" align="center" ><button id="aibutton" >AI 인식 Start</button></a><br><br>
-            <div align="center"  id="extractedTxt" name="extractedTxt" readonly><input id="extractedtxt"></div>
+            <h1 align="center" style="font-weight: bold;">게시물</h1> <a href="#"
+            align="center"><button id="aibutton">AI 인식 Start</button></a><br>
+         <br>
+            <div align="center" id="extractedTxt" name="extractedTxt" readonly>
+               <input id="extractedtxt">
+            </div>
          </li>
          <li><a href="#"><i class="fa-solid fa-ellipsis fa-2x"></i></a></li>
       </ul>
@@ -483,8 +484,8 @@ $('#aibutton').click(function () {
             <div class="kind_slider">
                <ul class="slider">
                   <c:forEach items="${aList }" var="at">
-                   <!--  영양정보관련 : 후버시 영양정보 뜸 class="food"-->
-                                        <a href="#" >
+                     <!--  영양정보관련 : 후버시 영양정보 뜸 class="food"-->
+                     <a href="#">
                         <li class="modalImg"><img
                            src="resources/board_upfiles/${at.atch_file_name }"></li>
                      </a>
@@ -539,15 +540,18 @@ $('#aibutton').click(function () {
                                                         }</a></span>
                         </p>
                      </c:if></li>
-                  <li style="position: relative;">
-                  <c:if   test="${board.userid eq loginMember.userid }">
+                  <li style="position: relative;"><c:if
+                        test="${board.userid eq loginMember.userid }">
                         <p class="modalContent">
                            <textarea name="b_content" id="b_content">${board.b_content }</textarea>
                            <span><br> <a
                               href="bsearch.do?b_category=${board.b_category }">${board.b_category
                                                         }</a></span>
-                           <span>카테고리를 변경할 경우 선택해주세요.</span><select name="b_category"
-                              id="b_category">
+                           <span>카테고리를 변경할 경우 선택해주세요.</span>
+                           <br>
+                           <br>
+                           <select name="b_category"
+                              id="b_category" style="font-weight: bold;width: 120px;height:2rem; border:2px solid #f8f9fa; top:48px;text-align:center;border-radius:20px;" >
                               <option value="갈비탕">갈비탕
                               <option value="과일채소샐러드">과일채소샐러드
                               <option value="닭갈비">닭갈비
@@ -591,8 +595,7 @@ $('#aibutton').click(function () {
                         <input type="hidden" name="b_no" value="${board.b_no }">
                         <input type="hidden" name="userid"
                            value="${loginMember.userid }">
-                        <li><textarea class="replyRig" name="b_reply_content" 
-                        ></textarea></li>
+                        <li><textarea class="replyRig" name="b_reply_content"></textarea></li>
                         <li><input class="replyBtn" type="submit" value="댓글등록"
                            style="cusor: pointer;"><a href="#"></a></li>
                      </form>
@@ -601,13 +604,14 @@ $('#aibutton').click(function () {
                            class="fa-solid fa-arrows-rotate"></i>
                      </a></li>
                   </ul>
-                  <ul class="replyList" >
+                  <ul class="replyList">
                      <c:forEach items="${rList }" var="r">
                         <c:if test="${r.userid ne loginMember.userid }">
                            <li>${r.b_reply_content }</li>
                         </c:if>
                         <c:if test="${r.userid eq loginMember.userid }">
-                           <li style="positon:relative;left:100px;bottom:100px;"><textarea id="b_reply_content">${r.b_reply_content }</textarea>
+                           <li style="positon: relative; left: 100px; bottom: 100px;"><textarea
+                                 id="b_reply_content">${r.b_reply_content }</textarea>
                               <button onclick="rupdate();">수정</button>
                               <button
                                  onclick="javascript:location.href='rdel.do?b_no=${board.b_no }&b_reply_no=${r.b_reply_no}';">삭제</button>
