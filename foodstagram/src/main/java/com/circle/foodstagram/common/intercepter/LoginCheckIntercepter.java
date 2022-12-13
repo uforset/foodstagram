@@ -19,7 +19,7 @@ public class LoginCheckIntercepter extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session = request.getSession();
-		Member loginMember = (Member) session.getAttribute("loginMember");
+		Object loginMember = session.getAttribute("loginMember");
 			
 		if(loginMember != null) {
 			logger.info("로그인 상태 : " + request.getRequestURI() + " 요청.");

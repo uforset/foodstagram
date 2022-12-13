@@ -33,6 +33,7 @@ public class NotificationController {
 
 		JSONObject json = new JSONObject();
 		
+		log.info("출력" + n.getN_readcheck());
 		if(n.getN_readcheck().equals("Y")) {
 			//model.addAttribute("read", "read");
 			json.put("read", "read");

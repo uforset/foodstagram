@@ -49,26 +49,30 @@
 		where b_open = 2
 		and atch_seq = 1
 		order by a.atch_parent_no desc
+		offset (#{pageUnit} * (#{page}-1)) rows
+        fetch next #{pageUnit} rows only
 	</select>
 
-	<select id="selectListMy" resultMap="resultAttach"
-		parameterType="string">
+	<select id="selectListMy"  resultMap="resultAttach" parameterType="Map">
 		select a.atch_parent_no, a.atch_file_name
 		from board b
 		join boardattach a on (b.b_no = a.atch_parent_no)
 		where userid = #{userid}
 		and atch_seq = 1
 		order by a.atch_parent_no desc
+		offset (#{pageUnit} * (#{page}-1)) rows
+        fetch next #{pageUnit} rows only
 	</select>
 
-	<select id="selectListFriend" resultMap="resultAttach"
-		parameterType="string">
+	<select id="selectListFriend" resultMap="resultAttach" parameterType="Map">
 		select a.atch_parent_no, a.atch_file_name
 		from board b
 		join boardattach a on (b.b_no = a.atch_parent_no)
 		where userid = #{userid} and b_open in (1,2)
 		and atch_seq = 1
 		order by a.atch_parent_no desc
+		offset (#{pageUnit} * (#{page}-1)) rows
+        fetch next #{pageUnit} rows only
 	</select>
 
 	<select id="selectBoard" resultType="Board" parameterType="_int">

@@ -31,6 +31,35 @@
 	<select id="getChatRoomMessage" parameterType="string" resultMap="resultChatMessage">
 		select * from chat_message
 		where chat_room_id = #{chat_room_id}
-		order by create_date
+		order by create_date desc, cm_no desc
+		offset 0 rows fetch first 20 rows with ties
 	</select>
+	
+	<select id="selectRoomMessageCount" parameterType="string" resultType="_int">
+		select count(*)
+		from chat_message
+		where chat_room_id = #{chat_room_id}
+	</select>
+	
+	<select id="selectRoomMessageList" parameterType="Map" resultMap="resultChatMessage">
+	select * 
+	from (select ROWNUM RNUM, c.*
+		  from (select * 
+		  		from chat_message 
+		  		where chat_room_id = #{chat_room_id}
+		  		order by create_date DESC) c)
+	where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="getChatMessageRowLimitingClausePaging" parameterType="Map" resultMap="resultChatMessage">
+		select *
+		from chat_message
+		where chat_room_id = #{id}
+		order by create_date desc, cm_no desc
+		OFFSET (#{page}-1) * #{size} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<delete id="deleteMessage" parameterType="int">
+		delete from chat_message where cm_no = #{cm_no}
+	</delete>
 </mapper>

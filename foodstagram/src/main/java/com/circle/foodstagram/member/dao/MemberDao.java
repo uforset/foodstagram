@@ -9,7 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.circle.foodstagram.common.Paging;
 import com.circle.foodstagram.common.SearchPaging;
+import com.circle.foodstagram.member.model.vo.GoogleVO;
+import com.circle.foodstagram.member.model.vo.KakaoVO;
 import com.circle.foodstagram.member.model.vo.Member;
+import com.circle.foodstagram.member.model.vo.NaverVO;
 
 @Repository("memberDao")
 public class MemberDao {
@@ -140,26 +143,5 @@ public class MemberDao {
 		List<Member> list = session.selectList("memberMapper.searchUser", searchpaging);
 		return (ArrayList<Member>)list;
 	}
-
-
-
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

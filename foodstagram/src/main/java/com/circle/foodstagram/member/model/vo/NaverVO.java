@@ -1,0 +1,21 @@
+package com.circle.foodstagram.member.model.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class NaverVO implements java.io.Serializable{
+	
+	private static final long serialVersionUID = -2027767816623829633L;
+	private String username;
+	private String email;
+	private String userid;
+	
+}

@@ -1,6 +1,7 @@
 package com.circle.foodstagram.board.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,18 +30,29 @@ public class BoardDao {
 		return session.delete("boardMapper.deleteBoard", b_no);
 	}
 
-	public ArrayList<BoardAttach> selectListAll() {
-		List<BoardAttach> list=session.selectList("boardMapper.selectListAll");
+	public ArrayList<BoardAttach> selectListAll(int page, int pageUnit) {
+		List<BoardAttach> list=session.selectList("boardMapper.selectListAll", new HashMap<String, Integer>(){{
+		    put("page", page);
+		    put("pageUnit", pageUnit);
+		}});
 		return (ArrayList<BoardAttach>)list;
 	}
 	
-	public ArrayList<BoardAttach> selectListMy(String userid) {
-		List<BoardAttach> list=session.selectList("boardMapper.selectListMy", userid);
+	public ArrayList<BoardAttach> selectListMy(String userid, int page, int pageUnit) {
+		List<BoardAttach> list=session.selectList("boardMapper.selectListMy", new HashMap<String, Object>(){{
+			put("userid", userid);
+			put("page", page);
+		    put("pageUnit", pageUnit);
+		}});
 		return (ArrayList<BoardAttach>)list;
 	}
 	
-	public ArrayList<BoardAttach> selectListFriend(String userid) {
-		List<BoardAttach> list=session.selectList("boardMapper.selectListFriend", userid);
+	public ArrayList<BoardAttach> selectListFriend(String userid, int page, int pageUnit) {
+		List<BoardAttach> list=session.selectList("boardMapper.selectListFriend", new HashMap<String, Object>(){{
+			put("userid", userid);
+			put("page", page);
+		    put("pageUnit", pageUnit);
+		}});
 		return (ArrayList<BoardAttach>)list;
 	}
 

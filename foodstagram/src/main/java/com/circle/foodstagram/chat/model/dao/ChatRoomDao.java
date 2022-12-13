@@ -71,5 +71,9 @@ public class ChatRoomDao {
 	public int createChatRomm(ChatRoom chatRoom) {
 		return session.insert("chatRoomMapper.insertChatRoom", chatRoom);
 	}
+
+	public int updateRoomTitle(ChatRoom room) {
+		return session.update("chatRoomMapper.updateRoomTitle", room);
+	}
 	
 }

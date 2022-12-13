@@ -8,4 +8,5 @@ public interface NotificationService {
 	ArrayList<Notification> selectAll();
 	int updateNotification (String userid);
 	Notification selectNotification(String userid);
+	int insertNotification(String userid);
 }

@@ -53,7 +53,7 @@ $(function(){
 							<th>접수일시</th>
 							<td><fmt:formatDate value="${ q.q_date }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<th>유형</th>
 							<td>
 								<select name="con_cate" id="con_cate" disabled>
@@ -67,7 +67,7 @@ $(function(){
                                                                         <option value="T07"	>홈페이지</option>
                                                 					</select>
 							</td>
-						</tr>
+						</tr> -->
 						<tr>
 							<th>회원아이디</th>
 							<td>${ q.userid }</td>
@@ -160,7 +160,7 @@ $(function(){
 						<tr>
 							<th>담당자</th>
 <!--							<td>관리자(--><!--)</td>-->
-							<td><img src="/assets/images/re_BI_MVNO.png"></td>
+							<td><img width="50" height="50" src="/foodstagram/resources/images/logo.png"></td>
 						</tr>
 						<tr>
 							<th>답변일시</th>

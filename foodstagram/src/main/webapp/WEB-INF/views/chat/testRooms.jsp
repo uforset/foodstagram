@@ -87,13 +87,13 @@ function visibleUsers() {
                                     <div class="_aa4k">
                                         <div class="_aa4m _aa4n"></div>
                                         <div class="_aa4o">
-                                            <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" style="width: 100%;"><button aria-label="계정 전환 - tjgyqo2" class="_acan _acao _acas" type="button" tabindex="0">
+                                            <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" style="width: 100%;"><button dis aria-label="계정 전환 - tjgyqo2" class="_acan _acao _acas" type="button" tabindex="0">
                                                     <div class="_ab8w  _ab94 _ab97 _ab9h _ab9k _ab9p _abcm" style="width: 100%;">
                                                         <div class="_abyj">
-                                                            <div class="_aacl _aacp _aacw _aacx _aada _aade">tjgyqo2</div>
+                                                            <div class="_aacl _aacp _aacw _aacx _aada _aade">${ loginMember.userid }</div>
                                                         </div>
                                                         <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _ab9y _aba8 _abcm"><span style="display: inline-block; transform: rotate(180deg);"><svg aria-label="아래쪽 V자형 아이콘" class="_ab6-" color="#262626" fill="#262626" height="20" role="img" viewBox="0 0 24 24" width="20">
-                                                                    <path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path>
+                                                                    
                                                                 </svg></span></div>
                                                     </div>
                                                 </button></div>
@@ -118,9 +118,22 @@ function visibleUsers() {
                                                     <div class=" _ab8s _ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm">
                                                         <div class="_abm4"><a class="x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz _a6hd" href="/foodstagram/chat/room?roomId=${room.chat_room_id}" role="link" tabindex="0">
                                                                 <div aria-labelledby="f31ad56cacbb6a4 f3baa4da491f23 f2889a7ac87d5a f3c41205ec58798" class="_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _ab9_ _aba8 _abcm">
+                                                                    <c:if test="${room.participants.size() <= 2}">
                                                                     <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbj _abcm">
                                                                         <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 56px; height: 56px;"><img alt="tjgyqo2님의 프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span></div>
                                                                     </div>
+                                                                    </c:if>
+                                                                    
+                                                                    <c:if test="${room.participants.size() > 2}">
+                                                                    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abbj _abcm">
+																	    <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abcj _abcm" style="height: 56px; width: 56px;"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 40px; height: 40px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span>
+																	        <div class="_aa2p _aa2q">
+																	            <div class="_ab8w  _ab94 _ab96 _ab9g _ab9k _ab9p _abcm"><span class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7" role="link" tabindex="-1" style="width: 40px; height: 40px;"><img alt="프로필 사진" class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3" crossorigin="anonymous" draggable="false" src="/foodstagram/resources/images/userImage.jpg"></span></div>
+																	        </div>
+																	    </div>
+																	</div>
+                                                                    </c:if>
+                                                                    
                                                                     <div class="_ab8w  _ab94 _ab99 _ab9h _ab9m _ab9o _abcm">
                                                                         <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p _abcm" id="f3baa4da491f23">
                                                                             <div class="_aacl _aaco _aacu _aacx _aada">
@@ -133,7 +146,7 @@ function visibleUsers() {
                                                                         </div>
                                                                         <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abb- _abcm" id="f2889a7ac87d5a">
                                                                             <div class="_aacl _aaco _aacu _aacy _aada">
-                                                                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9k _ab9p _abcm"><span class="_ab6a"><span class="_aacl _aaco _aacu _aacy _aad7">ㅁㄴㅇㄹㄴㅁㅇㄹㄴ</span></span><span class="_ab68 _ac6e _ac6f _ac6h">·</span><time class="_ab69" datetime="2022-10-28T07:58:51.863Z" title="10월 28, 2022">5주</time></div>
+                                                                                <div class="_ab8w  _ab94 _ab99 _ab9f _ab9k _ab9p _abcm"><span class="_ab6a"><span class="_aacl _aaco _aacu _aacy _aad7"></span></span><span class="_ab68 _ac6e _ac6f _ac6h"></span><time class="_ab69" datetime="2022-10-28T07:58:51.863Z" title="10월 28, 2022"></time></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

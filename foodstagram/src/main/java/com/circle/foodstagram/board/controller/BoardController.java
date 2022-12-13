@@ -1,10 +1,14 @@
 package com.circle.foodstagram.board.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,33 +66,36 @@ public class BoardController {
 	// 모든 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "blistAll.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String boardListMethod() throws UnsupportedEncodingException {
-
-		ArrayList<BoardAttach> list = boardService.selectListAll();
-
-		JSONObject sendJson = new JSONObject();
-		JSONArray jarr = new JSONArray();
-
-		for (BoardAttach boardAttach : list) {
+	public String boardListMethod(@RequestParam("page")int page) throws UnsupportedEncodingException {
 			
-			JSONObject jobj = new JSONObject();
-			jobj.put("atch_parent_no", boardAttach.getAtch_parent_no());
-			jobj.put("atch_file_name", boardAttach.getAtch_file_name());
-			jarr.add(jobj);
-			
-		}
-		
+			ArrayList<BoardAttach> list = boardService.selectListAll(page, 9);
+	
+			JSONObject sendJson = new JSONObject();
+			JSONArray jarr = new JSONArray();
+	
+			for (BoardAttach boardAttach : list) {
+				
+				JSONObject jobj = new JSONObject();
+				jobj.put("atch_parent_no", boardAttach.getAtch_parent_no());
+				jobj.put("atch_file_name", boardAttach.getAtch_file_name());
+				jarr.add(jobj);
+				
+			}
+
+		// 전송용 객체에 jarr 을 담음
 		sendJson.put("list", jarr);
-		return sendJson.toJSONString();
-		
+
+		// json 을 json string 타입으로 바꿔서 전송함
+		return sendJson.toJSONString(); // 뷰리졸버로 리턴함
+
 	}
 
 	// 마이 페이지 본인 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "blistmy.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String boardListMyMethod(@RequestParam("userid") String userid) throws UnsupportedEncodingException {
+	public String boardListMyMethod(@RequestParam("userid") String userid, @RequestParam("page")int page) throws UnsupportedEncodingException {
 
-		ArrayList<BoardAttach> list = boardService.selectListMy(userid);
+		ArrayList<BoardAttach> list = boardService.selectListMy(userid, page, 6);
 
 		JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
@@ -95,13 +103,16 @@ public class BoardController {
 		for (BoardAttach boardAttach : list) {
 			
 			JSONObject jobj = new JSONObject();
+
 			jobj.put("atch_parent_no", boardAttach.getAtch_parent_no());
 			jobj.put("atch_file_name", boardAttach.getAtch_file_name());
+
 			jarr.add(jobj);
-			
+
 		}
 
 		sendJson.put("list", jarr);
+
 		return sendJson.toJSONString();
 
 	}
@@ -109,22 +120,23 @@ public class BoardController {
 	// 마이페이지 친구 이상 공개 목록보기 요청 처리용
 	@RequestMapping(value = "blistfriend.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String boardListFriendMethod(@RequestParam("userid") String userid) throws UnsupportedEncodingException {
+	public String boardListFriendMethod(@RequestParam("userid") String userid, @RequestParam("page")int page) throws UnsupportedEncodingException {
 
-		ArrayList<BoardAttach> list = boardService.selectListFriend(userid);
+		ArrayList<BoardAttach> list = boardService.selectListFriend(userid, page, 6);
 
 		JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
 
 		for (BoardAttach boardAttach : list) {
+			
 			JSONObject jobj = new JSONObject();
-
 			jobj.put("atch_parent_no", boardAttach.getAtch_parent_no());
 			jobj.put("atch_file_name", boardAttach.getAtch_file_name());
+
 			jarr.add(jobj);
 
 		}
-		
+
 		sendJson.put("list", jarr);
 		return sendJson.toJSONString();
 
@@ -210,7 +222,7 @@ public class BoardController {
 
 	// 검색한 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "bsearch.do", method = RequestMethod.GET)
-	public String boardsearchMethod(@RequestParam("fname") String fname, Model model) {
+	public String boardsearchMethod(@RequestParam("b_category") String fname, Model model) {
 
 		ArrayList<BoardAttach> list = boardService.searchBoard(fname);
 
@@ -245,5 +257,57 @@ public class BoardController {
 			return "common/error";
 		}
 	}
+	
+	// 게시물 상세보기에서 'AI 인식 Start' 버튼을 눌렀을 때 실행되어야 함 
+	@PostMapping("extractImgtoResult.do")
+	@ResponseBody
+	public void callPy(@RequestParam("b_no") int b_no,Board board, Model model, @RequestParam("index") int index,
+			HttpServletResponse response) throws Exception{
+		ArrayList<BoardAttach> aList = boardAttachService.selectAttchList(b_no);
+		String filename = aList.get(index).getAtch_file_name();
+        String command = "C:/Users/yurim/.conda/envs/yolo7_py38/python.exe";
+        String arg1 = "C:/doc_thirdprj/ai/yolov7-main/yolov7-main/detect.py";
+        String arg2 = "C:/doc_thirdprj/ai/yolov7-main/yolov7-main/runs/train/yolov7_food19/weights/best.pt";
+        String arg3 = "C:\\Users\\yurim\\git\\foodstagram\\foodstagram\\src\\main\\webapp\\resources\\board_upfiles\\" + filename;
+        
+        int idx = 0;
+        int exitVal = 0;
+
+        ProcessBuilder builder;
+        BufferedReader br;
+
+        String[] cmd = new String[] {command, arg1, "--weights",arg2, "--source",arg3};
+        
+        builder = new ProcessBuilder(cmd); //python3 error
+
+        builder.redirectErrorStream(true);
+        Process process = builder.start();
+
+        // 자식 프로세스가 종료될 때까지 기다림
+        int exitval = process.waitFor();
+
+        //// 서브 프로세스가 출력하는 내용을 받기 위해
+        br = new BufferedReader(new InputStreamReader(process.getInputStream(),"euc-kr"));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+        	//System.out.println(">>> " + line);
+        	idx=line.indexOf("@");
+            if(line.indexOf("@") >= 0) {            	
+                String result = line.substring(idx+1);
+                System.out.println(result);
+                response.setContentType("text/html; charset=utf-8");
+                PrintWriter out = response.getWriter();
+                out.append(result.strip());
+                out.flush();
+                out.close();
+            }
+        }
+        
+        if(exitval !=0){
+            //비정상종료
+        	System.out.println(exitval);
+        }
+    }
 	
 }

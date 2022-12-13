@@ -2,7 +2,9 @@ package com.circle.foodstagram.chat.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -168,7 +171,9 @@ public class RoomController {
     	List<ChatRoom> list = chatService.findAllMyRooms(myId);
     	
     	for(ChatRoom cr : list) {
-        	List<ChatRoomJoin> crjList = cr.getParticipants();
+    		if (!cr.getTitle().equals("emp"))
+        		continue;
+    		List<ChatRoomJoin> crjList = cr.getParticipants();
         	// crjList => 참여자수, 참여자들 알수있음
         	int size = crjList.size();
         	ArrayList<String> userArray = new ArrayList<String>();
@@ -251,6 +256,9 @@ public class RoomController {
         for(ChatRoom cr : list) {
         	List<ChatRoomJoin> crjList = cr.getParticipants();
         	// crjList => 참여자수, 참여자들 알수있음
+        	if (!cr.getTitle().equals("emp"))
+        		continue;
+        	
         	int size = crjList.size();
         	ArrayList<String> userArray = new ArrayList<String>();
         	for(ChatRoomJoin crj : crjList) {
@@ -295,5 +303,88 @@ public class RoomController {
     	ArrayList<Member> mlist = memberService.selectSearchUseridUsername(keyword);
     	log.info(gson.toJson(mlist));
     	return gson.toJson(mlist);
+    }
+    
+    
+    @GetMapping("getNextChat.do/{page}")
+    @ResponseBody
+    public String getPageChatMessageMethod(
+    		@PathVariable(name = "page") int page,
+    		@RequestParam String id) {
+    	
+    	Gson gson = new Gson();
+    	Map<String,Object> map = new HashMap<String,Object>();
+    	
+    	int size = 20;
+    	
+    	map.put("page", page);
+    	map.put("size", size);
+    	map.put("id", id);
+    	
+    	
+    	List<ChatMessage> mlist = chatService.getChatMessageRowLimitingClausePaging(map);
+    	//스크롤 페이징 하려면 수정필요.
+    	//시간순으로 정렬해줘서 가져옴.
+    	log.info("방에서 가져온 메세지 확ㅇ니!!!!");
+    	log.info("사이즈확인 20개여야되는데" + mlist.size());
+    	log.info(mlist);
+    	
+    	log.info(gson.toJson(mlist));
+    	return gson.toJson(mlist);
+    }
+    
+    @PostMapping("deleteMessage.do")
+    @ResponseBody
+    public String deleteMessageMethod(
+    		@RequestParam int cm_no) {
+
+    	
+    	JsonObject sendjson = new JsonObject();
+    	
+    	if( chatService.deleteMessage(cm_no) > 0 ) {
+    		log.info("삭제성공");
+    		sendjson.addProperty("status", "success");
+    	} else {
+    		sendjson.addProperty("status", "failed");
+    	}
+    	
+    	
+    	return sendjson.toString();
+    }
+    
+    @PostMapping("roomTitleEdit.do")
+    @ResponseBody
+    public String roomTitleEditMethod(
+    		ChatRoom room) {
+    	JsonObject sendjson = new JsonObject();
+    	
+    	if( chatService.updateRoomTitle(room) > 0) {
+    		log.info("수정성공");
+			sendjson.addProperty("status", "success");
+		} else {
+			sendjson.addProperty("status", "failed");
+		}
+    	return sendjson.toString();
+    }
+    
+    @PostMapping("leaveChatRoom.do")
+    @ResponseBody
+    public String leaveChatRoomMethod(
+    		@RequestParam String userid,
+    		@RequestParam String chat_room_id) {
+    	JsonObject sendjson = new JsonObject();
+    	
+    	Map<String,Object> map = new HashMap<String,Object>();
+    	map.put("userid", userid);
+    	map.put("chat_room_id", chat_room_id);
+    	
+    	if( chatService.deleteChatRoomJoin(map) > 0) {
+    		log.info("탈출성공ㅜ");
+			sendjson.addProperty("status", "success");
+		} else {
+			sendjson.addProperty("status", "failed");
+		}
+    	
+    	return sendjson.toString();
     }
 }

@@ -33,6 +33,8 @@
 		insert into chat_room values(#{chat_room_id}, #{title}, default, default)
 	</insert>
 
-
+	<update id="updateRoomTitle">
+		update chat_room set title= #{title} where chat_room_id=#{chat_room_id}
+	</update>
 
 </mapper>

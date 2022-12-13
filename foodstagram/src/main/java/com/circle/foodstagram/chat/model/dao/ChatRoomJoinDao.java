@@ -1,6 +1,7 @@
 package com.circle.foodstagram.chat.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,9 @@ public class ChatRoomJoinDao {
 	
 	public int insertChatRoomJoin(ChatRoomJoin chatRoomJoin) {
 		return session.insert("chatRoomJoinMapper.insertChatRoomJoin", chatRoomJoin);
+	}
+
+	public int deleteChatRoomJoin(Map<String, Object> map) {
+		return session.delete("chatRoomJoinMapper.deleteChatRoomJoin",map);
 	}
 }
