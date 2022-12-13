@@ -183,6 +183,7 @@ a {
    border-radius: 30px;
    background-color: #F0F0F0;
    border: none;
+   resize: none;
 }
 
 .replyBtn {
@@ -445,9 +446,10 @@ $('#aibutton').click(function () {
                     function bupdate() {
                         var contentValue = document.getElementById("b_content").value;
                         var categoryValue = document.getElementById("b_category").value;
+                        var openValue = document.getElementById("b_open").value;
 
                         location.href = 'bupdate.do?b_content=' + contentValue + '&b_category='
-                            + categoryValue + '&b_no=${board.b_no}';
+                            + categoryValue + '&b_no=${board.b_no}' + '&b_open=' + openValue;
                     }
                 </script>
 <script type="text/javascript">
@@ -476,7 +478,7 @@ $('#aibutton').click(function () {
                <input id="extractedtxt">
             </div>
          </li>
-         <li><a href="#"><i class="fa-solid fa-ellipsis fa-2x"></i></a></li>
+         <li><a href="#"></a></li>
       </ul>
       <!--슬라이드처리  및 영양정보-->
       <ul>
@@ -564,6 +566,22 @@ $('#aibutton').click(function () {
                               <option value="스테이크">스테이크
                               <option value="스튜">스튜
                            </select>
+                           <c:if test="${ board.b_open eq '0' }">
+                           	<span>현재 상태 : 비공개</span>
+                           </c:if>
+                           <c:if test="${ board.b_open eq '1' }">
+                           	<span>현재 상태 : 검색후공개</span>
+                           </c:if>
+                           <c:if test="${ board.b_open eq '2' }">
+                           	<span>현재 상태 : 모두공개</span>
+                           </c:if>
+                            <select name="b_open"
+                              id="b_open" style="font-weight: bold;width: 120px;height:2rem; border:2px solid #f8f9fa; top:48px;text-align:center;border-radius:20px;" >
+                              <option value="0">비공개
+                              <option value="1">검색후공개
+                              <option value="2">모두공개
+                           </select> 
+
                         </p>
                         <ul class="etc">
                            <li><a href="bdel.do?b_no=${board.b_no }">삭제</a></li>
@@ -584,9 +602,6 @@ $('#aibutton').click(function () {
                   </a> <span class="countingLike">${board.b_like }</span></li>
                   <li class="reply"><a href="#"><i
                         class="fa-regular fa-message"></i></a></li>
-                  <li><i class="fa-solid fa-paper-plane"></i></li>
-                  <li><a href="#"><button id="recipe">레시피</button></a></li>
-                  <li><a href="#"><button id="restaurant">주변맛집</button></a></li>
 
                </ol> <!-- 댓글 -->
                <div>

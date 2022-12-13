@@ -33,7 +33,8 @@
 		update board
 		set b_content = #{b_content},
 			b_category = #{b_category},
-			b_up_date = sysdate
+			b_up_date = sysdate,
+			b_open = #{b_open}
 		where b_no = #{b_no}
 	</update>
 
