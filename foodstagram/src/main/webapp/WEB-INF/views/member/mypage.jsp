@@ -463,23 +463,23 @@ $(function(){
                     <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                     <c:if test="${ empty sessionScope.sns }">
-	                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
-	                         <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
-	                    </c:if>
+				    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
+					 <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+				    </c:if>
 
-                	<c:url var="callMyinfo" value="/myinfo.do">
-                        <c:param name="userid" value="${ member.userid }" />
-                    </c:url>
-                    <li><a href="${ callMyinfo }"><span id="id">${ member.userid }</span></a></li> 
-                  	<c:url var="moveup" value="/moveup.do">
-                     	<c:param name="userid" value="${ member.userid }"/>
-                  	</c:url>
-                    <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
-                    <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
-                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
-                   		<li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
-
-                    </c:if>
+				<c:url var="callMyinfo" value="/myinfo.do">
+				<c:param name="userid" value="${ member.userid }" />
+			    </c:url>
+			    <li><a href="${ callMyinfo }"><span id="id">${ member.userid }</span></a></li> 
+				<c:url var="moveup" value="/moveup.do">
+				<c:param name="userid" value="${ member.userid }"/>
+				</c:url>
+			    <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
+			    <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
+			    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
+					<li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+			    </c:if>	
+		</c:if>
                 </ul>
                 <ul>
                     <li id="lSize"></li>
