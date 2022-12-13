@@ -138,7 +138,7 @@ li {list-style: none;}
 	   var memberid = "${member.userid}";
 	   var loginuserid = "${loginMember.userid}";
 	   var call = "";
-
+	   var userid;
 	   if(memberid === loginuserid){
 	      userid ="${loginMember.userid}";
 	   }else{
