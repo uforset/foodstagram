@@ -16,12 +16,19 @@
 
 	<resultMap type="Notice" id="noticeAttaches">
 		<collection property="attaches"
-			column="{atch_parent_no=noticeno, atch_category=atch_category}" 
-			ofType="Attach"
-			select="attachMapper.getAttachListByParent">
+			column="{atch_parent_no=noticeno}" 
+			ofType="NoticeAttach"
+			select="noticeAttachMapper.getAttachListByParent">
 		</collection>
-	</resultMap>
+	</resultMap> 
 
+<!-- 	<resultMap type="Notice" id="noticeAttaches">
+	    <collection property="attaches"  column="{atch_parent_no=q_no, atch_category=atch_category}"
+	    ofType="Attach" 
+	    select="noticeAttachMapper.getAttachListByParent"> 
+	    </collection>
+	</resultMap> -->
+	
 	<select id="selectAll" resultMap="resultNotice">
 		select * from notice
 		order by

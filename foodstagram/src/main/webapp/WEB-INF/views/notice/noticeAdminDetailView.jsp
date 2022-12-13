@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
 <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/site.css?v=1669255025"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href="resources/css/reset.css">
+<link href="resources/css/style.css">
 <style>
 /*Layout*/
 #wrap {
@@ -423,7 +425,7 @@ th.last_bg {
 							<th><img
 								src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_04.png"
 								border="0" alt="등록일 "></th>
-							<td class="board_data">${ notice.noticedate }</td>
+							<td><fmt:formatDate value="${ notice.noticedate }" pattern="yyyy-MM-dd" /></td>
 							<th><img
 								src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_06.png"
 								border="0" alt="조회수"></th>
@@ -455,9 +457,9 @@ th.last_bg {
 							width="41" height="14" border="0" alt="첨부파일"></th>
 						<td>
 							<c:forEach var="f" items="${ notice.attaches }" varStatus="st">
-								<div> 파일 ${st.count} <a href="<c:url value='/attachDownload.do/${f.atch_no}' />" target="_blank"> 
-						        ${f.atch_original_name}
-						      	 </a> Size : ${f.atch_fancy_size} Down : ${f.atch_down_hit}
+								<div> &nbsp;&nbsp;&nbsp;&nbsp;파일 ${st.count} <a href="<c:url value='/noticeAttachDownload.do/${f.atch_no}' />" target="_blank"> 
+						        &nbsp;${f.atch_original_name}
+						      	 </a> (Size : ${f.atch_fancy_size} Down : ${f.atch_down_hit})
 						        </div>
 								</c:forEach>
 						</td>

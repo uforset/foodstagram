@@ -11,6 +11,7 @@
 	<typeAliases>
 		<typeAlias type="com.circle.foodstagram.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.circle.foodstagram.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.circle.foodstagram.notice.model.vo.NoticeAttach" alias="NoticeAttach" />
 		<typeAlias type="com.circle.foodstagram.notification.model.vo.Notification" alias="Notification" />
 		<typeAlias type="com.circle.foodstagram.food.model.vo.Food" alias="Food" />
 		<typeAlias type="com.circle.foodstagram.common.SearchDate" alias="SearchDate" />
@@ -31,6 +32,7 @@
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/noticeAttach-mapper.xml" />
 		<mapper resource="mappers/notification-mapper.xml" />
 		<mapper resource="mappers/food-mapper.xml" />
 		<mapper resource="mappers/question-mapper.xml" />
