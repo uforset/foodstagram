@@ -164,7 +164,7 @@ a {
 	color: #333;
 	background-color: #E5E5E5;
 	font-size: 13px;
-	margin: 10px 50px 0;
+	margin: 10px 152px 0;
 }
 
 #aibutton:hover {
@@ -340,6 +340,8 @@ ul {
 	height: 100px;
 }
 
+#b_reply_content {border:none;}
+
 /* hover시 영양정보 */
 i:hover {
 	color: green
@@ -473,7 +475,11 @@ $('#aibutton').click(function () {
 				align="center"><button id="aibutton">AI 인식 Start</button></a><br>
 				<br>
 				<div align="center" id="extractedTxt" name="extractedTxt" readonly>
-					<input id="extractedtxt">
+					<input id="extractedtxt"  >
+					<p style="margin-top:10px;">
+						원하는 음식 사진을 고르고 AI 인식 start버튼을 눌러주세요
+					</p>
+					<br>
 				</div>
 			</li>
 			<li><a href="#"><i class="fa-solid fa-ellipsis fa-2x"></i></a></li>
