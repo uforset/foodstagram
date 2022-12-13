@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonNode;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -115,12 +115,15 @@ public class SnsController {
 		JSONObject response_obj = (JSONObject) jsonObj.get("response");
 
 		NaverVO navervo = new NaverVO();
-
+		
+		//logger.info("출력" + response_obj.toJSONString());
+		
 		navervo.setEmail((String) response_obj.get("email"));
-		navervo.setUsername((String) response_obj.get("nickname"));
+		navervo.setUsername((String) response_obj.get("name"));
 		navervo.setUserid((String) response_obj.get("id"));
 		
-		NaverVO loginvo = snsService.selectNaverVO(navervo.getUsername());
+		NaverVO loginvo = snsService.selectNaverVO(navervo.getUserid());
+		logger.info("출력: " + loginvo);
 		if(loginvo == null) {
 			int result1 = snsService.insertNaverVO(navervo);
 		} else {
@@ -128,6 +131,7 @@ public class SnsController {
 		}
 		
 		session.setAttribute("sns", "naver");
+		session.setAttribute("access_Token", oauthToken);
 		session.setAttribute("loginMember", navervo);
 		
 		return "redirect:/main.do";
@@ -217,8 +221,4 @@ public class SnsController {
 	
 
 }
-
-
-
-
 
