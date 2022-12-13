@@ -22,7 +22,7 @@ section {
 	text-align: center;
 	margin: 0 auto;
 	width: 900px;
-	height: 838px;
+	height: 820px;
 	background-color: white;
 	border-radius: 20px;
 	box-shadow: 2px 2px 10px grey;
