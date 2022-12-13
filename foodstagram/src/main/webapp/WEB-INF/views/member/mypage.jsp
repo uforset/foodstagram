@@ -303,7 +303,6 @@
             background-color: #E5E5E5;
             font-size: 13px;
         }
-
         
         .logout,
         .updateProfile,
@@ -335,11 +334,6 @@
 
         .adminMember:hover,
         .updateProfile:hover, .logout:hover, {
-
-
-        .adminMember:hover,
-        .updateProfile:hover {
-
             background-color: #F95E25;
         }
 
@@ -383,15 +377,9 @@ var loginuserid = "${loginMember.userid}";
 var call = "";
 
 if(userid === loginuserid){
-
    call ="blistmy.do";
 }else{
    call ="blistfriend.do";
-
-	call ="blistmy.do";
-}else{
-	call ="blistfriend.do";
-
 }
 <!-- 게시글 리스트 출력처리 -->
 $(function(){
@@ -435,12 +423,6 @@ $(function(){
          
       },
       error: function(jqXHR, textStatus, errorThrown){
-
-         console.log("blist error : " + call + "," +jqXHR 
-
-         console.log("btop3 error : " + jqXHR 
-
-               + ", " + textStatus + ", " + errorThrown);
       }
    });      
 });
@@ -452,7 +434,6 @@ $(function(){
             <li class="mypageImg"><a href="#"><img src="resources/images/profile.jpg"></a></li>
             <li>
                 <ul>
-
                    <c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ member.userid }" />
                     </c:url>
@@ -463,29 +444,16 @@ $(function(){
                     <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                     <c:if test="${ empty sessionScope.sns }">
-				    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
-					 <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
-				    </c:if>
-
-				<c:url var="callMyinfo" value="/myinfo.do">
-				<c:param name="userid" value="${ member.userid }" />
-			    </c:url>
-			    <li><a href="${ callMyinfo }"><span id="id">${ member.userid }</span></a></li> 
-				<c:url var="moveup" value="/moveup.do">
-				<c:param name="userid" value="${ member.userid }"/>
-				</c:url>
-			    <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
-			    <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
-			    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
-					<li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
-			    </c:if>	
-		</c:if>
+	                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
+	                         <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+	                    </c:if>
+                    </c:if>
+                    <li><a href="${ pageContext.servletContext.contextPath }/loginPage.do"><button class="logout">로그아웃</button></a></li>
                 </ul>
                 <ul>
                     <li id="lSize"></li>
                     <li>친구 10명</li>
                 </ul>
-
                 <ul>이름 : ${ member.username }</ul>
                 <c:url var="mdel" value="/mdel.do">
 	                  <c:param name="userid" value="${ member.userid }"/>
@@ -495,11 +463,11 @@ $(function(){
         </ul>
         <c:if test="${ empty sessionScope.sns }">
 	        <c:if test="${ !empty sessionScope.loginMember and (sessionScope.loginMember.admin ne 'Y' or !empty sessionScope.sns)}">
-	         <table class="mainPage" id="blist">
-	         <!-- 게시글 출력 영역 -->
-	         </table>
-	        </c:if>
-        </c:if>
+	        <table class="mainPage" id="blist">
+	        <!-- 게시글 출력 영역 -->
+	        </table>
+	      </c:if>
+      </c:if>
       
     </section>
     <!-- TWC chatbot Scripts -->
