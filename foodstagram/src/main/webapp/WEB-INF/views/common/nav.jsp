@@ -13,6 +13,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+    <!-- TWC chatbot Scripts -->
+<script src="https://public-common-sdk.s3.ap-northeast-2.amazonaws.com/sdk/seller/Twc.plugin.js"></script>
+<script>
+(function() {
+	Twc('init', {
+		brandKey: "m0qEkQGszGQPOJycVHShoA",
+		channelType: "scenario",
+		scenarioId: "Njk=",
+		buttonOption: {
+			showLauncher: true,
+			zIndex: 10,
+			bottom: 25,
+			right: 25
+		}
+	})
+})();
+</script>
     <title></title>
     <style>
         * {
@@ -148,7 +165,7 @@ li {list-style: none;}
       $.ajax({
          url: "/foodstagram/readCheck.do",
          type: "get",
-         data: { userid: userid },
+         data: { userid: "${loginMember.userid}" },
          dataType: 'json',
          success: function(data, jqXHR, textStatus){
             //alert("readcheck : " + data.read);

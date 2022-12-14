@@ -132,7 +132,7 @@ public class MemberController {
    }
 
    // 로그인 처리용 메소드 : 커맨드 객체(command object) 사용
-   @RequestMapping(value="login.do", method=RequestMethod.POST)
+   @RequestMapping(value="main.do", method=RequestMethod.POST)
    public String loginMethod(@RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd,
          HttpSession loginSession, SessionStatus status, Model model) {
 	   
@@ -310,7 +310,7 @@ public class MemberController {
          //쿼리스트링 : ?이름=값&이름=값
          HttpSession session = request.getSession(false);
          session.invalidate(); //세션 객체를 없앰
-         return "redirect:main.do";
+         return "member/loginPage";
       }else {
          model.addAttribute("message", 
                member.getUserid() + " : 회원 정보 수정 실패!");
@@ -674,7 +674,6 @@ public class MemberController {
 	
 
 }
-
 
 
 

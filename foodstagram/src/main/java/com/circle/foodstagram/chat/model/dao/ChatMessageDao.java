@@ -28,10 +28,6 @@ public class ChatMessageDao {
 		return list;
 	}
 	
-	public List<ChatMessage> paging() {
-		return null;
-	}
-
 	public List<ChatMessage> getChatMessageRowLimitingClausePaging(Map<String, Object> map) {
 		return session.selectList("chatMessageMapper.getChatMessageRowLimitingClausePaging", map);
 	}

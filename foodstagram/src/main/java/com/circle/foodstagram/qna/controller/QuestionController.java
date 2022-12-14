@@ -173,7 +173,7 @@ public class QuestionController {
 	
 	@ResponseBody
 	@RequestMapping(value = "insertQuestion.do", method = RequestMethod.POST)
-	public String fileUpload(
+	public String insertQuestionMethod(
 			@RequestParam(name="boFiles", required=false)MultipartFile[] boFiles
 			, Question question
 			, HttpServletRequest request) {
@@ -253,7 +253,7 @@ public class QuestionController {
 	
 	@PostMapping("questionModify.do")
 	@ResponseBody
-	public String questionModifyMethod(
+	public String updateQuestionMethod(
 			@RequestParam(name="boFiles", required=false)MultipartFile[] boFiles,
 			Question question,
 			HttpServletRequest request) {
@@ -409,7 +409,7 @@ public class QuestionController {
 	
 	@PostMapping("questionDelete.do")
 	@ResponseBody
-	public String questionDeleteMethod( 
+	public String deleteQuestionMethod( 
 			Question question,
 			HttpServletRequest request) {
 		String strResult = "{ \"result\":\"FAIL\" }";

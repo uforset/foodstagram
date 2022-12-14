@@ -242,24 +242,10 @@
         
     </style>
 </head>
-<!-- TWC chatbot Scripts -->
-<script src="https://public-common-sdk.s3.ap-northeast-2.amazonaws.com/sdk/seller/Twc.plugin.js"></script>
+
+
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
-<script>
-(function() {
-	Twc('init', {
-		brandKey: "m0qEkQGszGQPOJycVHShoA",
-		channelType: "scenario",
-		scenarioId: "Njk=",
-		buttonOption: {
-			showLauncher: true,
-			zIndex: 10,
-			bottom: 25,
-			right: 25
-		}
-	})
-})();
-</script>
+
 
 <script type="text/javascript">
 <!-- 게시글 리스트 출력처리 -->

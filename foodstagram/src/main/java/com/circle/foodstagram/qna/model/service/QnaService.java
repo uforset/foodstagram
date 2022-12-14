@@ -21,7 +21,6 @@ public interface QnaService {
 	ArrayList<Question> selectMyQuestionList(Map<String, Object> map);
 	int selectMyListCount(String userid);
 	
-	int updateAnswerCheck();
 	
 	int insertAnswer(Answer answer);
 	int updateAnswer(Answer answer);

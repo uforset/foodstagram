@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.circle.foodstagram.chat.model.dao.ChatRoomDao;
-import com.circle.foodstagram.chat.model.service.ChatRoomService;
 import com.circle.foodstagram.chat.model.service.ChatService;
 import com.circle.foodstagram.chat.model.vo.ChatMessage;
 import com.circle.foodstagram.chat.model.vo.ChatRoom;
@@ -43,8 +42,6 @@ import net.sf.json.JSONObject;
 @Log4j
 public class RoomController {
 	
-	@Autowired
-	private ChatRoomService chatRoomService;
 
 	@Autowired
 	private ChatService chatService;
@@ -92,10 +89,6 @@ public class RoomController {
     }
     */
     
-	@GetMapping("testRooms.do")
-	public String moveTest() {
-		return "chat/testRooms";
-	}
 	
     // new
     //채팅방 개설
@@ -235,7 +228,7 @@ public class RoomController {
     
     //채팅방 목록 조회
     @GetMapping(value = "/rooms")
-    public String room(HttpSession session, Model model){
+    public String roomList(HttpSession session, Model model){
 
     	Member loginMember = (Member) session.getAttribute("loginMember");
     	if(loginMember == null) {
