@@ -247,11 +247,9 @@ li {list-style: none;}
             <li style="width: 350px;margin-left: 350px;">
                 <ol class="navlist">
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
-                    <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
-                    <c:if test="${ empty sessionScope.sns }">
-	                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
-	                    <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
-	                    </c:if>
+                    <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li> 
+	            <c:if test="${ (!empty sessionScope.loginMember and !empty sessionScope.sns) or sessionScope.loginMember.admin ne 'Y'}">
+	                <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li> 
                     </c:if>
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
                     <c:url var="callMyinfo" value="/myinfo.do">
