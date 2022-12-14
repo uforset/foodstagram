@@ -21,7 +21,7 @@
 
 <br><br><br><br><br><br>
 
-<h1 align="center">Error Page</h1>
+<h1 align="center">Error Page..${ message }</h1>
 <!-- 다른 jsp 에서 exception이 넘어온 경우의 처리 -->
 <c:set var="e" value="<%= exception %>" />
 <c:if test="${ !empty e }">  <!-- if(e != null) 과 같음 -->

@@ -237,7 +237,7 @@ public class QuestionController {
 			,int q_no) {
 		
 		Question q = qnaService.getQuestion(q_no);	// 이거하나로 질문에연결된 첨부파일도 List에 세팅이 됨 resultMap 이용 mapper참고	
-		log.info(q); 
+		//q.getAttaches() 
 		
 		// 답글이 있을경우 답글도 넣어줌
 		if( q.getAnswercheck().equals("Y") ) { //답변존재 
@@ -247,8 +247,6 @@ public class QuestionController {
 		
 		model.addAttribute("q", q);
 
-		
-		
 		return "qna/qnaDetail";
 	}
 	

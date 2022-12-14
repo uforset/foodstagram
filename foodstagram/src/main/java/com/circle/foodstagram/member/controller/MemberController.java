@@ -132,7 +132,7 @@ public class MemberController {
    }
 
    // 로그인 처리용 메소드 : 커맨드 객체(command object) 사용
-   @RequestMapping(value="main.do", method=RequestMethod.POST)
+   @RequestMapping(value="login.do", method=RequestMethod.POST)
    public String loginMethod(@RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd,
          HttpSession loginSession, SessionStatus status, Model model) {
 	   
