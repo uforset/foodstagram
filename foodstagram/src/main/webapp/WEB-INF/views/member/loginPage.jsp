@@ -230,7 +230,7 @@ td a:hover {
 			</span>
 		</div>
 
-		<form action="login.do" method="post" align="center">
+		<form action="main.do" method="post" align="center">
 			<h1 align="center" style="margin-top: 5px;">
 				<a href="#"><img src="resources/images/name.png"></a>
 			</h1>
