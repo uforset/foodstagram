@@ -25,7 +25,7 @@
 					values (default,
 							#{a_ref},
 							#{userid},
-							default,
+							#{a_date},
 							#{a_content})
 	</insert>
 
@@ -33,7 +33,7 @@
 		update answer set
 					a_content = #{a_content},
 					userid = #{userid},
-					a_date = SYSDATE
+					a_date = #{a_date}
 				where
 					a_id = #{a_id}
 	</update>

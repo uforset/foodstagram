@@ -1,5 +1,7 @@
 package com.circle.foodstagram.qna.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,7 @@ public class AnswerController {
 			HttpServletRequest request) {
 		
 		String strResult = "{ \"result\":\"FAIL\" }";
-	
+		answer.setA_date(new Date());
 		if (qnaService.insertAnswer(answer) > 0  ) {
 			log.info("답변 입력 성공" + answer.toString());
 			
@@ -70,7 +72,7 @@ public class AnswerController {
 			Answer answer,
 			HttpServletRequest request) {
 		String strResult = "{ \"result\":\"FAIL\" }";
-		
+		answer.setA_date(new Date());
 		try {
 			if (qnaService.updateAnswer(answer) > 0) {
 				log.info("답변수정 성공.");

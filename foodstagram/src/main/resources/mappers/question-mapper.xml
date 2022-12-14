@@ -67,7 +67,7 @@
 					values 	   (default,
 								#{userid},
 								#{q_title},
-								default,
+								#{q_date},
 								#{q_content},
 								'N')
 		<selectKey keyProperty="q_no" resultType="int" order="AFTER">
@@ -85,7 +85,7 @@
 	<update id="updateQuestion" parameterType="Question">
 		update Question set 
 							q_title=#{q_title},
-							q_date = SYSDATE,
+							q_date = #{q_date},
 							q_content = #{q_content}
 						where 
 							q_no = #{q_no}

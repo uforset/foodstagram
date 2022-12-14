@@ -1,6 +1,7 @@
 package com.circle.foodstagram.qna.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -205,6 +206,7 @@ public class QuestionController {
 		}
 		
 		// 글등록
+		question.setQ_date(new Date());
 		if( qnaService.insertQuestion(question) > 0 ) {
 			log.info("질문등록성공" + question.toString());
 			//strResult = "{ \"result\":\"success\" }";
@@ -311,6 +313,7 @@ public class QuestionController {
 			}
 			
 			// 업로드후 질문update
+			question.setQ_date(new Date());
 			if (qnaService.updateQuestion(question) > 0) {
 				log.info("질문수정 성공.");
 				strResult = "{ \"result\":\"success\" }";
