@@ -33,7 +33,8 @@
 		update board
 		set b_content = #{b_content},
 			b_category = #{b_category},
-			b_up_date = sysdate
+			b_up_date = sysdate,
+			b_open = #{b_open}
 		where b_no = #{b_no}
 	</update>
 
@@ -80,7 +81,13 @@
 		from board
 		where b_no = #{b_no}
 	</select>
-
+	
+	<select id="countBoard" resultType="int" parameterType="string">
+		select count(*)
+		from board
+		where userid = #{userid}
+	</select>
+	
 	<select id="searchBoard" parameterType="string" resultMap="resultAttach">
 		select a.atch_parent_no, a.atch_file_name
 		from board b

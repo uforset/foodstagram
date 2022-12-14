@@ -22,7 +22,7 @@ section {
 	text-align: center;
 	margin: 0 auto;
 	width: 900px;
-	height: 838px;
+	height: 820px;
 	background-color: white;
 	border-radius: 20px;
 	box-shadow: 2px 2px 10px grey;
@@ -130,6 +130,9 @@ li>#preview {
 <script type="text/javascript">
 	function validation() {
 		var fileValue = document.getElementById("boFiles").value;
+		if($("#cam").val() != null){
+			return true;
+		}
 		if (fileValue == null || fileValue == "") {
 			alert("이미지 첨부는 필수 입니다.");
 			return false;
@@ -163,9 +166,11 @@ function readURL(input) {
 				href="${ pageContext.servletContext.contextPath }/main.do"><i
 					class="fa-solid fa-x"></i></a></li>
 		</ul>
-
 		<form id="regForm" action="binsert.do" method="post"
 			enctype="multipart/form-data" onsubmit="return validation();" style="position: absolute;" class="post">
+			<c:if test="${ not empty file_name }">
+				<input type="hidden" name="cam" value="${ file_name }" id="cam">
+			</c:if>
 			<div type="content">
 				<div class="title-wrap" >
 					<!-- 아이디 보임 -->
@@ -190,15 +195,16 @@ function readURL(input) {
 							};
 						</script>
 
-						<%-- <button class="takePic">
-							<a href="${ pageContext.servletContext.contextPath }/bwtakepic.do">사진
-								찍기</a>
-						</button> --%>
+						
 						<br>
-
+						
+						<button class="takePic">
+							<a href="${ pageContext.servletContext.contextPath }/boardTakePictures.do">사진
+								찍기</a>
+						</button>
 						<!-- 이미지업데이트 -->
 						<ul style="position: relative; bottom: 670px; left: 5px;">
-							<li><img id="preview" ></li>
+							<li><img id="preview"  src="${ pageContext.servletContext.contextPath }/resources/uploaded_foodImage/${ file_name }"></li>
 							<input multiple="multiple" id="boFiles" type="file"
 								name="boFiles" onchange="readURL(this);" />
 							<br>

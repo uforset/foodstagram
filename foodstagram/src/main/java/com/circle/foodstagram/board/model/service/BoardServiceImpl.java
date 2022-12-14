@@ -50,6 +50,11 @@ public class BoardServiceImpl implements BoardService {
 	public Board selectBoard(int b_no) {
 		return boardDao.selectBoard(b_no);
 	}
+	
+	@Override
+	public int countBoard(String userid) {
+		return boardDao.countBoard(userid);
+	}
 
 	@Override
 	public ArrayList<BoardAttach> searchBoard(String Tag) {

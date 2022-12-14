@@ -379,9 +379,9 @@ var call = "";
 var page = 1;
 
 if(userid === loginuserid){
-	call ="blistmy.do?page=" + page;
+	call ="blistmy.do";
 }else{
-	call ="blistfriend.do?page=" + page;
+	call ="blistfriend.do";
 }
 <!-- 게시글 리스트 출력처리 -->
 
@@ -399,9 +399,11 @@ var startEvent = {
 			type: "post",
 			dataType: "json",
 			data: {
-				userid: "${member.userid}"
+				userid: "${member.userid}",
+				page: page
 			},
 			success: function(data){
+				console.log("success : " + data); //Object 로 출력됨
 					         
 				var jsonStr = JSON.stringify(data);
 				var json = JSON.parse(jsonStr);
@@ -431,7 +433,7 @@ var startEvent = {
 				}
 				$("#blist").html($("#blist").html() + bvalues);
 				
-				$("#lSize").html("게시물 " + json.list.length);
+				$("#lSize").html("게시물 " + data.countboard);
 				
 			},
 			error: function(jqXHR, textStatus, errorThrown){
@@ -451,7 +453,8 @@ var startEvent = {
 					type: "post",
 					dataType: "json",
 					data: {
-						userid: "${member.userid}"
+						userid: "${member.userid}",
+						page: page
 					},
 					success: function(data){
 						console.log("success : " + data); //Object 로 출력됨
@@ -462,6 +465,7 @@ var startEvent = {
 						var bvalues = "";
 						
 						var count = 1;
+						console.log("json.list.length" + json.list.length)
 						if(json.list.length <= 0) return;
 						
 						for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
@@ -503,13 +507,13 @@ var startEvent = {
             <li class="mypageImg"><a href="#"><img src="resources/images/profile.jpg"></a></li>
             <li>
                 <ul>
-                   <c:url var="callMyinfo" value="/myinfo.do">
+                   	<c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ member.userid }" />
-                    </c:url>
+                   	</c:url>
                     <li><a href="${ callMyinfo }"><span id="id">${ member.userid }</span></a></li> 
-                     <c:url var="moveup" value="/moveup.do">
-                        <c:param name="userid" value="${ member.userid }"/>
-                     </c:url>
+                    	<c:url var="moveup" value="/moveup.do">
+                        	<c:param name="userid" value="${ member.userid }"/>
+                    	</c:url>
                     <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                     <c:if test="${ empty sessionScope.sns }">
@@ -517,26 +521,29 @@ var startEvent = {
 	                         <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
 	                    </c:if>
                     </c:if>
-                    <li><a href="${ pageContext.servletContext.contextPath }/loginPage.do"><button class="logout">로그아웃</button></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/logout.do"><button class="logout">로그아웃</button></a></li>
                 </ul>
                 <ul>
                     <li id="lSize"></li>
-                    <li>친구 10명</li>
                 </ul>
                 <ul>이름 : ${ member.username }</ul>
-                <c:url var="mdel" value="/mdel.do">
-	                  <c:param name="userid" value="${ member.userid }"/>
-	               </c:url>
-	                     <button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
+                <c:if test="${ member.userid eq loginMember.userid }">
+                	<c:url var="mdel" value="/mdel.do">
+	            		<c:param name="userid" value="${ member.userid }"/>
+	            	</c:url>
+	            	<c:if test="sessionScope.loginMember.admin ne 'Y'">
+	                	<button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
+            		</c:if>
+            	</c:if>
             </li>
         </ul>
-        <c:if test="${ empty sessionScope.sns }">
-	        <c:if test="${ !empty sessionScope.loginMember and (sessionScope.loginMember.admin ne 'Y' or !empty sessionScope.sns)}">
-	        <table class="mainPage" id="blist">
-	        <!-- 게시글 출력 영역 -->
-	        </table>
-	      </c:if>
-      </c:if>
+        
+	        <c:if test="${ (!empty sessionScope.loginMember and !empty sessionScope.sns) or sessionScope.loginMember.admin ne 'Y'}">
+		        <table class="mainPage" id="blist">
+		        <!-- 게시글 출력 영역 -->
+		        </table>
+	      	</c:if>
+      
       
     </section>
     <!-- TWC chatbot Scripts -->
@@ -561,21 +568,7 @@ var startEvent = {
 
 
     <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
-    <script>
-        // 모달창
-        const open = () => {
-            document.querySelector(".modal").classList.remove("hidden");
-        }
 
-        const close = () => {
-            document.querySelector(".modal").classList.add("hidden");
-        }
-
-        document.querySelector(".openBtn").addEventListener("click", open);
-        document.querySelector(".closeBtn").addEventListener("click", close);
-        document.querySelector(".bg").addEventListener("click", close);
-
-    </script>
 </body>
 
 </html>
