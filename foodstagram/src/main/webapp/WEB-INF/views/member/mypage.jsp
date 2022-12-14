@@ -507,13 +507,13 @@ var startEvent = {
             <li class="mypageImg"><a href="#"><img src="resources/images/profile.jpg"></a></li>
             <li>
                 <ul>
-                   <c:url var="callMyinfo" value="/myinfo.do">
+                   	<c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ member.userid }" />
-                    </c:url>
+                   	</c:url>
                     <li><a href="${ callMyinfo }"><span id="id">${ member.userid }</span></a></li> 
-                     <c:url var="moveup" value="/moveup.do">
-                        <c:param name="userid" value="${ member.userid }"/>
-                     </c:url>
+                    	<c:url var="moveup" value="/moveup.do">
+                        	<c:param name="userid" value="${ member.userid }"/>
+                    	</c:url>
                     <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                     <c:if test="${ empty sessionScope.sns }">
@@ -539,10 +539,10 @@ var startEvent = {
         </ul>
         
 	        <c:if test="${ (!empty sessionScope.loginMember and !empty sessionScope.sns) or sessionScope.loginMember.admin ne 'Y'}">
-	        <table class="mainPage" id="blist">
-	        <!-- 게시글 출력 영역 -->
-	        </table>
-	      </c:if>
+		        <table class="mainPage" id="blist">
+		        <!-- 게시글 출력 영역 -->
+		        </table>
+	      	</c:if>
       
       
     </section>
