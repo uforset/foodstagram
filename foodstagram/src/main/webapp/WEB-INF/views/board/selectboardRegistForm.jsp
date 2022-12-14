@@ -191,7 +191,7 @@ width: 450px;
 						</select>
 					</div>
 					<!-- 컨텐츠 입력 -->
-					<textarea id="b_content" name="b_content" required></textarea>
+					<textarea id="b_content" name="b_content"  maxlength="200" required></textarea>
 					<div class="btn">
 						<!-- 						<button class="uploadPic" onclick="showfile(); return false;">
 							컴퓨터에서 선택</button> -->
