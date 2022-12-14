@@ -363,12 +363,10 @@ $(function (){
 		    data: { userList: users.toString() }, // 넘길 데이터
 		    dataType: "json", // 데이터 타입 json으로 설정 <- 이걸 안하면 밑에 처럼 JSON.parse를 해야함
 		    success: function(data) {
-		    	alert("등록 되었습니다."+data.uuid);
 		    	location.href='/foodstagram/chat/room?roomId='+data.uuid;
 		    },
 		    error: function () {
-	            // handle upload error
-	            // ...
+		    	alert("잠시후 다시 시도해주세요.");
 	        }
 		});
 	});

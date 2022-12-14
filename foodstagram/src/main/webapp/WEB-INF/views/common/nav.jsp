@@ -165,7 +165,7 @@ li {list-style: none;}
       $.ajax({
          url: "/foodstagram/readCheck.do",
          type: "get",
-         data: { userid: userid },
+         data: { userid: "${loginMember.userid}" },
          dataType: 'json',
          success: function(data, jqXHR, textStatus){
             //alert("readcheck : " + data.read);
