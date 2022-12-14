@@ -535,13 +535,13 @@ var startEvent = {
 	            </c:if>
             </li>
         </ul>
-        <c:if test="${ empty sessionScope.sns }">
-	        <c:if test="${ !empty sessionScope.loginMember and (sessionScope.loginMember.admin ne 'Y' or !empty sessionScope.sns)}">
+        
+	        <c:if test="${ (!empty sessionScope.loginMember and !empty sessionScope.sns) or sessionScope.loginMember.admin ne 'Y'}">
 	        <table class="mainPage" id="blist">
 	        <!-- 게시글 출력 영역 -->
 	        </table>
 	      </c:if>
-      </c:if>
+      
       
     </section>
     <!-- TWC chatbot Scripts -->
