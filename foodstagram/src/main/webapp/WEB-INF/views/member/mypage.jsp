@@ -515,10 +515,11 @@ var startEvent = {
                         	<c:param name="userid" value="${ member.userid }"/>
                     	</c:url>
                     <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
-                    <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
+                    <!-- 관리자로그인일때 회원관리 버튼이 나타나야함, 문의 관리 버튼도 -->
                     <c:if test="${ empty sessionScope.sns }">
 	                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
 	                         <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
+	                    	 <li><a href="${ pageContext.servletContext.contextPath }/question.do"><button class="adminMember">문의관리</button></a></li>
 	                    </c:if>
                     </c:if>
                     <li><a href="${ pageContext.servletContext.contextPath }/logout.do"><button class="logout">로그아웃</button></a></li>
