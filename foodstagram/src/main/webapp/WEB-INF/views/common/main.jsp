@@ -278,88 +278,70 @@ var startEvent = {
 			type: "post",
 			dataType: "json",
 			success: function(data){
-				console.log("success : " + data); //Object 로 출력됨
-				
 				var jsonStr = JSON.stringify(data);
 				var json = JSON.parse(jsonStr);
-				
 				var bvalues = "";
-	
 				var count = 1;
-				
-				for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+				for(var i in json.list){
 					if(count % 3 == 1){
 						bvalues += "<tr>";
 					}
-				
-					bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+					bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no 
+							+ '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name 
+							+ '" class="openBtn"></a></td>';
 					count++;
-					
 					if(count % 3 == 1){
 						bvalues += "</tr>";
 					}
-				} //for in
+				}
 				if(count != 4){
-	
 					for(var n = count; n <= 3; n++){
 						bvalues += "<td>&nbsp;</td>";
 					}
 					bvalues += "</tr>";
 				}
 				$("#blist").html($("#blist").html() + bvalues);
-				
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				console.log("btop3 error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
 			}
 		});
-
 	},
 	
 	
 	eventData: function(){
 		$(window).scroll(function() {
 		    if(Math.round($(window).scrollTop()) == $(document).height() - $(window).height()) {
-		    	
 		    	page++;
-		        
 		    	$.ajax({
 		    		url: "blistAll.do?page=" + page,
 		    		type: "post",
 		    		dataType: "json",
 		    		success: function(data){
-		    			console.log("success : " + data); //Object 로 출력됨
-		    			
 		    			var jsonStr = JSON.stringify(data);
 		    			var json = JSON.parse(jsonStr);
-		    			
 		    			var bvalues = "";
-	
 		    			var count = 1;
 		    			if(json.list.length <= 0) return;
-		    			
-		    			for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+		    			for(var i in json.list){
 		    				if(count % 3 == 1){
 		    					bvalues += "<tr>";
 		    				}
-		    				bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+		    				bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no 
+		    						+ '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name 
+		    						+ '" class="openBtn"></a></td>';
 		    				count++;
-		    				
 		    				if(count % 3 == 1){
 		    					bvalues += "</tr>";
 		    					}
-		    			} //for in
-		    			
+		    			}
 		    			if(count != 4){
-	
 		    				for(var n = count; n <= 3; n++){
 		    					bvalues += "<td>&nbsp;</td>";
 		    				}
 		    				bvalues += "</tr>";
 		    			}
-		    			
 		    			$("#blist").html($("#blist").html() + bvalues);
-		    			
 		    		},
 		    		error: function(jqXHR, textStatus, errorThrown){
 		    			console.log("btop3 error : " + jqXHR + ", " + textStatus + ", " + errorThrown);

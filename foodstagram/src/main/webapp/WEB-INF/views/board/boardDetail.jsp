@@ -413,61 +413,61 @@ $('#aibutton').click(function () {
 });
 </script>
 <script>
-                    window.onload = function () {
-                        const kindWrap = document.querySelector('.kind_wrap');
-                        const slider = kindWrap.querySelector('.slider');
-                        const slideLis = slider.querySelectorAll('li')
-                        const moveButton = kindWrap.querySelector('.arrow');
+window.onload = function () {
+    const kindWrap = document.querySelector('.kind_wrap');
+    const slider = kindWrap.querySelector('.slider');
+    const slideLis = slider.querySelectorAll('li')
+    const moveButton = kindWrap.querySelector('.arrow');
 
-                        /* ul 넓이 계산해 주기 */
-                        const liWidth = slideLis[0].clientWidth;
-                        var sliderWidth = liWidth * slideLis.length;
-                        slider.style.width = sliderWidth + "px";
-                        /* 리스너 설치하기 */
-                        //let currentIdx = 0; // 슬라이드 현재 번호
-                        let translate = 0; // 슬라이드 위치 값
-                        moveButton.addEventListener('click', moveSlide);
+    /* ul 넓이 계산해 주기 */
+    const liWidth = slideLis[0].clientWidth;
+    var sliderWidth = liWidth * slideLis.length;
+    slider.style.width = sliderWidth + "px";
+    /* 리스너 설치하기 */
+    //let currentIdx = 0; // 슬라이드 현재 번호
+    let translate = 0; // 슬라이드 위치 값
+    moveButton.addEventListener('click', moveSlide);
 
-                        function moveSlide(event) {
-                            event.preventDefault();
-                            if (event.target.className === 'next') {
-                                if (currentIdx !== slideLis.length - 1) {
-                                    translate -= liWidth;
-                                    slider.style.transform = 'translateX(' + translate + 'px)';
-                                    currentIdx += 1;
-                                }
-                            } else if (event.target.className === 'prev') {
-                                if (currentIdx !== 0) {
-                                    translate += liWidth;
-                                    slider.style.transform = 'translateX(' + translate + 'px)';
-                                    currentIdx -= 1;
-                                }
-                            }
-                        }
+    function moveSlide(event) {
+        event.preventDefault();
+        if (event.target.className === 'next') {
+            if (currentIdx !== slideLis.length - 1) {
+                translate -= liWidth;
+                slider.style.transform = 'translateX(' + translate + 'px)';
+                currentIdx += 1;
+            }
+        } else if (event.target.className === 'prev') {
+            if (currentIdx !== 0) {
+                translate += liWidth;
+                slider.style.transform = 'translateX(' + translate + 'px)';
+                currentIdx -= 1;
+            }
+        }
+    }
 
-                    }
-                </script>
+}
+</script>
 <!-- 게시물 수정용 -->
 <script type="text/javascript">
-                    function bupdate() {
-                        var contentValue = document.getElementById("b_content").value;
-                        var categoryValue = document.getElementById("b_category").value;
-                        var openValue = document.getElementById("b_open").value;
-
-                        location.href = 'bupdate.do?b_content=' + contentValue + '&b_category='
-                            + categoryValue + '&b_no=${board.b_no}' + '&b_open=' + openValue;
-                    }
-                </script>
+	function bupdate() {
+	    var contentValue = document.getElementById("b_content").value;
+	    var categoryValue = document.getElementById("b_category").value;
+	    var openValue = document.getElementById("b_open").value;
+	
+	    location.href = 'bupdate.do?b_content=' + contentValue + '&b_category='
+	        + categoryValue + '&b_no=${board.b_no}' + '&b_open=' + openValue;
+	}
+</script>
 <script type="text/javascript">
-                    $(function () {
-                        $("ul.slider").on("mouseover", function () {
-                            $("div.info").css("display", "block");
-                        });
-                        $("ul.slider").on("mouseleave", function () {
-                            $("div.info").css("display", "none");
-                        });
-                    });
-                </script>
+    $(function () {
+        $("ul.slider").on("mouseover", function () {
+            $("div.info").css("display", "block");
+        });
+        $("ul.slider").on("mouseleave", function () {
+            $("div.info").css("display", "none");
+        });
+    });
+</script>
 </head>
 
 <body>
@@ -536,30 +536,29 @@ $('#aibutton').click(function () {
             <li class="content">
                <!-- 다른 유저의 프로필사진, id, 글쓴내용, 지도  -->
                <ol>
-                  <li><c:url var="callMyinfo" value="/myinfo.do">
-                        <c:param name="userid" value="${ board.userid }" />
-                     </c:url></li>
-                  <li><a href="${ callMyinfo }"><textarea id="id" class="id">${ board.userid }</textarea></a>
+	               <li>
+	               		<c:url var="callMyinfo" value="/myinfo.do">
+	                    	<c:param name="userid" value="${ board.userid }" />
+	                  	</c:url>
+	               </li>
+	               <li><a href="${ callMyinfo }"><textarea id="id" class="id">${ board.userid }</textarea></a>
+	               </li>
+	               <li>
+                  		<c:if test="${board.userid ne loginMember.userid }">
+	                        <p class="modalContent">${board.b_content }
+	                           <span><a href="bsearch.do?b_category=${board.b_category }"><br>${board.b_category }</a></span>
+	                        </p>
+                     	</c:if>
                   </li>
-                  <li><c:if test="${board.userid ne loginMember.userid }">
-                        <p class="modalContent">${board.b_content }
-                           <span><a
-                              href="bsearch.do?b_category=${board.b_category }"><br>${board.b_category
-                                                        }</a></span>
-                        </p>
-                     </c:if></li>
-                  <li style="position: relative;"><c:if
-                        test="${board.userid eq loginMember.userid }">
+                  <li style="position: relative;">
+                  		<c:if test="${board.userid eq loginMember.userid }">
                         <p class="modalContent">
-                           <textarea name="b_content" id="b_content">${board.b_content }</textarea>
-                           <span><br><br><br> 
-                           <a href="bsearch.do?b_category=${board.b_category }">${board.b_category
-                                                        }</a></span>
+                           <textarea name="b_content" id="b_content" maxlength="200">${board.b_content }</textarea>
+                           <span>
+                           <br>
+                           <a href="bsearch.do?b_category=${board.b_category }">${board.b_category }</a></span>
                            <span>카테고리를 변경할 경우 선택해주세요.</span>
-                           <br>
-                           <br>
-                           <select name="b_category"
-                              id="b_category" style="font-weight: bold;width: 120px;height:2rem; border:2px solid #f8f9fa; top:48px;text-align:center;border-radius:20px;" >
+                           <select name="b_category" id="b_category" style="font-weight: bold;width: 150px;height:2rem; border:2px solid #f8f9fa; top:48px;text-align:center;border-radius:20px;" >
                               <option value="갈비탕">갈비탕
                               <option value="과일채소샐러드">과일채소샐러드
                               <option value="닭갈비">닭갈비
@@ -573,86 +572,81 @@ $('#aibutton').click(function () {
                               <option value="스튜">스튜
                            </select>
                            <c:if test="${ board.b_open eq '0' }">
-                           	<span>현재 상태 : 비공개</span>
+                           		<span>현재 상태 : 비공개</span>
                            </c:if>
                            <c:if test="${ board.b_open eq '1' }">
-                           	<span>현재 상태 : 검색후공개</span>
+                           		<span>현재 상태 : 검색후공개</span>
                            </c:if>
                            <c:if test="${ board.b_open eq '2' }">
-                           	<span>현재 상태 : 모두공개</span>
+                           		<span>현재 상태 : 모두공개</span>
                            </c:if>
-                            <select name="b_open"
-                              id="b_open" style="font-weight: bold;width: 120px;height:2rem; border:2px solid #f8f9fa; top:48px;text-align:center;border-radius:20px;" >
+                           <select name="b_open" id="b_open" style="font-weight: bold;width: 120px;height:2rem; border:2px solid #f8f9fa; top:48px;text-align:center;border-radius:20px;" >
                               <option value="0">비공개
                               <option value="1">검색후공개
                               <option value="2">모두공개
                            </select> 
-
                         </p>
                         <ul class="etc">
                            <li><a href="bdel.do?b_no=${board.b_no }">삭제</a></li>
                            <li><a href="javascript:bupdate();">수정</a></li>
                         </ul>
                      </c:if></li>
-
-
                </ol>
-
             </li>
             <li>
                <ol class="lr">
                   <!-- 좋아요 수 -->
-                  <li><a
-                     href="javascript:location.href='addlike.do?b_no=${board.b_no }';">
+                  <li>
+                  	<a href="javascript:location.href='addlike.do?b_no=${board.b_no }';">
                         <i class="fa-solid fa-heart"></i>
-                  </a> <span class="countingLike">${board.b_like }</span></li>
-                  <li class="reply"><a href="#"><i
-                        class="fa-regular fa-message"></i></a></li>
+                  </a> <span class="countingLike">${board.b_like }</span>
+                  </li>
+                  <li class="reply">
+                  	<a href="#"><i class="fa-regular fa-message"></i></a>
+                  </li>
 
                </ol> <!-- 댓글 -->
                <div>
                   <ul class="replyBox">
                      <form action="rinsert.do" method="POST">
                         <input type="hidden" name="b_no" value="${board.b_no }">
-                        <input type="hidden" name="userid"
-                           value="${loginMember.userid }">
+                        <input type="hidden" name="userid" value="${loginMember.userid }">
                         <li><textarea class="replyRig" name="b_reply_content"></textarea></li>
-                        <li><input class="replyBtn" type="submit" value="댓글등록"
-                           style="cusor: pointer;"><a href="#"></a></li>
+                        <li><input class="replyBtn" type="submit" value="댓글등록" style="cusor: pointer;"><a href="#"></a></li>
                      </form>
                      <!-- 새로고침 -->
-                     <li class="resetBtn"><a href="#"> <i
-                           class="fa-solid fa-arrows-rotate"></i>
-                     </a></li>
+                    <li class="resetBtn">
+                    	<a onclick="reload();"> <i class="fa-solid fa-arrows-rotate"></i></a>
+                    </li>
                   </ul>
                   <ul class="replyList">
                      <c:forEach items="${rList }" var="r">
                         <c:if test="${r.userid ne loginMember.userid }">
-                           <li>${r.b_reply_content }</li>
+                           <li>${r.userid }&nbsp;:&nbsp;${r.b_reply_content }</li>
                         </c:if>
                         <c:if test="${r.userid eq loginMember.userid }">
-                           <li style="positon: relative; left: 100px; bottom: 100px;"><textarea
-                                 id="b_reply_content">${r.b_reply_content }</textarea>
+                           <li style="positon: relative; left: 100px; bottom: 100px;">${r.userid }&nbsp;:&nbsp;
+                           	<textarea id="b_reply_content" style="border: none;resize:none;">${r.b_reply_content }</textarea>
                               <button onclick="rupdate();">수정</button>
-                              <button
-                                 onclick="javascript:location.href='rdel.do?b_no=${board.b_no }&b_reply_no=${r.b_reply_no}';">삭제</button>
+                              <button onclick="javascript:location.href='rdel.do?b_no=${board.b_no }&b_reply_no=${r.b_reply_no}';">삭제</button>
                            </li>
                         </c:if>
                         <script type="text/javascript">
-                                                function rupdate() {
-                                                    var contentValue = document
-                                                        .getElementById("b_reply_content").value;
-                                                    location.href = 'rupdate.do?b_reply_content='
-                                                        + contentValue
-                                                        + '&b_reply_no=${r.b_reply_no}&b_no=${board.b_no}';
-                                                }
-                                            </script>
+                            function rupdate() {
+                                var contentValue = document
+                                    .getElementById("b_reply_content").value;
+                                location.href = 'rupdate.do?b_reply_content='
+                                    + contentValue
+                                    + '&b_reply_no=${r.b_reply_no}&b_no=${board.b_no}';
+                            }
+                            
+                            function reload(){
+                            	location.reload(true);
+                            }
+                        </script>
                      </c:forEach>
                   </ul>
-
                </div>
-
-
             </li>
             </ol>
             </li>

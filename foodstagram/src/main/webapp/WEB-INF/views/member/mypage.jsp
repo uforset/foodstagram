@@ -375,7 +375,6 @@
 var userid = "${member.userid}";
 var loginuserid = "${loginMember.userid}";
 var call = "";
-
 var page = 1;
 
 if(userid === loginuserid){
@@ -383,8 +382,6 @@ if(userid === loginuserid){
 }else{
 	call ="blistfriend.do";
 }
-<!-- 게시글 리스트 출력처리 -->
-
 
 $(function(){
 	startEvent.firstData();
@@ -403,38 +400,30 @@ var startEvent = {
 				page: page
 			},
 			success: function(data){
-				console.log("success : " + data); //Object 로 출력됨
-					         
 				var jsonStr = JSON.stringify(data);
 				var json = JSON.parse(jsonStr);
-					         
 				var bvalues = "";
-				
 				var count = 1;
-				
-				for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+				for(var i in json.list){
 					if(count % 3 == 1){
 						bvalues += "<tr>";
 					}
-				
-					bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+					bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no 
+							+ '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name 
+							+ '" class="openBtn"></a></td>';
 					count++;
-					
 					if(count % 3 == 1){
 						bvalues += "</tr>";
 					}
-				} //for in
+				}
 				if(count != 4){
-				
 					for(var n = count; n <= 3; n++){
 						bvalues += "<td>&nbsp;</td>";
 					}
 					bvalues += "</tr>";
 				}
 				$("#blist").html($("#blist").html() + bvalues);
-				
 				$("#lSize").html("게시물 " + data.countboard);
-				
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				console.log("btop3 error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -445,9 +434,7 @@ var startEvent = {
 	eventData: function(){
 		$(window).scroll(function() {
 		    if(Math.round($(window).scrollTop()) == $(document).height() - $(window).height()) {
-		    	
 		    	page++;
-		    	
 				$.ajax({
 					url: call,
 					type: "post",
@@ -457,39 +444,30 @@ var startEvent = {
 						page: page
 					},
 					success: function(data){
-						console.log("success : " + data); //Object 로 출력됨
-							         
 						var jsonStr = JSON.stringify(data);
 						var json = JSON.parse(jsonStr);
-							         
 						var bvalues = "";
-						
 						var count = 1;
-						console.log("json.list.length" + json.list.length)
 						if(json.list.length <= 0) return;
-						
-						for(var i in json.list){  //인덱스 i가 자동 1씩 증가하는 루프문
+						for(var i in json.list){
 							if(count % 3 == 1){
 								bvalues += "<tr>";
 							}
-						
-							bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no + '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name + '" class="openBtn"></a></td>';
+							bvalues +=  '<td><a href="bdetail.do?b_no=' + json.list[i].atch_parent_no 
+									+ '"><img src="resources/board_upfiles/' + json.list[i].atch_file_name 
+									+ '" class="openBtn"></a></td>';
 							count++;
-							
 							if(count % 3 == 1){
 								bvalues += "</tr>";
 							}
-						} //for in
+						}
 						if(count != 4){
-						
 							for(var n = count; n <= 3; n++){
 								bvalues += "<td>&nbsp;</td>";
 							}
 							bvalues += "</tr>";
 						}
-						
 						$("#blist").html($("#blist").html() + bvalues);
-						
 					},
 					error: function(jqXHR, textStatus, errorThrown){
 						console.log("btop3 error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -514,14 +492,16 @@ var startEvent = {
                     	<c:url var="moveup" value="/moveup.do">
                         	<c:param name="userid" value="${ member.userid }"/>
                     	</c:url>
-                    <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
+                    <c:if test="${member.userid eq loginMember.userid }">
+	                    <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
+	                    <li><a href="${ pageContext.servletContext.contextPath }/logout.do"><button class="logout">로그아웃</button></a></li>
+                    </c:if>
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                     <c:if test="${ empty sessionScope.sns }">
 	                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
 	                         <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
 	                    </c:if>
                     </c:if>
-                    <li><a href="${ pageContext.servletContext.contextPath }/logout.do"><button class="logout">로그아웃</button></a></li>
                 </ul>
                 <ul>
                     <li id="lSize"></li>
