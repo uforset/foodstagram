@@ -521,7 +521,7 @@ var startEvent = {
 	                         <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
 	                    </c:if>
                     </c:if>
-                    <li><a href="${ pageContext.servletContext.contextPath }/loginPage.do"><button class="logout">로그아웃</button></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/logout.do"><button class="logout">로그아웃</button></a></li>
                 </ul>
                 <ul>
                     <li id="lSize"></li>
@@ -531,8 +531,9 @@ var startEvent = {
                 	<c:url var="mdel" value="/mdel.do">
 	                  <c:param name="userid" value="${ member.userid }"/>
 	               </c:url>
+	               <c:if test="sessionScope.loginMember.admin ne 'Y'">
 	                     <button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
-	            </c:if>
+            		</c:if>
             </li>
         </ul>
         
