@@ -132,14 +132,19 @@ width: 450px;
 </style>
 
 <script type="text/javascript">
-   function validation() {
-      var fileValue = document.getElementById("boFiles").value;
-      if (fileValue == null || fileValue == "") {
-         alert("이미지 첨부는 필수 입니다.");
-         return false;
-      }
-      return true;
-   };
+
+	function validation() {
+		var fileValue = document.getElementById("boFiles").value;
+		if($("#cam").val() != null){
+			return true;
+		}
+		if (fileValue == null || fileValue == "") {
+			alert("이미지 첨부는 필수 입니다.");
+			return false;
+		}
+		return true;
+	};
+
 </script>
 
 <script>
@@ -160,86 +165,85 @@ width: 450px;
 
 <body>
 
-   <section>
-      <ul>
-         <li>새 게시물 만들기</li>
-         <li class="closeBtn"><a
-            href="${ pageContext.servletContext.contextPath }/main.do"><i
-               class="fa-solid fa-x"></i></a></li>
-      </ul>
 
-      <form id="regForm" action="binsert.do" method="post"
-         enctype="multipart/form-data" onsubmit="return validation();"
-         style="position: absolute;" class="post">
-         <div type="content">
-            <div class="title-wrap">
-               <!-- 아이디 보임 -->
-               <div class="idid">
-                  <input type="text"
-                     style="font-weight: bold; width: 120px; height: 2rem; border: 2px solid #f8f9fa; top: 48px; text-align: center; border-radius: 20px;"
-                     name="userid" readonly
-                     value="${ sessionScope.loginMember.userid }" required> <select
-                     name="b_open" required
-                     style="width: 100px; height: 2.5rem; border: none; top: 48px; text-align: center; right: 308px; border-radius: 20px;">
-                     <option value="2" selected>전체공개</option>
-                     <option value="1">친구공개</option>
-                     <option value="0">비공개</option>
-                  </select>
-               </div>
-               <!-- 컨텐츠 입력 -->
-               <textarea id="b_content" name="b_content" required></textarea>
-               <div class="btn">
-                  <!--                   <button class="uploadPic" onclick="showfile(); return false;">
-                     컴퓨터에서 선택</button> -->
+	<section>
+		<ul>
+			<li>새 게시물 만들기</li>
+			<li class="closeBtn"><a
+				href="${ pageContext.servletContext.contextPath }/main.do"><i
+					class="fa-solid fa-x"></i></a></li>
+		</ul>
+		<form id="regForm" action="binsert.do" method="post"
+			enctype="multipart/form-data" onsubmit="return validation();" style="position: absolute;" class="post">
+			<c:if test="${ not empty file_name }">
+				<input type="hidden" name="cam" value="${ file_name }" id="cam">
+			</c:if>
+			<div type="content">
+				<div class="title-wrap" >
+					<!-- 아이디 보임 -->
+					<div class="idid">
+						<input type="text" style="font-weight: bold;width: 120px;height:2rem; border:2px solid #f8f9fa; top:48px;text-align:center;border-radius:20px;" name="userid"
+							readonly value="${ sessionScope.loginMember.userid }" required>
+						<select name="b_open" required  style="width: 100px;height:2.5rem; border:none; top:48px;text-align:center; right:308px;border-radius:20px;">
+							<option value="2" selected>전체공개</option>
+							<option value="1">친구공개</option>
+							<option value="0">비공개</option>
+						</select>
+					</div>
+					<!-- 컨텐츠 입력 -->
+					<textarea id="b_content" name="b_content" required></textarea>
+					<div class="btn">
+						<!-- 						<button class="uploadPic" onclick="showfile(); return false;">
+							컴퓨터에서 선택</button> -->
 
-                  <script type="text/javascript">
-                     function showfile() {
-                        document.getElementById("boFiles").click();
-                     };
-                  </script>
+						<script type="text/javascript">
+							function showfile() {
+								document.getElementById("boFiles").click();
+							};
+						</script>
 
-                  <%-- <button class="takePic">
-                     <a href="${ pageContext.servletContext.contextPath }/bwtakepic.do">사진
-                        찍기</a>
-                  </button> --%>
-                  <br>
+						
+						<br>
+						
+						<button class="takePic">
+							<a href="${ pageContext.servletContext.contextPath }/boardTakePictures.do">사진
+								찍기</a>
+						</button>
+						<!-- 이미지업데이트 -->
+						<ul style="position: relative; bottom: 670px; left: 5px;">
+							<li><img id="preview"  src="${ pageContext.servletContext.contextPath }/resources/uploaded_foodImage/${ file_name }"></li>
+							<input multiple="multiple" id="boFiles" type="file"
+								name="boFiles" onchange="readURL(this);" />
+							<br>
+							<br>
+							<label>저장할 이미지에 대한 태그를 선택해주세요<br> <br> <select
+								name="b_category" style="font-weight: bold;width: 120px;height:2rem; border:2px solid #f8f9fa; top:48px;text-align:center;border-radius:20px;">
+									<option value="갈비탕">갈비탕
+									<option value="과일채소샐러드">과일채소샐러드
+									<option value="닭갈비">닭갈비
+									<option value="마르게리따피자">마르게리따피자
+									<option value="마카롱">마카롱
+									<option value="모듬초밥">모듬초밥
+									<option value="바게트빵">바게트빵
+									<option value="순대국밥">순대국밥
+									<option value="순살찜닭">순살찜닭
+									<option value="스테이크">스테이크
+									<option value="스튜">스튜
+							</select>
+							</label>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<p>
+				<input class="admit" type="submit" value="등록하기">&nbsp; <input class="admit" type="reset"
+					value="작성취소"> &nbsp;
+				<button class="admit" onclick="javascript:history.go(-1); return false;">목록</button>
+		</form>
+	</section>
 
-                  <!-- 이미지업데이트 -->
-                  <ul style="position: relative; bottom: 670px; left: 5px;">
-                     <li><img id="preview"></li>
-                     <input multiple="multiple" id="boFiles" type="file"
-                        name="boFiles" onchange="readURL(this);" />
-                     <br>
-                     <br>
-                     <label>저장할 이미지에 대한 태그를 선택해주세요<br> <br> <select
-                        name="b_category"
-                        style="font-weight: bold; width: 120px; height: 2rem; border: 2px solid #f8f9fa; top: 48px; text-align: center; border-radius: 20px;">
-                           <option value="갈비탕">갈비탕
-                           <option value="과일채소샐러드">과일채소샐러드
-                           <option value="닭갈비">닭갈비
-                           <option value="마르게리따피자">마르게리따피자
-                           <option value="마카롱">마카롱
-                           <option value="모듬초밥">모듬초밥
-                           <option value="바게트빵">바게트빵
-                           <option value="순대국밥">순대국밥
-                           <option value="순살찜닭">순살찜닭
-                           <option value="스테이크">스테이크
-                           <option value="스튜">스튜
-                     </select>
-                     </label>
-                  </ul>
-               </div>
-            </div>
-         </div>
-         <p>
-            <input class="admit" type="submit" value="등록하기">&nbsp; <input
-               class="admit" type="reset" value="작성취소"> &nbsp;
-            <button class="admit"
-               onclick="javascript:history.go(-1); return false;">목록</button>
-      </form>
-   </section>
+	<script src="https://kit.fontawesome.com/6478f529f2.js"
+		crossorigin="anonymous"></script>
 
-   <script src="https://kit.fontawesome.com/6478f529f2.js"
-      crossorigin="anonymous"></script>
 </body>
 </html>

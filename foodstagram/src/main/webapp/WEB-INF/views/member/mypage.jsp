@@ -507,13 +507,13 @@ var startEvent = {
             <li class="mypageImg"><a href="#"><img src="resources/images/profile.jpg"></a></li>
             <li>
                 <ul>
-                   <c:url var="callMyinfo" value="/myinfo.do">
+                   	<c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ member.userid }" />
-                    </c:url>
+                   	</c:url>
                     <li><a href="${ callMyinfo }"><span id="id">${ member.userid }</span></a></li> 
-                     <c:url var="moveup" value="/moveup.do">
-                        <c:param name="userid" value="${ member.userid }"/>
-                     </c:url>
+                    	<c:url var="moveup" value="/moveup.do">
+                        	<c:param name="userid" value="${ member.userid }"/>
+                    	</c:url>
                     <li><a href="${ moveup }" ><button class="updateProfile">프로필 편집</button></a></li>
                     <!-- 관리자로그인일때 회원관리 버튼이 나타나야함 -->
                     <c:if test="${ empty sessionScope.sns }">
@@ -521,7 +521,7 @@ var startEvent = {
 	                         <li><a href="${ pageContext.servletContext.contextPath }/mmlist.do"><button class="adminMember">회원관리</button></a></li>  
 	                    </c:if>
                     </c:if>
-                    <li><a href="${ pageContext.servletContext.contextPath }/loginPage.do"><button class="logout">로그아웃</button></a></li>
+                    <li><a href="${ pageContext.servletContext.contextPath }/logout.do"><button class="logout">로그아웃</button></a></li>
                 </ul>
                 <ul>
                     <li id="lSize"></li>
@@ -529,19 +529,21 @@ var startEvent = {
                 <ul>이름 : ${ member.username }</ul>
                 <c:if test="${ member.userid eq loginMember.userid }">
                 	<c:url var="mdel" value="/mdel.do">
-	                  <c:param name="userid" value="${ member.userid }"/>
-	               </c:url>
-	                     <button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
-	            </c:if>
+	            		<c:param name="userid" value="${ member.userid }"/>
+	            	</c:url>
+	            	<c:if test="sessionScope.loginMember.admin ne 'Y'">
+	                	<button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
+            		</c:if>
+            	</c:if>
             </li>
         </ul>
-        <c:if test="${ empty sessionScope.sns }">
-	        <c:if test="${ !empty sessionScope.loginMember and (sessionScope.loginMember.admin ne 'Y' or !empty sessionScope.sns)}">
-	        <table class="mainPage" id="blist">
-	        <!-- 게시글 출력 영역 -->
-	        </table>
-	      </c:if>
-      </c:if>
+        
+	        <c:if test="${ (!empty sessionScope.loginMember and !empty sessionScope.sns) or sessionScope.loginMember.admin ne 'Y'}">
+		        <table class="mainPage" id="blist">
+		        <!-- 게시글 출력 영역 -->
+		        </table>
+	      	</c:if>
+      
       
     </section>
     <!-- TWC chatbot Scripts -->

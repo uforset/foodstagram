@@ -388,6 +388,7 @@ ul:not(.replyList) {
 <!-- 슬라이드 -->
 <script>
 $(function () { 
+	$('#b_category').val('${board.b_category}').prop("selected",true);
    console.log('${aList.toString()}')
    var ary = JSON.stringify('${aList.toString()}');
    

@@ -120,7 +120,7 @@ i:hover {
 .searchBtn {
     position: relative;
     bottom: 33px;
-    left: 90px;
+    left: 160px;
     border-radius: 10px;
     background-color: white;
     border: none;
@@ -204,7 +204,7 @@ li {list-style: none;}
                     </li>
                     <li class="share">
                         <i class="fas fa-regular fa-chevron-down fa-1x" id="shareBtn">
-                            <div class="shareContent"><a href="${ pageContext.servletContext.contextPath }/loginPage.do">로그아웃</a></div>
+                            <div class="shareContent"><a href="${ pageContext.servletContext.contextPath }/logout.do">로그아웃</a></div>
                         </i></a>
                     </li>
                 </ol>
@@ -221,8 +221,20 @@ li {list-style: none;}
 
                     <span id="d4" style="position:relative; bottom: 40px; left: 190px;">
                         <form action="bsearch.do" method="get">
-                            <input type="search" name="b_category"  placeholder="'음식명'을 입력해주세요" required
+                        	<select type="search" name="b_category"  placeholder="'음식명'을 입력해주세요" required
                                 style="width: 260px;height:2.5rem; border:3px solid #f8f9fa; border-radius: 20px;">
+                        		<option value="갈비탕">갈비탕
+                              	<option value="과일채소샐러드">과일채소샐러드
+                              	<option value="닭갈비">닭갈비
+                              	<option value="마르게리따피자">마르게리따피자
+                              	<option value="마카롱">마카롱
+                              	<option value="모듬초밥">모듬초밥
+                              	<option value="바게트빵">바게트빵
+                              	<option value="순대국밥">순대국밥
+                              	<option value="순살찜닭">순살찜닭
+                              	<option value="스테이크">스테이크
+                              	<option value="스튜">스튜
+                        	</select>
                             <input type="submit" class="searchBtn" value="검색">
                         </form>
                     </span>
@@ -248,11 +260,11 @@ li {list-style: none;}
                 <ol class="navlist">
                     <li><a href="${ pageContext.servletContext.contextPath }/main.do"><i class="fa-solid fa-house fa-2x"></i></a></li>
                     <li><a href="${ pageContext.servletContext.contextPath }/chatting.do"><i class="fa fa-light fa-user-group fa-2x"></i></a></li>
-                    <c:if test="${ empty sessionScope.sns }">
-	                    <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin ne 'Y'}">
+                    <c:if test="${ (!empty sessionScope.loginMember and !empty sessionScope.sns) or sessionScope.loginMember.admin ne 'Y'}">
 	                    <li><a href="${ pageContext.servletContext.contextPath }/selectbwform.do"><i class="fa-solid fa-camera-retro fa-2x"></i></a></li>
-	                    </c:if>
-                    </c:if>
+	                </c:if>
+               
+
                     <!--밑부분은 사용자의 프로필이 뜨는 부분으로 예시를 위해 넣어음 -->
                     <c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ loginMember.userid }" />
