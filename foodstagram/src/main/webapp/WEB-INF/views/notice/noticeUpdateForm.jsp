@@ -7,10 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <title>공지 수정</title>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/reset.css?v=1669255025">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/swiper.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/site.css?v=1669255025"> -->
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
-<link href="resources/css/reset.css"  rel="stylesheet">
-<link href="resources/css/style.css"  rel="stylesheet">
+<!-- <script src="https://www.eyes.co.kr/assets/js/libs/swiper.min.js"></script>
+<script src="https://www.eyes.co.kr/assets/js/libs/chart.min.js"></script>
+<script src="https://www.eyes.co.kr/assets/js/libs/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="https://www.eyes.co.kr/assets/js/site.js?v=1669259435"></script> -->
+
 <style>
 h2 {
 	text-align: center;
@@ -158,7 +166,7 @@ input::tbox {
 								<input type="checkbox" name="delFlag" value="yes"
 				style="width: 1rem; height: 1rem; border: 1px solid black;"> 파일삭제 <br>
 			</c:if> --%>
-			<input multiple="multiple"  type="file"  name="boFiles" style="width: 406px; height: 2rem; border: 1px solid black;">
+			<input multiple="multiple"  type="file"  name="boFiles" style="width: 406px; height: 2rem; border: 1px solid black;  margin-top: 10px;">
 			<c:forEach var="f" items="${notice.attaches}" varStatus="st">
 				<div>
 					# 파일 ${st.count} <a style="color: #337ab7;" href="<c:url value='/attachDownload.do/${f.atch_no}' />" target="_blank"> 
