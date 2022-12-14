@@ -527,12 +527,12 @@ var startEvent = {
                     <li id="lSize"></li>
                 </ul>
                 <ul>이름 : ${ member.username }</ul>
-                <c:if test="${ member.userid eq loginMember.userid }">
-                	<c:url var="mdel" value="/mdel.do">
-	            		<c:param name="userid" value="${ member.userid }"/>
-	            	</c:url>
-	            	<c:if test="sessionScope.loginMember.admin ne 'Y'">
-	                	<button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
+		    <c:url var="mdel" value="/mdel.do">
+	            	<c:param name="userid" value="${ member.userid }"/>
+	            </c:url>
+            	<button class="delbutton"><a href="${ mdel }">탈퇴하기</a></button>
+                <c:if test="${ member.userid eq loginMember.userid }">	
+	            	<c:if test="sessionScope.loginMember.admin ne 'Y'">       	
             		</c:if>
             	</c:if>
             </li>
