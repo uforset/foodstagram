@@ -310,7 +310,7 @@ public class MemberController {
          //쿼리스트링 : ?이름=값&이름=값
          HttpSession session = request.getSession(false);
          session.invalidate(); //세션 객체를 없앰
-         return "redirect:main.do";
+         return "member/loginPage";
       }else {
          model.addAttribute("message", 
                member.getUserid() + " : 회원 정보 수정 실패!");
