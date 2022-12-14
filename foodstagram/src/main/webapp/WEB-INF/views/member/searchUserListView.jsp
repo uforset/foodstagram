@@ -41,8 +41,11 @@ th, td {
 		
 		<c:forEach items="${ requestScope.list }" var="m">
 			<tr>
-				<td>${ m.userid }</td>
-				<td>${ m.username }</td>
+			<c:url var="callMyinfo" value="/myinfo.do">
+                        <c:param name="userid" value="${ m.userid  }" />
+              </c:url>
+			<td><a href="${ callMyinfo }">${ m.userid }</a></td>
+			<td>${ m.username }</td>
 			</tr>
 		</c:forEach>
 	

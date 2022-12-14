@@ -1,15 +1,30 @@
 package com.circle.foodstagram.board.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.http.HttpRequest;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
+import org.codehaus.plexus.util.Base64;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,12 +33,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.circle.foodstagram.board.model.service.BoardAttachService;
@@ -35,6 +52,7 @@ import com.circle.foodstagram.board.model.vo.BoardReply;
 import com.circle.foodstagram.common.AttachUtils;
 import com.circle.foodstagram.food.model.service.FoodService;
 import com.circle.foodstagram.food.model.vo.Food;
+
 
 @Controller
 public class BoardController {
@@ -59,9 +77,111 @@ public class BoardController {
 	// 페이지 이동처리용 ----------------
 	// 게시 원글 쓰기 페이지로 이동 처리용
 	@RequestMapping("selectbwform.do")
-	public String moveBoardWriteForm() {
+	public String moveBoardWriteForm( Model model, @RequestParam (value="file_name", required=false )String file_name) {
+		try {
+			model.addAttribute("file_name", file_name);
+			logger.info("이름 : " + file_name);
+		}catch (Exception e) {
+			
+		}
 		return "board/selectboardRegistForm";
 	}
+	
+	@RequestMapping("boardTakePictures.do")
+	public String moveTakepictureForm() {
+		return "board/boardTakePictures";
+	}
+	
+	// AI 사진 이미지 찍기 페이지
+	@ResponseBody
+   @PostMapping("transmitCam.do")
+   public void transmitCam(HttpServletRequest request, HttpServletResponse response) throws Exception{
+      String msg = "";
+      String img = request.getParameter("img");
+      FileOutputStream stream = null;
+      try {
+         System.out.println("binary file : " + img);
+         if(img == null || img.trim().equals("")) {
+            throw new Exception();
+         }
+         img = img.replaceAll("data:image/png;base64,", "");
+         byte[] file = Base64.decodeBase64(img.getBytes());
+         String filePath = request.getSession().getServletContext().
+               getRealPath("resources/uploaded_foodImage");
+         Date today = new Date();
+         SimpleDateFormat format1;
+         format1 = new SimpleDateFormat("yyyy-MM-ddHHmmss");
+         msg = format1.format(today) + ".png";
+         stream = new FileOutputStream(filePath+ "\\" + msg);
+         
+         stream.write(file);
+         stream.close();
+      }catch(Exception e) {
+         e.printStackTrace();;
+         stream.close();
+         msg = "fail";
+      }
+      response.setContentType("text/html; charset=utf-8");
+      PrintWriter out = response.getWriter();
+      out.append(msg);
+      out.flush();
+      out.close();
+   }
+	
+	@GetMapping("filedown.do")
+	public ModelAndView filedownMethod(HttpServletRequest request) {
+		 String s= request.getSession().getServletContext().getRealPath("resources/uploaded_foodImage");
+	      s += "\\cam_food.png";
+	      File f=new File(s);
+	      return new ModelAndView("afiledown", "downFile", f);
+	}
+	
+   @ResponseBody
+   @PostMapping("transmitImg.do")
+   public void transmitImg(@RequestParam("file") MultipartFile file
+         ,HttpServletRequest request, HttpServletResponse response) throws IOException {
+      String imgFilePath = request.getSession().getServletContext().getRealPath("/resources/uploaded_foodImage");
+      String fileName = file.getOriginalFilename();
+      String renameFilename = "dnd_food." + fileName.substring(fileName.lastIndexOf(".") + 1);
+      String msg = "";
+      //파일 저장
+      File renameFile = new File(imgFilePath + "\\" + renameFilename);
+      try {
+         file.transferTo(renameFile);
+         logger.info(renameFile.getAbsolutePath());
+      } catch(Exception e) {
+         e.printStackTrace();
+         msg = "fail";
+      }
+      
+      response.setContentType("text/html; charset=utf-8");
+      PrintWriter out = response.getWriter();
+      out.append(msg);
+      out.flush();
+      out.close();
+      
+   }
+   
+   @PostMapping("upImg.do")
+   public String upImg(@RequestParam("imgFile") MultipartFile file
+         ,HttpServletRequest request, Model model) {
+      String keyword = "";
+      String imgFilePath = request.getSession().getServletContext().getRealPath("/resources/uploaded_foodImage");
+      String fileName = file.getOriginalFilename();
+      String renameFilename = "up_food." + fileName.substring(fileName.lastIndexOf(".") + 1);
+      String msg = "";
+      //파일 저장
+      File renameFile = new File(imgFilePath + "\\" + renameFilename);
+      try {
+         file.transferTo(renameFile);
+         logger.info(renameFile.getAbsolutePath());
+      } catch(Exception e) {
+         e.printStackTrace();
+         return "common/error";
+      }
+
+      return "board/boardTakePictures";
+   }
 
 	// 모든 게시글 목록보기 요청 처리용
 	@RequestMapping(value = "blistAll.do", method = RequestMethod.POST)
@@ -174,14 +294,27 @@ public class BoardController {
 	// 게시 원글 등록 처리용 : 파일 첨부(업로드) 기능 있음
 	@RequestMapping(value = "binsert.do", method = RequestMethod.POST)
 	public String boardInsertMethod(Board board, Model model, HttpServletRequest request,
-			@RequestParam("boFiles") MultipartFile[] boFiles) {
-
+			@RequestParam(value="boFiles", required=false) MultipartFile[] boFiles, @RequestParam(value="cam", required=false) String cam) throws IOException {
+		logger.info("음음");
 		List<BoardAttach> attaches = null;
-
+		if(cam != null) {
+			MultipartFile[] camFiles;
+			if(boFiles != null && boFiles.length > 0 && boFiles[0].getSize()>0) {
+				camFiles = Arrays.copyOf(boFiles, boFiles.length + 1);
+				camFiles[boFiles.length] = getMultipartFile(request, cam);
+				logger.info("if문");
+				logger.info("boFiles"+ boFiles[0]);
+			}
+			else {
+				camFiles = new MultipartFile[1];
+				camFiles[0] = getMultipartFile(request, cam);
+				logger.info("else문");
+			}
+			boFiles = camFiles;
+		}
 		try {
 			if (boFiles != null && boFiles.length > 0) {
 				attaches = attachUtils.getBoardAttachListByMultiparts(boFiles, "board_upfiles", request);
-				
 			}
 
 		} catch (Exception e) {
@@ -207,6 +340,26 @@ public class BoardController {
 			return "common/error";
 		}
 	}
+	
+    private MultipartFile getMultipartFile(HttpServletRequest request, String file_name) throws IOException {
+    	String uploadPath = request.getSession().getServletContext().getRealPath("resources/uploaded_foodImage");
+        File file = new File(uploadPath + "\\" + file_name);
+        FileItem fileItem = new DiskFileItem("originFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+
+        try {
+            InputStream input = new FileInputStream(file);
+            OutputStream os = fileItem.getOutputStream();
+            IOUtils.copy(input, os);
+            // Or faster..
+            // IOUtils.copy(new FileInputStream(file), fileItem.getOutputStream());
+        } catch (IOException ex) {
+            // do something.
+        }
+
+        //jpa.png -> multipart 변환
+        MultipartFile mFile = new CommonsMultipartFile(fileItem);
+        return mFile;
+    }
 
 	// 게시 원글 삭제 처리용
 	@RequestMapping(value = "bdel.do", method = RequestMethod.GET)
