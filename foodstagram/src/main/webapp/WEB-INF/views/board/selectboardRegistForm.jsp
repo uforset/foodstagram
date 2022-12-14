@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" errorPage="../common/error.jsp"%>
+   pageEncoding="UTF-8" errorPage="../common/error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -12,122 +12,127 @@
 <link href="resources/css/reset.css" rel="stylesheet">
 <link href="resources/css/style.css" rel="stylesheet">
 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-	rel="stylesheet">
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+   rel="stylesheet">
 
 
 <style>
 section {
-	/* box-sizing: border-box; */
-	text-align: center;
-	margin: 0 auto;
-	width: 900px;
-	height: 820px;
-	background-color: white;
-	border-radius: 20px;
-	box-shadow: 2px 2px 10px grey;
+   /* box-sizing: border-box; */
+   text-align: center;
+   margin: 0 auto;
+   width: 900px;
+   height: 838px;
+   background-color: white;
+   border-radius: 20px;
+   box-shadow: 2px 2px 10px grey;
 }
 
 section ul li:nth-child(1) {
-	padding: 15px 0;
-	font-weight: bold;
-	font-size: 16px;
-	/* border-bottom: #F0F0F0 2px solid; */
+   padding: 15px 0;
+   font-weight: bold;
+   font-size: 16px;
+   /* border-bottom: #F0F0F0 2px solid; */
 }
 
 section ul li:last-child {
-	position: relative;
-	bottom: 43px;
-	left: 430px;
+   position: relative;
+   bottom: 43px;
+   left: 430px;
 }
 
 .uploadPic, .takePic {
-	width: 150px;
-	height: 40px;
-	font-weight: bold;
-	border: none;
-	border-radius: 10px;
-	transition: 0.5s ease-in-out;
-	box-shadow: 2px 2px 5px gray;
-	color: #333;
-	background-color: #E5E5E5;
-	margin-left: 10px;
+   width: 150px;
+   height: 40px;
+   font-weight: bold;
+   border: none;
+   border-radius: 10px;
+   transition: 0.5s ease-in-out;
+   box-shadow: 2px 2px 5px gray;
+   color: #333;
+   background-color: #E5E5E5;
+   margin-left: 10px;
 }
 
 .uploadPic:hover, .takePic:hover {
-	color: white;
-	background-color: #F95E25;
+   color: white;
+   background-color: #F95E25;
 }
 
 .uploadPic a, .takePic a {
-	display: block;
+   display: block;
 }
 
 section {
-	margin-top: 30px;
+   margin-top: 30px;
 }
 
 .btn {
-	padding: 300px 0;
+   padding: 300px 0;
 }
 
 .closeBtn {
-	position: relative;
-	top: -35px;
+   position: relative;
+   top: -35px;
 }
 
 .admit {
-	width: 100px;
-	height: 40px;
-	font-weight: bold;
-	border: none;
-	border-radius: 10px;
-	transition: 0.5s ease-in-out;
-	color: #333;
-	background-color: #E5E5E5;
-	margin-left: 10px;
-	position: relative;
-	bottom: -415px;
-	left: 5px;
+   width: 100px;
+   height: 40px;
+   font-weight: bold;
+   border: none;
+   border-radius: 10px;
+   transition: 0.5s ease-in-out;
+   color: #333;
+   background-color: #E5E5E5;
+   margin-left: 10px;
+   position: relative;
+   bottom: -415px;
+   left: 5px;
 }
+
 .admit:hover {
-	cursor: pointer;
-	background-color: #F95E25;
+   cursor: pointer;
+   background-color: #F95E25;
 }
 
 textarea {
-	font-weight: normal;
-	width: 410px;
-	height: 300px;
-	border: #f8f9fa 2px solid;;
-	position: relative;
-	bottom: -24px;
-	left: 445px;
+   font-weight: normal;
+   width: 410px;
+   height: 300px;
+   border: #f8f9fa 2px solid;;
+   position: relative;
+   bottom: -24px;
+   left: 445px;
 }
 
 li>#preview {
-	width: 450px;
-	height: auto;
-	object-fit: cover;
-}
-.postBox {
-	position: relative;
-	bottom: 100px;
-	left: 100px;
-}
-.post {
-	display: flex;
-	width: 900px;
-}
-.idid {
-	position: relative;
-	bottom: -10px;
-	left: 357px;
+width: 450px;
+   /* height: auto; */
+   max-height:600px;
+   object-fit: cover;
 }
 
+.postBox {
+   position: relative;
+   bottom: 100px;
+   left: 100px;
+}
+
+.post {
+   display: flex;
+   width: 900px;
+}
+
+.idid {
+   position: relative;
+   bottom: -10px;
+   left: 357px;
+}
 </style>
 
 <script type="text/javascript">
+
 	function validation() {
 		var fileValue = document.getElementById("boFiles").value;
 		if($("#cam").val() != null){
@@ -139,25 +144,27 @@ li>#preview {
 		}
 		return true;
 	};
+
 </script>
 
 <script>
-function readURL(input) {
-	  if (input.files && input.files[0]) {
-	    var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	  } else {
-	    document.getElementById('preview').src = "";
-	  }
-	}
+   function readURL(input) {
+      if (input.files && input.files[0]) {
+         var reader = new FileReader();
+         reader.onload = function(e) {
+            document.getElementById('preview').src = e.target.result;
+         };
+         reader.readAsDataURL(input.files[0]);
+      } else {
+         document.getElementById('preview').src = "";
+      }
+   }
 </script>
 </head>
 <c:import url="/WEB-INF/views/common/nav.jsp" />
 
 <body>
+
 
 	<section>
 		<ul>
@@ -237,5 +244,6 @@ function readURL(input) {
 
 	<script src="https://kit.fontawesome.com/6478f529f2.js"
 		crossorigin="anonymous"></script>
+
 </body>
 </html>
