@@ -7,18 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>공지 수정</title>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/reset.css?v=1669255025">
-<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/swiper.min.css">
-<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
-<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/site.css?v=1669255025"> -->
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
-<!-- <script src="https://www.eyes.co.kr/assets/js/libs/swiper.min.js"></script>
-<script src="https://www.eyes.co.kr/assets/js/libs/chart.min.js"></script>
-<script src="https://www.eyes.co.kr/assets/js/libs/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="https://www.eyes.co.kr/assets/js/site.js?v=1669259435"></script> -->
-
+<link href="resources/css/reset.css"  rel="stylesheet">
+<link href="resources/css/style.css"  rel="stylesheet">
 <style>
 h2 {
 	text-align: center;

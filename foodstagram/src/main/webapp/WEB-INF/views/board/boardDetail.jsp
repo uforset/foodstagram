@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8" errorPage="../common/error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -71,6 +71,10 @@ ul li ol {
    bottom: 10px;
    font-weight: bold;
    color: #333;
+   max-width: 200px;
+    overflow: auto;
+    border:none;
+    resize:none;
 }
 
 .addFriend {
@@ -85,16 +89,17 @@ ul li ol {
 }
 
 .modalContent {
-   padding-bottom: 20px;
-   /* border-bottom: 1px solid #E5E5E5; */
-   width: 430px;
-   height: 100px;
-   margin-bottom: 10px;
-   padding-top: 10px;
-   font-size: 14px;
-   /* overflow: auto; */
-   position: relative;
-   left: -30px;
+    padding-bottom: 20px;
+    /* border-bottom: 1px solid #E5E5E5; */
+    width: 430px;
+    height: 100px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    font-size: 14px;
+    /* overflow: auto; */
+    position: relative;
+    left: -175px;
+    bottom: -30px;
 }
 
 .modalContent span a {
@@ -107,14 +112,14 @@ a {
 
 /* 하트, 댓글등 */
 .lr {
-   position: relative;
-   top: 212px;
-   right: 475px;
-   /*    border-bottom: 1px solid #E5E5E5; */
-   width: 435px;
-   height: 33px;
-   line-height: 33px;
-   padding: 5px 0 10px 0;
+    position: relative;
+    top: 266px;
+    right: 602px;
+    /* border-bottom: 1px solid #E5E5E5; */
+    width: 435px;
+    height: 33px;
+    line-height: 33px;
+    padding: 5px 0 10px 0;
 }
 
 .lr li {
@@ -174,7 +179,7 @@ a {
 .replyBox {
    position: relative;
    top: 470px;
-   right: 417px;
+   right: 532px;
 }
 
 .replyRig {
@@ -208,7 +213,7 @@ a {
 .replyList {
    position: relative;
    top: 269px;
-   right: 480px;
+   right: 600px;
    width: 420px;
    height: 115px;
    padding: 10px;
@@ -476,7 +481,7 @@ $('#aibutton').click(function () {
             align="center"><button id="aibutton">AI 인식 Start</button></a><br>
          <br>
             <div align="center" id="extractedTxt" name="extractedTxt" readonly>
-               <input id="extractedtxt">
+               <input id="extractedtxt" placeholder="AI 인식 Start 버튼 클릭 !" readonly="readonly">
             </div>
          </li>
          <li><a href="#"></a></li>
@@ -534,7 +539,7 @@ $('#aibutton').click(function () {
                   <li><c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ board.userid }" />
                      </c:url></li>
-                  <li><a href="${ callMyinfo }"><span id="id" class="id">${ board.userid }</span></a>
+                  <li><a href="${ callMyinfo }"><textarea id="id" class="id">${ board.userid }</textarea></a>
                   </li>
                   <li><c:if test="${board.userid ne loginMember.userid }">
                         <p class="modalContent">${board.b_content }
@@ -547,8 +552,8 @@ $('#aibutton').click(function () {
                         test="${board.userid eq loginMember.userid }">
                         <p class="modalContent">
                            <textarea name="b_content" id="b_content">${board.b_content }</textarea>
-                           <span><br> <a
-                              href="bsearch.do?b_category=${board.b_category }">${board.b_category
+                           <span><br><br><br> 
+                           <a href="bsearch.do?b_category=${board.b_category }">${board.b_category
                                                         }</a></span>
                            <span>카테고리를 변경할 경우 선택해주세요.</span>
                            <br>

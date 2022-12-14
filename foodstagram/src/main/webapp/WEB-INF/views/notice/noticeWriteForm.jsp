@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>공지 등록</title>
+<link href="resources/css/reset.css"  rel="stylesheet">
+<link href="resources/css/style.css"  rel="stylesheet">
 <style>
 h2 {
 	text-align: center;

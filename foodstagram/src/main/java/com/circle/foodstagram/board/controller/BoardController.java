@@ -216,7 +216,8 @@ public class BoardController {
 	public String boardListMyMethod(@RequestParam("userid") String userid, @RequestParam("page")int page) throws UnsupportedEncodingException {
 
 		ArrayList<BoardAttach> list = boardService.selectListMy(userid, page, 6);
-
+		int board = boardService.countBoard(userid);
+		
 		JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
 
@@ -232,17 +233,18 @@ public class BoardController {
 		}
 
 		sendJson.put("list", jarr);
-
+		sendJson.put("countboard", board);
+		
 		return sendJson.toJSONString();
 
 	}
-
 	// 마이페이지 친구 이상 공개 목록보기 요청 처리용
 	@RequestMapping(value = "blistfriend.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String boardListFriendMethod(@RequestParam("userid") String userid, @RequestParam("page")int page) throws UnsupportedEncodingException {
 
 		ArrayList<BoardAttach> list = boardService.selectListFriend(userid, page, 6);
+		int board = boardService.countBoard(userid);
 
 		JSONObject sendJson = new JSONObject();
 		JSONArray jarr = new JSONArray();
@@ -258,6 +260,8 @@ public class BoardController {
 		}
 
 		sendJson.put("list", jarr);
+		sendJson.put("countboard", board);
+		
 		return sendJson.toJSONString();
 
 	}

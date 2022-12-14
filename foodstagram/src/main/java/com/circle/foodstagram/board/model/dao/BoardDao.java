@@ -59,6 +59,10 @@ public class BoardDao {
 	public Board selectBoard(int b_no) {
 		return session.selectOne("boardMapper.selectBoard", b_no);
 	}
+	
+	public int countBoard(String userid) {
+		return session.selectOne("boardMapper.countBoard", userid);
+	}
 
 	public ArrayList<BoardAttach> searchBoard(String Tag) {
 		List<BoardAttach> list=session.selectList("boardMapper.searchBoard", Tag);

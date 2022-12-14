@@ -17,6 +17,7 @@ public interface BoardService {
 	ArrayList<BoardAttach> selectListMy(String userid, int page, int pageUnit); 		// 내 이미지 리스트
 	ArrayList<BoardAttach> selectListFriend(String userid, int page, int pageUnit); 	// 친구 이미지 리스트
 	Board selectBoard(int b_no); 														// 상세보기
+	int countBoard(String userid); 														// 게시물 갯수
 	ArrayList<BoardAttach> searchBoard(String Tag); 									// 게시판 이미지 검색
 	void updateAddReadcount(int b_no); 													// 조회수
 	int addLikeupdateBoard(int b_no);													// 좋아요

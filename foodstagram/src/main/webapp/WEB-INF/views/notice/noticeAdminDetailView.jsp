@@ -7,14 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/reset.css?v=1669255025">
-<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/swiper.min.css">
-<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
-<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/site.css?v=1669255025"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-<link href="resources/css/reset.css">
-<link href="resources/css/style.css">
+<link href="resources/css/reset.css"  rel="stylesheet">
+<link href="resources/css/style.css"  rel="stylesheet">
 <style>
 /*Layout*/
 #wrap {
@@ -42,7 +37,6 @@
 	position: relative;
 	margin: 0 auto;
 	padding-top: 191px;
-	/* background:#f5f3ed; */
 	min-height: 700px;
 }
 
