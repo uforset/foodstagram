@@ -15,9 +15,8 @@ h2 {
 .stab {
 	width: 100%;
 	margin-top: 60px;
-	/* position: relative;
-    left:-350px;
-    top:55px */;
+	position: relative;
+    left:20px;
 }
 .container {	
 }
@@ -141,7 +140,7 @@ input::tbox {
 					<th>첨부파일</th>
 					<td>
 						<input class="tbox" type="file" name="boFiles" id="file" value="파일추가"
-						style="width: 406px; height: 2rem; border: 1px solid black;"  multiple="multiple">
+						style="width: 406px; height: 2rem; border: 1px solid black; margin-top: 10px; margin-bottom: 10px;"  multiple="multiple">
 					</td>
 				</tr>
 				<tr>
