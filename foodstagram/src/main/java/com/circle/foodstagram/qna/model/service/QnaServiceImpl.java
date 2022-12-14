@@ -65,11 +65,6 @@ public class QnaServiceImpl implements QnaService {
 		return questionDao.selectMyListCount(userid);
 	}
 
-	@Override
-	public int updateAnswerCheck() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int insertAnswer(Answer answer) {

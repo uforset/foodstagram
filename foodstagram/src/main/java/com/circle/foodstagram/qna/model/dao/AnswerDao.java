@@ -11,9 +11,7 @@ public class AnswerDao {
 	@Autowired
 	private SqlSessionTemplate session;
 	
-	public int updateAnswerCheck() {
-		return 0;
-	}
+
 	public int insertAnswer( Answer answer ) {
 		return session.insert("answerMapper.insertAnswer",answer);
 	}
