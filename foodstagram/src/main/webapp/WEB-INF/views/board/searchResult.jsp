@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="../common/error.jsp" %>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
@@ -283,7 +283,7 @@ scenarioId: "Njk=",
 					<c:if test="${count > 1 and count % 3 == 0 }">
 						</tr>
 					</c:if>
-					<c:set var="count" value="${count+= 1 }"/>
+					<c:set var="count"  value="${count+ 1 }"/>
 			</c:forEach>
 			<c:if test="${count ne 4 }">
 				<c:forEach var="n" begin="${ count }" step="1" end="3">
