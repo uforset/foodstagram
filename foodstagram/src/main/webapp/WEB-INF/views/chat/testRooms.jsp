@@ -173,7 +173,7 @@ function visibleUsers() {
                                         <h2 class="_aacl _aacr _aact _aacx _aad6 _aadb">내 메시지</h2>
                                     </div>
                                     <div class="_ab8w  _ab94 _ab99 _ab9f _ab9m _ab9p  _abc0 _abcm">
-                                        <div class="_aacl _aaco _aacu _aacy _aad6 _aadb">친구나 그룹에 비공개 사진과 메시지를 보내보세요.</div>
+                                        <div class="_aacl _aaco _aacu _aacy _aad6 _aadb">친구나 그룹에 비공개 메시지를 보내보세요.</div>
                                     </div>
                                     <!-- Modal HTML embedded directly into document -->
 									<div id="ex1" class="modal" style="max-width: 440px;" >
