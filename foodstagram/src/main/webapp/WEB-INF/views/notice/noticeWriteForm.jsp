@@ -122,7 +122,7 @@ input::tbox {
 			<table align="center" width="500" cellspacing="0" height="30" cellpadding="5" class="table">
 				<tr>
 					<th style="width: 80px;">제 목</th>
-					<td><input type="text" class="tbox" name="noticetitle"
+					<td><input type="text"  required="required" class="tbox" name="noticetitle"
 						style="width: 400px; height: 2rem; border: 1px solid black; margin-bottom: 5px; padding-left: 5px;"
 						value="${ notice.noticetitle }">
 						<input type="checkbox" name="importance" value="2" 
@@ -145,7 +145,7 @@ input::tbox {
 				</tr>
 				<tr>
 					<th>내 용</th>
-					<td><textarea rows="8" cols="80" name="noticecontent" wrap="hard" name="content"></textarea></td>
+					<td><textarea rows="8" cols="80" name="noticecontent" wrap="hard" name="content" required="required"></textarea></td>
 					</div>
 				</tr>
 				<tr align="center">
