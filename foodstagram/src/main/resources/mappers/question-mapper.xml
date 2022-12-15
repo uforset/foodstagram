@@ -80,8 +80,7 @@
 		from question q 
 		where q_no = #{q_no}
 	</select>
-
-
+	
 	<update id="updateQuestion" parameterType="Question">
 		update Question set 
 							q_title=#{q_title},
