@@ -26,6 +26,10 @@
 						#{chat_room_id},
 						#{message},
 						#{create_date})
+		<selectKey keyProperty="cm_no" resultType="int" order="AFTER">
+			select max(cm_no) from chat_message
+			where userid = #{userid} and chat_room_id = #{chat_room_id}
+		</selectKey>
 	</insert>
 	
 	<select id="getChatRoomMessage" parameterType="string" resultMap="resultChatMessage">

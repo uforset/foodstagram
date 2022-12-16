@@ -197,9 +197,9 @@ function titleEdit() {
 function deleteMessage() {
 	
 	let dgo = confirm('메시지 전송을 취소하시겠어요?\n메시지 전송을 취소하면 모든 사람에게 보낸 메시지가 삭제됩니다.\n상대방이 이미 메시지를 확인했을 수 있습니다.');
-	console.log($(this).parent().parent().parent().parent().parent().parent());
+	//console.log($(this).parent().parent().parent().parent().parent().parent());
 	var dmg = $(this).closest('.mButton').parent();
-	console.log(dmg);
+	console.log($(this).val());
 	if(dgo){
 		$.ajax({
 		    url: "/foodstagram/chat/deleteMessage.do", // 호출할 주소
