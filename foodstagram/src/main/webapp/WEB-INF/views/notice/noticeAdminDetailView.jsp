@@ -2,14 +2,20 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<link href="/foodstagram/resources/css/reset.css">
+<link href="/foodstagram/resources/css/style.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+ --><!-- <link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/reset.css?v=1669255025">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/swiper.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="https://www.eyes.co.kr/assets/css/site.css?v=1669255025"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-<link href="resources/css/reset.css"  rel="stylesheet">
-<link href="resources/css/style.css"  rel="stylesheet">
 <style>
 /*Layout*/
 #wrap {
@@ -37,6 +43,7 @@
 	position: relative;
 	margin: 0 auto;
 	padding-top: 191px;
+	/* background:#f5f3ed; */
 	min-height: 700px;
 }
 
@@ -184,11 +191,11 @@ input.board_bt_style03 {
 	text-align: left;
 }
 
-.title_area span {
+/* .title_area span {
 	font-weight: bold;
 	color: #dd4949;
 }
-
+ */
 .bt_list {
 	padding: 6px 25px;
 	background: #005faf;
@@ -197,29 +204,9 @@ input.board_bt_style03 {
 	border: 0px solid;
 }
 
-.board_search {
-	float: right;
-	width: 280px;
-	*width: 280px;
-	height: 39px;
-	margin: 0;
-	text-align: right;
-}
-
-.board_search select {
-	height: 25px;
-}
-
-.search_b {
-	width: 200px;
-	height: 25px;
-	text-align: left;
-	margin-left: 3px;
-}
-
 .board_bottom_bar {
 	width: 130px;
-	_background: #326cb4;
+	background: #326cb4;
 	border: 1px #ddd solid;
 	color: #666;
 	height: 23px;
@@ -246,7 +233,7 @@ input.board_bt_style03 {
 }
 
 .board_title01 {
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: bold;
 	text-align: center;
 }
@@ -334,6 +321,7 @@ th.last_bg {
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
 }
+
 .button {
 	width: 80px;
 	height: 35px;
@@ -348,6 +336,12 @@ th.last_bg {
 	cursor: pointer;
 	outline: none;
 	transition: 0.1s;
+}
+.content {
+padding: 30px;"
+font-family:'나눔고딕', 'NanumGothic' , Sans-serif; 
+font-size: 12pt;
+margin: auto;
 }
 /*Footer*/
 #footer {
@@ -427,13 +421,14 @@ th.last_bg {
 						</tr>
 
 						<tr>
+						<% pageContext.setAttribute("LF", "\n"); %>
 							<td colspan="6" class="board_data2">
 								<!-- 파일이 그림일 경우 출력(gif/jpg) -->
 								<p style="line-height: 2;"></p>
 								<p align="justify" style="text-align: justify; line-height: 2;">
 									<span style="font-family:"나눔고딕", "NanumGothic" , Sans-serif; font-size: 10pt;">
-										<div style="padding: 30px","font-family:"나눔고딕", "NanumGothic" , Sans-serif; font-size: 10pt;" >
-										${ notice.noticecontent } <br><br><br><br><br><br></div></span>
+										<div class="content">
+										${fn:replace(notice.noticecontent, LF, '<br>')}<br><br><br><br><br><br></div></span>
 								</p>
 							</td>
 						</tr>

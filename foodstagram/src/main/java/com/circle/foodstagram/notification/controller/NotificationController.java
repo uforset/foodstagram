@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 public class NotificationController {
 	
 	@Autowired
-	NotificationService notificationService;
+	private NotificationService notificationService;
 	
 	
 	@GetMapping("readCheck.do")

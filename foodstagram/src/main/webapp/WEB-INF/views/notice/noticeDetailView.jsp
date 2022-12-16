@@ -2,14 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-<link href="resources/css/reset.css"  rel="stylesheet">
-<link href="resources/css/style.css"  rel="stylesheet">
+<link href="/foodstagram/resources/css/reset.css">
+<link href="/foodstagram/resources/css/style.css">
+
 <style>
 /*Layout*/
 #wrap {
@@ -37,6 +37,7 @@
 	position: relative;
 	margin: 0 auto;
 	padding-top: 191px;
+	/* background:#f5f3ed; */
 	min-height: 700px;
 }
 
@@ -78,8 +79,7 @@
 	font-size: 12px;
 	color: #666;
 	min-height: 20px;
-	font-family: 'NanumGothic', 'Malgun Gothic', 'verdana', 'arial', 'dotum',
-		'돋움';
+	font-family: 'NanumGothic', 'Malgun Gothic', 'verdana', 'arial', 'dotum', '돋움';
 	position: relative;
 }
 
@@ -97,7 +97,7 @@
  a:visited { text-decoration:none;color:#2f2f2f;}
  a:active {text-decoration:none; color:#2f2f2f; }
  a:hover { text-decoration:none; color:#8f8f8f;}
-
+ 
 #board_area a:hover {
 	color: #2f2f2f;
 	/*color:#d60c0c; (red)*/
@@ -120,7 +120,7 @@
 	background-color: #F95E25;
 }
 
-.board_bt_style01 {
+input.board_bt_style01 {
 	border: 0px;
 	color: #fff;
 	background: #666c74;
@@ -164,7 +164,7 @@ input.board_bt_style03 {
 .free_board th {
 	border-bottom: 1px solid #ddd;
 	padding: 15px 10px;
-	background: url("../notice_img/line_bg.gif") no-repeat center right;
+/* 	background: url("../notice_img/line_bg.gif") no-repeat center right; */
 }
 
 .free_board td, .free_board_view td {
@@ -236,7 +236,7 @@ input.board_bt_style03 {
 .free_board_view th {
 	border-bottom: 1px solid #ddd;
 	padding: 15px 8px;
-	background: url("../notice_img/line_bg.gif") no-repeat center right;
+	/* background: url("../notice_img/line_bg.gif") no-repeat center right; */
 	text-align: center;
 }
 
@@ -246,7 +246,7 @@ input.board_bt_style03 {
 }
 
 .board_title01 {
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: bold;
 	text-align: center;
 }
@@ -268,28 +268,22 @@ input.board_bt_style03 {
 	font-size: 14px;
 	font-weight: normal;
 }
-
 .board_data2 {
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: normal;
-	margin-left: 10px;
-	
+	margin-left: 12px;
 }
-
 th.board_stitle {
 	font-weight: normal;
 	font-size: 11px;
 }
-
 th.a_left {
 	text-align: left;
 }
-
 .number {
 	margin: 20px 0;
 	clear: both;
 }
-
 .number img {
 	vertical-align: middle;
 }
@@ -334,21 +328,13 @@ th.last_bg {
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
 }
-.button {
-	width: 80px;
-	height: 35px;
-	font-size: 14px;
-	font-weight: bold;
-	color: #ffffff;
-	font-family: '나눔고딕';
-	letter-spacing: 1px;
-	background-color: #827f7f;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	outline: none;
-	transition: 0.1s;
+.content {
+padding: 30px;"
+font-family:'나눔고딕', 'NanumGothic' , Sans-serif; 
+font-size: 12pt;
+margin: auto;
 }
+
 /*Footer*/
 #footer {
 	width: 100%;
@@ -377,10 +363,9 @@ th.last_bg {
 						<input type="button" class="board_bt_style01" title=""
 							value="목록으로" name=""
 							onclick="location.href ='${ pageContext.servletContext.contextPath }/nlist.do';">
-						<p></p>
+					<p></p>
 					</div>
 			</div>
-
 			</ul>
 			<div id="board_area">
 				<!--Board_View-->
@@ -403,8 +388,9 @@ th.last_bg {
 								<c:if test="${ notice.importance eq 1 }"></c:if> <c:if
 									test="${ notice.importance eq 2 }">
 									<img
-										src="${ pageContext.servletContext.contextPath }/resources/notice_img/notice.png">
+										src="${ pageContext.servletContext.contextPath }/resources/notice_img/notice.png">&nbsp;&nbsp;
 								</c:if>
+								
 							<td style="text-align: right;"><span class="mr2"> <img
 									src="../notice_img/empty.png" width="16" height="16" border="0"
 									alt=""></a></span> <span class="mr2"><img
@@ -429,15 +415,17 @@ th.last_bg {
 						<tr>
 							<td colspan="6" class="board_data2">
 								<!-- 파일이 그림일 경우 출력(gif/jpg) -->
+								<% pageContext.setAttribute("LF", "\n"); %>
 								<p style="line-height: 2;"></p>
 								<p align="justify" style="text-align: justify; line-height: 2;">
 									<span style="font-family:"나눔고딕", "NanumGothic" , Sans-serif; font-size: 10pt;">
-										<div style="padding: 30px","font-family:"나눔고딕", "NanumGothic" , Sans-serif; font-size: 10pt;" >
-										${ notice.noticecontent } <br><br><br><br><br><br></div></span>
+										<div class="content" >
+											${fn:replace(notice.noticecontent, LF, '<br>')}<br><br><br><br><br><br></div></span>
 								</p>
-							</td>
+								</p>
+						</td>
 						</tr>
-
+						
 					</tbody>
 				</table>
 			</div>
@@ -446,7 +434,7 @@ th.last_bg {
 			<br>
 				<tbody>
 					<tr class="board_data">
-						<th><img
+						<th style="width: 20"><img
 							src="${ pageContext.servletContext.contextPath }/resources/notice_img/t_05.png"
 							width="41" height="14" border="0" alt="첨부파일"></th>
 						<td>
@@ -460,37 +448,12 @@ th.last_bg {
 					</tr>
 				</tbody>
 			</table>
-
-			<!--END Board-->
-
-			<!-- Footer Start -->
-			<!-- Footer End -->
-			<!--Button-->
-<%-- 				<input type="button" class="board_bt_style01" title="" value="목록으로"
-					name=""
-					onclick="location.href ='${ pageContext.servletContext.contextPath }/nlist.do';">
- --%>				
-
- 					<br><br>
-					<!-- 수정페이지로 이동 버튼 -->
-					<tr align="center">
-					<th colspan="2">
-					<div class="board_btn">
-					<c:url var="movenup" value="/nmoveup.do" >
-						<c:param name="noticeno" value="${ notice.noticeno }" />
-					</c:url>
-					<button type="button" onclick="location.href='${ movenup }';" class="board_bt_style01">수정</button>
-					<!-- 삭제하기 버튼 -->
-					<c:url var="ndel" value="/ndel.do">
-						<c:param name="noticeno" value="${ notice.noticeno }" />
-						<c:param name="boFiles" value="${ notice.attaches }" />
-					</c:url>
-					<button type="button" onclick="javascript:location.href='${ ndel }';"
-						class="board_bt_style01" >삭제</button>
-						</div>
-						</th></tr>
-				</div>
-				</div>
 			</div>
+			</div>
+			
+	<!--END Board-->
+
+	<!-- Footer Start -->
+	<!-- Footer End -->
 </body>
 </html>
